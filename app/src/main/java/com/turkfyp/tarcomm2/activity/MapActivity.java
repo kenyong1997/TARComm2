@@ -50,6 +50,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import android.support.v4.app.Fragment;
 
 
 import org.json.JSONArray;
@@ -140,7 +141,7 @@ public class MapActivity extends android.support.v4.app.Fragment implements OnMa
 
 
         //hide action bar
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        //((AppCompatActivity) getActivity()).getSupportActionBar().hide();
 
         //LINK CODES WITH UI
         btnDirect = (Button) v.findViewById(R.id.btnDirect);
@@ -151,8 +152,8 @@ public class MapActivity extends android.support.v4.app.Fragment implements OnMa
 
         //set up spinner
         //spinnerFilter.setSelection(0);
-        tvFilterTitle = (TextView) v.findViewById(R.id.tvFilterTitle);
-        tvFilterTitle.setText("All \u25BD");
+        //tvFilterTitle = (TextView) v.findViewById(R.id.tvFilterTitle);
+        //tvFilterTitle.setText("All \u25BD");
 
         if (mMap != null) {
             //download all the marker details
@@ -255,6 +256,7 @@ public class MapActivity extends android.support.v4.app.Fragment implements OnMa
                 .position(tarc)));*/
 
         //when the spinner was clicked to change
+        /*
         spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -311,7 +313,7 @@ public class MapActivity extends android.support.v4.app.Fragment implements OnMa
 
             }
         });
-
+*/
 
         //check if someone select a event venue in event details
         /*

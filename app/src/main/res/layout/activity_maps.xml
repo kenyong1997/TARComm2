@@ -1,11 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.MapActivity">
+    tools:context="com.turkfyp.tarcomm2.activity.MapActivity2">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -13,18 +12,7 @@
 
 
 
-        <TextView
-            android:id="@+id/tvFilterTitle"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="22sp" />
+
 
     </RelativeLayout>
 
@@ -32,20 +20,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:background="@color/guillotine_background_dark"
+        >
 
         <AutoCompleteTextView
             android:id="@+id/etOrigin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter origin address" />
+            android:hint="Enter origin address"
+            android:textColorHint="@color/light_grey"
+            android:textColor="@android:color/black"/>
 
 
         <AutoCompleteTextView
             android:id="@+id/etDestination"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter destination address" />
+            android:hint="Enter destination address"
+            android:textColorHint="@color/light_grey"
+            android:textColor="@android:color/black"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -65,7 +59,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="0 km" />
+                android:text="0 km"
+                android:textColor="@android:color/black"/>
 
             <ImageView
                 android:layout_width="40dp"
@@ -80,7 +75,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="0 min" />
+                android:text="0 min"
+                android:textColor="@android:color/black"/>
 
             <Button
                 android:id="@+id/btnDirect"
@@ -99,11 +95,11 @@
             xmlns:map="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+            class="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="309dp"
-            android:layout_weight="1"
-            tools:context="my.edu.tarc.taroute.MapsActivity" />
+            android:layout_height="match_parent"
+
+            tools:context="com.turkfyp.tarcomm2.activity.MapActivity" />
 
 
     </LinearLayout>

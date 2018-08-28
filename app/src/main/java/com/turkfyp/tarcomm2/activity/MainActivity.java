@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         mViewpager.setAdapter(mAdapter);
     }
    public void map_onclick(View view){
-        Intent i = new Intent (this,MapActivity.class);
+        Intent i = new Intent (this,MapActivity2.class);
         startActivity(i);
    }
     private class ViewPagerStack implements ViewPager.PageTransformer{
