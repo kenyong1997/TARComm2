@@ -1,5 +1,6 @@
 package com.turkfyp.tarcomm2.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.FrameLayout;
 
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.guillotine.animation.GuillotineAnimation;
+import com.turkfyp.tarcomm2.widget.CanaroTextView;
 
 import java.util.ArrayList;
 
@@ -30,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     FrameLayout root;
     @BindView(R.id.content_hamburger)
     View contentHamburger;
+
+    private CanaroTextView tvMarketplace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +79,16 @@ public class MainActivity extends AppCompatActivity {
         mViewpager.setPageTransformer(true, new ViewPagerStack());
         mViewpager.setOffscreenPageLimit(6);
         mViewpager.setAdapter(mAdapter);
+
+        tvMarketplace = (CanaroTextView) findViewById(R.id.tv_Marketplace);
+        tvMarketplace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent launchMarketplace = new Intent(MainActivity.this,MarketplaceActivity.class);
+                startActivity(launchMarketplace);
+            }
+        });
+
     }
    public void map_onclick(View view){
         Intent i = new Intent (this,MapActivity.class);
@@ -93,4 +107,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 }
