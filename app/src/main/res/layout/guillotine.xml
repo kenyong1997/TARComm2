@@ -139,7 +139,8 @@
 
         <com.turkfyp.tarcomm2.widget.CanaroTextView
             style="@style/TextView.GuillotineItem"
-            android:text="Navigation" />
+            android:text="Navigation"
+            android:onClick="map_onclick"/>
     </LinearLayout>
     <LinearLayout
             android:id="@+id/Friends_nearby_group"

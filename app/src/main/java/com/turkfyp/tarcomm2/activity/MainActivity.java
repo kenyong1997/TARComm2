@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.BindView;
 
+import android.content.Intent;
+
 public class MainActivity extends AppCompatActivity {
     private static final long RIPPLE_DURATION = 250;
     private ViewPager mViewpager;
@@ -74,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
         mViewpager.setOffscreenPageLimit(6);
         mViewpager.setAdapter(mAdapter);
     }
+   public void map_onclick(View view){
+        Intent i = new Intent (this,MapActivity.class);
+        startActivity(i);
+   }
     private class ViewPagerStack implements ViewPager.PageTransformer{
 
         @Override
