@@ -93,6 +93,7 @@
             android:src="@drawable/trading_icon" />
 
         <com.turkfyp.tarcomm2.widget.CanaroTextView
+            android:id="@+id/tv_Marketplace"
             style="@style/TextView.GuillotineItem"
             android:text="Marketplace" />
     </LinearLayout>

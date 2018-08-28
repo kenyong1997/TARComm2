@@ -25,6 +25,14 @@
         </activity>
 
         <activity android:name=".activity.MapActivity2"></activity>
+        <activity
+            android:name=".activity.MarketplaceActivity"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="com.turkfyp.tarcomm2.MarketplaceActivity" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

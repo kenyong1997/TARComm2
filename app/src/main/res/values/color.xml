@@ -8,4 +8,5 @@
     <color name="colorPrimary">#66b3ff</color>
     <color name="colorPrimaryDark">#7751ff</color>
     <color name="colorAccent">#7751ff</color>
+    <color name="selected_tabs">#FFFFFC52</color>
 </resources>
