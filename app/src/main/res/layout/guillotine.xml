@@ -82,7 +82,8 @@
 
         <com.turkfyp.tarcomm2.widget.CanaroTextView
             style="@style/TextView.GuillotineItem"
-            android:text="Events" />
+            android:text="Events"
+            android:onClick="event_onclick"/>
     </LinearLayout>
 
     <LinearLayout
