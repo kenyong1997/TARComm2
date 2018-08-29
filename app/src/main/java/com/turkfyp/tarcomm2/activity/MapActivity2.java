@@ -48,7 +48,7 @@ public class MapActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map2);
-        /*
+
         Toolbar toolbar=(Toolbar) findViewById(R.id.toolbar);
         FrameLayout activity_map2 = (FrameLayout) findViewById(R.id.activity_map2);
         View contentHamburger = (View) findViewById(R.id.content_hamburger);
@@ -66,7 +66,7 @@ public class MapActivity2 extends AppCompatActivity {
                 .setActionBarViewForAnimation(toolbar)
                 .setClosedOnStart(true)
                 .build();
-*/
+
         //get User info, either from SharedPreference or extra
         SharedPreferences pref = getSharedPreferences("tarouteUser", MODE_PRIVATE);
 
