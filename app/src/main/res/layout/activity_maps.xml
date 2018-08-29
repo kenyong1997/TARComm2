@@ -4,40 +4,66 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:weightSum="10"
     tools:context="com.turkfyp.tarcomm2.activity.MapActivity2"
-    >
+   >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="4"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@color/guillotine_background">
 
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/map"
+    class="com.google.android.gms.maps.SupportMapFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center" tools:context="com.turkfyp.tarcomm2.activity.MapActivity" />
+</LinearLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="1"
+        android:layout_weight="6"
         android:background="@color/guillotine_background_dark"
+        android:weightSum="3"
+        android:padding="10dp"
         >
 
         <AutoCompleteTextView
             android:id="@+id/etOrigin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:hint="Enter origin address"
             android:textColorHint="@color/light_grey"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
             android:textColor="@android:color/black"/>
 
 
         <AutoCompleteTextView
             android:id="@+id/etDestination"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:hint="Enter destination address"
             android:textColorHint="@color/light_grey"
+            android:layout_weight="1"
             android:textColor="@android:color/black"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
             android:orientation="horizontal">
 
             <ImageView
@@ -45,6 +71,7 @@
                 android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
+                android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_distance" />
 
             <TextView
@@ -52,6 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+                android:layout_gravity="center_vertical"
                 android:text="0 km"
                 android:textColor="@android:color/black"/>
 
@@ -60,6 +88,7 @@
                 android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
+                android:layout_gravity="center_vertical"
                 android:padding="5dp"
                 android:src="@drawable/ic_clock" />
 
@@ -67,6 +96,7 @@
                 android:id="@+id/tvDuration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
                 android:text="0 min"
                 android:textColor="@android:color/black"/>
@@ -76,6 +106,7 @@
                 style="@style/button_confirm_register_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="100dp"
                 android:text="Direct"
                 android:textColor="#ffff" />
@@ -84,15 +115,7 @@
         </LinearLayout>
 
 
-        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:map="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/map"
-            class="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
 
-            tools:context="com.turkfyp.tarcomm2.activity.MapActivity" />
 
 
     </LinearLayout>
