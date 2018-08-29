@@ -1,5 +1,6 @@
 package com.turkfyp.tarcomm2.activity;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.AppCompatActivity;
@@ -78,7 +79,18 @@ public class MarketplaceActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
     }
-
+    public void map_onclick(View view){
+        Intent i = new Intent (this,MapActivity2.class);
+        startActivity(i);
+    }
+    public void highlight_event_onclick(View view){
+        Intent i = new Intent (this,MainActivity.class);
+        startActivity(i);
+    }
+    public void market_onclick(View view){
+        Intent i = new Intent (this,MarketplaceActivity.class);
+        startActivity(i);
+    }
     // Adapter for the viewpager using FragmentPagerAdapter
 //    public static class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 //        public SectionsPagerAdapter(FragmentManager fm) {

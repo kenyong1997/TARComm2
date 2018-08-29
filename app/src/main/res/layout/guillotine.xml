@@ -68,7 +68,8 @@
 
         <com.turkfyp.tarcomm2.widget.CanaroTextView
             style="@style/TextView.GuillotineItem"
-            android:text="Highlight Events" />
+            android:text="Highlight Events"
+            android:onClick="highlight_event_onclick"/>
     </LinearLayout>
 
     <LinearLayout
@@ -95,7 +96,8 @@
         <com.turkfyp.tarcomm2.widget.CanaroTextView
             android:id="@+id/tv_Marketplace"
             style="@style/TextView.GuillotineItem"
-            android:text="Marketplace" />
+            android:text="Marketplace"
+            android:onClick="market_onclick"/>
     </LinearLayout>
 
     <LinearLayout

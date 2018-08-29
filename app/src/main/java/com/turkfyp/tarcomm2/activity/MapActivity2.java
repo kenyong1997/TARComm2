@@ -1,6 +1,7 @@
 package com.turkfyp.tarcomm2.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -66,7 +67,7 @@ public class MapActivity2 extends AppCompatActivity {
                 .setActionBarViewForAnimation(toolbar)
                 .setClosedOnStart(true)
                 .build();
-
+/*
         //get User info, either from SharedPreference or extra
         SharedPreferences pref = getSharedPreferences("tarouteUser", MODE_PRIVATE);
 
@@ -83,7 +84,7 @@ public class MapActivity2 extends AppCompatActivity {
                 contactNumber = extras.getString("contactNumber");
             }
         }
-
+*/
         //Set up the main page
         MapActivity m = new MapActivity();
         getSupportFragmentManager().beginTransaction().replace(R.id.frame, m).commit();
@@ -92,7 +93,18 @@ public class MapActivity2 extends AppCompatActivity {
         final ActionBar actionBar = getSupportActionBar();
 
     }
-
+    public void map_onclick(View view){
+        Intent i = new Intent (this,MapActivity2.class);
+        startActivity(i);
+    }
+    public void highlight_event_onclick(View view){
+        Intent i = new Intent (this,MainActivity.class);
+        startActivity(i);
+    }
+    public void market_onclick(View view){
+        Intent i = new Intent (this,MarketplaceActivity.class);
+        startActivity(i);
+    }
     @Override
     protected void onStop() {
         super.onStop();

@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.content_hamburger)
     View contentHamburger;
 
-    private CanaroTextView tvMarketplace;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,20 +80,21 @@ public class MainActivity extends AppCompatActivity {
         mViewpager.setOffscreenPageLimit(6);
         mViewpager.setAdapter(mAdapter);
 
-        tvMarketplace = (CanaroTextView) findViewById(R.id.tv_Marketplace);
-        tvMarketplace.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent launchMarketplace = new Intent(MainActivity.this,MarketplaceActivity.class);
-                startActivity(launchMarketplace);
-            }
-        });
+
 
     }
    public void map_onclick(View view){
         Intent i = new Intent (this,MapActivity2.class);
         startActivity(i);
    }
+    public void highlight_event_onclick(View view){
+        Intent i = new Intent (this,MainActivity.class);
+        startActivity(i);
+    }
+    public void market_onclick(View view){
+        Intent i = new Intent (this,MarketplaceActivity.class);
+        startActivity(i);
+    }
     private class ViewPagerStack implements ViewPager.PageTransformer{
 
         @Override
