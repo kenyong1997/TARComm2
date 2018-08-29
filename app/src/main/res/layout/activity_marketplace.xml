@@ -38,7 +38,7 @@
         </android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout
-            android:id="@+id/tab_trading"
+            android:id="@+id/tab_marketplace"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/guillotine_background"
@@ -51,8 +51,7 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_trading"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </android.support.v4.view.ViewPager>
+            android:layout_height="fill_parent" />
 
     </LinearLayout>
 </FrameLayout>

@@ -2,7 +2,6 @@ package com.turkfyp.tarcomm2.activity;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -21,10 +20,7 @@ import com.turkfyp.tarcomm2.guillotine.animation.GuillotineAnimation;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-public class MarketplaceActivity extends AppCompatActivity {
+public class MarketplaceActivity extends AppCompatActivity  {
 
     private static final long RIPPLE_DURATION = 250;
     //private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -68,6 +64,7 @@ public class MarketplaceActivity extends AppCompatActivity {
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.vp_trading);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_marketplace);
 
         // Add Fragments to adapter one by one
         adapter.addFragment(new FragmentTradingTab1(), "Textbooks");
@@ -75,7 +72,6 @@ public class MarketplaceActivity extends AppCompatActivity {
         adapter.addFragment(new FragmentTradingTab3(), "Your Uploads");
         viewPager.setAdapter(adapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_trading);
         tabLayout.setupWithViewPager(viewPager);
 
     }
