@@ -1,6 +1,8 @@
 package com.turkfyp.tarcomm2.activity;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -12,31 +14,30 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.guillotine.animation.GuillotineAnimation;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class MarketplaceActivity extends AppCompatActivity  {
+public class LostAndFoundActivity extends AppCompatActivity {
 
     private static final long RIPPLE_DURATION = 250;
-//    private ViewPager viewPager;
     private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_marketplace);
+        setContentView(R.layout.activity_lost_and_found);
 
         // For side menu
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        FrameLayout trading_layout = (FrameLayout) findViewById(R.id.trading_layout);
+        FrameLayout lostandfound_layout = (FrameLayout) findViewById(R.id.lostandfound_layout);
         View contentHamburger = (View) findViewById(R.id.content_hamburger);
 
         if (toolbar != null) {
@@ -45,7 +46,7 @@ public class MarketplaceActivity extends AppCompatActivity  {
         }
 
         View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
-        trading_layout.addView(guillotineMenu);
+        lostandfound_layout.addView(guillotineMenu);
 
         new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
                 .setStartDelay(RIPPLE_DURATION)
@@ -53,33 +54,17 @@ public class MarketplaceActivity extends AppCompatActivity  {
                 .setClosedOnStart(true)
                 .build();
 
+        //Side menu ends
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-//        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-//
-//        // Set up the ViewPager with the sections adapter.
-//        mViewPager = (ViewPager) findViewById(R.id.vp_trading);
-//        mViewPager.setAdapter(mSectionsPagerAdapter);
-//
-//        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_trading);
-//        tabLayout.setupWithViewPager(mViewPager);
-
-
-//        viewPager = (ViewPager) findViewById(R.id.vp_trading);
-//        setupViewPager(viewPager);
-//        tabLayout = (TabLayout) findViewById(R.id.tab_marketplace);
-//        tabLayout.setupWithViewPager(viewPager);
-
-        tabLayout = (TabLayout) findViewById(R.id.tab_marketplace);
+        //Tab Fragment
+        tabLayout = (TabLayout) findViewById(R.id.tab_lostandfound);
 
         //create tabs title
-        tabLayout.addTab(tabLayout.newTab().setText("Textbooks"));
-        tabLayout.addTab(tabLayout.newTab().setText("Others"));
+        tabLayout.addTab(tabLayout.newTab().setText("Lost and Found Items"));
         tabLayout.addTab(tabLayout.newTab().setText("Your Uploads"));
 
         //replace default fragment
-        replaceFragment(new FragmentTradingTab1());
+        replaceFragment(new FragmentLostFoundTab1());
 
 
         //handling tab click event
@@ -87,11 +72,9 @@ public class MarketplaceActivity extends AppCompatActivity  {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
-                    replaceFragment(new FragmentTradingTab1());
-                } else if (tab.getPosition() == 1) {
-                    replaceFragment(new FragmentTradingTab2());
+                    replaceFragment(new FragmentLostFoundTab1());
                 } else {
-                    replaceFragment(new FragmentTradingTab3());
+                    replaceFragment(new FragmentLostFoundTab2());
                 }
             }
 
@@ -106,12 +89,13 @@ public class MarketplaceActivity extends AppCompatActivity  {
             }
         });
 
+
     }
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.marketplace_container, fragment);
+        transaction.replace(R.id.lostandfound_container, fragment);
 
         transaction.commit();
     }
@@ -134,45 +118,4 @@ public class MarketplaceActivity extends AppCompatActivity  {
         Intent i = new Intent (this,LostAndFoundActivity.class);
         startActivity(i);
     }
-
-/*
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-        adapter.addFragment(new FragmentTradingTab1(), "Textbooks");
-        adapter.addFragment(new FragmentTradingTab2(), "Others");
-        adapter.addFragment(new FragmentTradingTab3(), "Your Uploads");
-        viewPager.setAdapter(adapter);
-    }
-
-    // Adapter for the viewpager using FragmentPagerAdapter
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-    }*/
 }
-

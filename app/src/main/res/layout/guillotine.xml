@@ -110,7 +110,8 @@
 
         <com.turkfyp.tarcomm2.widget.CanaroTextView
             style="@style/TextView.GuillotineItem"
-            android:text="Lost and Found" />
+            android:text="Lost and Found"
+            android:onClick="lost_and_found_onclick"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/friends_group"

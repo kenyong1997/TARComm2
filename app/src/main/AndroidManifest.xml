@@ -39,7 +39,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.EventActivity" />
-        <activity android:name=".activity.EventDetailsActivity"></activity>
+        <activity android:name=".activity.EventDetailsActivity" />
+        <activity
+            android:name=".activity.LostAndFoundActivity"
+            android:label="@string/title_activity_lost_and_found"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

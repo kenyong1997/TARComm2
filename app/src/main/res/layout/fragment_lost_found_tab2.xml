@@ -3,15 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@color/guillotine_background_dark">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Marketplace Uploads"
+        android:text="Lost and Found Uploads"
         android:textSize="40dp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        />
 
 </RelativeLayout>

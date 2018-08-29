@@ -83,10 +83,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-   public void map_onclick(View view){
+    //Side Menu Navigation
+    public void map_onclick(View view){
         Intent i = new Intent (this,MapActivity2.class);
         startActivity(i);
-   }
+    }
     public void highlight_event_onclick(View view){
         Intent i = new Intent (this,MainActivity.class);
         startActivity(i);
@@ -95,6 +96,11 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent (this,MarketplaceActivity.class);
         startActivity(i);
     }
+    public void lost_and_found_onclick(View view){
+        Intent i = new Intent (this,LostAndFoundActivity.class);
+        startActivity(i);
+    }
+
     private class ViewPagerStack implements ViewPager.PageTransformer{
 
         @Override

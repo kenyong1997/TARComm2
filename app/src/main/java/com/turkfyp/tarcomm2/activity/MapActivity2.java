@@ -93,6 +93,8 @@ public class MapActivity2 extends AppCompatActivity {
         final ActionBar actionBar = getSupportActionBar();
 
     }
+
+    //Side Menu Navigation
     public void map_onclick(View view){
         Intent i = new Intent (this,MapActivity2.class);
         startActivity(i);
@@ -103,6 +105,10 @@ public class MapActivity2 extends AppCompatActivity {
     }
     public void market_onclick(View view){
         Intent i = new Intent (this,MarketplaceActivity.class);
+        startActivity(i);
+    }
+    public void lost_and_found_onclick(View view){
+        Intent i = new Intent (this,LostAndFoundActivity.class);
         startActivity(i);
     }
     @Override
