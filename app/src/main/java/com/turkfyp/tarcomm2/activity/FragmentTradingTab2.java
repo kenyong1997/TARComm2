@@ -13,6 +13,13 @@ import com.turkfyp.tarcomm2.R;
 
 public class FragmentTradingTab2 extends Fragment {
 
+    public FragmentTradingTab2(){}
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
