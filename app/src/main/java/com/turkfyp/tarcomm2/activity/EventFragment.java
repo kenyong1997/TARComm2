@@ -112,29 +112,29 @@ public class EventFragment extends android.support.v4.app.Fragment{
             }
         });
 
-/*
+
         //when a particular event was selected to view more details
         lvEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Event selectedEvent = (Event) parent.getItemAtPosition(position);
-                Intent eventDetailIntent = new Intent(getActivity(), EventFragment.class);
-                eventDetailIntent.putExtra("eventName", selectedEvent.getEventName());
-                eventDetailIntent.putExtra("eventDateTime", selectedEvent.getEventDateTime());
-                eventDetailIntent.putExtra("eventDesc", selectedEvent.getEventDesc());
-                eventDetailIntent.putExtra("eventVenue", selectedEvent.getEventVenue());
-
-
-                ImageView imageEvent = (ImageView) view.findViewById(R.id.ivImageEvent);
-                imageEvent.buildDrawingCache();
-                Bitmap image = imageEvent.getDrawingCache();
-                eventDetailIntent.putExtra("Image", image);
-                eventDetailIntent.putExtra("ImageURL", selectedEvent.getEventImageURL());
+                Intent eventDetailIntent = new Intent(getActivity(), EventDetailsActivity.class);
+//                eventDetailIntent.putExtra("eventName", selectedEvent.getEventName());
+//                eventDetailIntent.putExtra("eventDateTime", selectedEvent.getEventDateTime());
+//                eventDetailIntent.putExtra("eventDesc", selectedEvent.getEventDesc());
+//                eventDetailIntent.putExtra("eventVenue", selectedEvent.getEventVenue());
+//
+//
+//                ImageView imageEvent = (ImageView) view.findViewById(R.id.ivImageEvent);
+//                imageEvent.buildDrawingCache();
+//                Bitmap image = imageEvent.getDrawingCache();
+//                eventDetailIntent.putExtra("Image", image);
+//                eventDetailIntent.putExtra("ImageURL", selectedEvent.getEventImageURL());
 
                 startActivity(eventDetailIntent);
             }
         });
-*/
+
         return v;
     }
 
