@@ -119,17 +119,17 @@ public class EventFragment extends android.support.v4.app.Fragment{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Event selectedEvent = (Event) parent.getItemAtPosition(position);
                 Intent eventDetailIntent = new Intent(getActivity(), EventDetailsActivity.class);
-//                eventDetailIntent.putExtra("eventName", selectedEvent.getEventName());
-//                eventDetailIntent.putExtra("eventDateTime", selectedEvent.getEventDateTime());
-//                eventDetailIntent.putExtra("eventDesc", selectedEvent.getEventDesc());
-//                eventDetailIntent.putExtra("eventVenue", selectedEvent.getEventVenue());
-//
-//
-//                ImageView imageEvent = (ImageView) view.findViewById(R.id.ivImageEvent);
-//                imageEvent.buildDrawingCache();
-//                Bitmap image = imageEvent.getDrawingCache();
-//                eventDetailIntent.putExtra("Image", image);
-//                eventDetailIntent.putExtra("ImageURL", selectedEvent.getEventImageURL());
+                eventDetailIntent.putExtra("eventName", selectedEvent.getEventName());
+                eventDetailIntent.putExtra("eventDateTime", selectedEvent.getEventDateTime());
+                eventDetailIntent.putExtra("eventDesc", selectedEvent.getEventDesc());
+                eventDetailIntent.putExtra("eventVenue", selectedEvent.getEventVenue());
+
+
+                ImageView imageEvent = (ImageView) view.findViewById(R.id.ivImageEvent);
+                imageEvent.buildDrawingCache();
+                Bitmap image = imageEvent.getDrawingCache();
+                eventDetailIntent.putExtra("Image", image);
+                eventDetailIntent.putExtra("ImageURL", selectedEvent.getEventImageURL());
 
                 startActivity(eventDetailIntent);
             }

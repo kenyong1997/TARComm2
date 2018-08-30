@@ -15,10 +15,12 @@
 
         <ListView
             android:id="@+id/lvEvents"
-            android:divider="@color/light_grey"
+            android:divider="@color/grey"
+            android:dividerHeight="1dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="vertical">
+            android:scrollbars="vertical"
+            >
 
         </ListView>
     </android.support.v4.widget.SwipeRefreshLayout>

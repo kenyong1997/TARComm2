@@ -9,4 +9,5 @@
     <color name="colorPrimaryDark">#7751ff</color>
     <color name="colorAccent">#7751ff</color>
     <color name="selected_tabs">#FFFFFC52</color>
+    <color name="grey">#B0B0B0</color>
 </resources>
