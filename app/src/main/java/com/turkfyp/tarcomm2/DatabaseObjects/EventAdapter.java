@@ -77,13 +77,13 @@ public class EventAdapter extends ArrayAdapter<Event> {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(getContext(), "Downloading Image...", "Please wait...", true, true);
+                //loading = ProgressDialog.show(getContext(), "Downloading Image...", "Please wait...", true, true);
             }
 
             @Override
             protected void onPostExecute(Bitmap bitmap) {
                 super.onPostExecute(bitmap);
-                loading.dismiss();
+                //loading.dismiss();
                 ivImage.setImageBitmap(bitmap);
             }
         }
