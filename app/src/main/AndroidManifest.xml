@@ -47,6 +47,10 @@
             android:name=".activity.LostAndFoundActivity"
             android:label="@string/title_activity_lost_and_found"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.EventDetailsActivity"
+            android:label="@string/title_activity_event_details"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

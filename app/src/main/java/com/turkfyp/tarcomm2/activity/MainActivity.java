@@ -58,9 +58,9 @@ public class MainActivity extends AppCompatActivity {
         mViewpager = (ViewPager) findViewById(R.id.viewpager);
         mContents = new ArrayList<>();
         int images[] =  {R.drawable.one,R.drawable.two,R.drawable.three,R.drawable.four,R.drawable.five,R.drawable.six};
-        String names[] = {"Mina","Mina","Mina","Mina","Mina","Mina"};
-        String desc[] = {"TWICE","TWICE","TWICE","TWICE","TWICE","TWICE"};
-        String location[] = {"Korea","Korea","Korea","Korea","Korea","Korea"};
+        String names[] = {"One","Two","Three","Four","Five","Six"};
+        String desc[] = {"Event","Event","Event","Event","Event","Event"};
+        String location[] = {"Main Campus","Main Campus","Main Campus","Main Campus","Main Campus","Main Campus"};
 
         for(int i =0;i<images.length;i++)
         {
