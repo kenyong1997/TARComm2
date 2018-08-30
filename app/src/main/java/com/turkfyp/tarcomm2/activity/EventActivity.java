@@ -55,7 +55,7 @@ public class EventActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Upcoming Events"));
 
         //replace default fragment
-        replaceFragment(new FragmentEventTab1());
+        replaceFragment(new EventFragment());
 
 
         //handling tab click event
@@ -63,7 +63,7 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
-                    replaceFragment(new FragmentEventTab1());
+                    replaceFragment(new EventFragment());
                 } else {
                     replaceFragment(new FragmentEventTab2());
                 }

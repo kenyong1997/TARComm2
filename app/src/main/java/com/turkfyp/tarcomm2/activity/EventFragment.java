@@ -37,6 +37,7 @@ import java.util.Map;
 
 import com.turkfyp.tarcomm2.DatabaseObjects.Event;
 import com.turkfyp.tarcomm2.DatabaseObjects.EventAdapter;
+
 public class EventFragment extends android.support.v4.app.Fragment{
 
     public static boolean allowRefresh;
@@ -81,11 +82,11 @@ public class EventFragment extends android.support.v4.app.Fragment{
 
             //initialize textBookList
             eventList = new ArrayList<>();
-
+            Log.d("HIIIIIIIIIIII","lullllllllllllllllllllllllllllllllllllllllllll");
+            Log.d("context", String.valueOf(getActivity().getApplicationContext()));
             downloadEventRecords(getActivity().getApplicationContext(), GET_URL);
 
-            //Log.d("HIIIIIIIIIIII","lullllllllllllllllllllllllllllllllllllllllllll");
-            //Log.d("context", String.valueOf(getActivity().getApplicationContext()));
+
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -112,7 +113,7 @@ public class EventFragment extends android.support.v4.app.Fragment{
             }
         });
 
-/*
+
         //when a particular event was selected to view more details
         lvEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -134,7 +135,7 @@ public class EventFragment extends android.support.v4.app.Fragment{
                 startActivity(eventDetailIntent);
             }
         });
-*/
+
         return v;
     }
 

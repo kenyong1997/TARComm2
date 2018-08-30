@@ -21,9 +21,7 @@ import java.util.List;
 import com.turkfyp.tarcomm2.R;
 
 
-/**
- * Created by User-PC on 7/10/2017.
- */
+
 
 public class EventAdapter extends ArrayAdapter<Event> {
 
