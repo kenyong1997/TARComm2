@@ -4,14 +4,14 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:weightSum="1"
-    android:background="@color/guillotine_background_dark">
+    android:background="@drawable/card_navyborder">
 
     <ImageView
         android:id="@+id/ivImageEvent"
-        android:layout_width="100dp"
+        android:layout_width="130dp"
         android:layout_marginLeft="10dp"
         android:padding="5dp"
-        android:layout_height="100dp"
+        android:layout_height="130dp"
          />
 
     <LinearLayout

@@ -10,4 +10,5 @@
     <color name="colorAccent">#7751ff</color>
     <color name="selected_tabs">#FFFFFC52</color>
     <color name="grey">#B0B0B0</color>
+    <color name="list_view_bg">#e0e0e0</color>
 </resources>
