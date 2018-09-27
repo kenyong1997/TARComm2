@@ -43,7 +43,7 @@ public class FragmentEventTab2 extends android.support.v4.app.Fragment{
 
     private static final String TAG = "FragmentEventTab2";
 
-    private static String GET_URL = "https://taroute.000webhostapp.com/getEvent.php";
+    private static String GET_URL = "https://taroute.000webhostapp.com/getUpcomingEvent.php";
     ListView lvEvents;
     SwipeRefreshLayout swipeRefreshEvents;
     List<Event> eventList;
