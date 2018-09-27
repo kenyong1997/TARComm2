@@ -42,7 +42,7 @@
             android:name=".activity.EventActivity"
             android:label="@string/title_activity_event"
             android:theme="@style/AppTheme" />
-        <!--<activity android:name=".activity.EventFragment" />-->
+        <!--<activity android:name=".activity.FragmentEventTab1" />-->
         <activity
             android:name=".activity.LostAndFoundActivity"
             android:label="@string/title_activity_lost_and_found"

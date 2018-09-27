@@ -20,12 +20,10 @@ import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -50,7 +48,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import android.support.v4.app.Fragment;
 
 
 import org.json.JSONArray;
@@ -137,7 +134,7 @@ public class MapActivity extends android.support.v4.app.Fragment implements OnMa
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.activity_maps, container, false);
+        View v = inflater.inflate(R.layout.activity_map_content, container, false);
 
 
         //hide action bar

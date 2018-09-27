@@ -37,11 +37,11 @@ import java.util.Map;
 
 import com.turkfyp.tarcomm2.DatabaseObjects.Event;
 import com.turkfyp.tarcomm2.DatabaseObjects.EventAdapter;
-public class EventFragment extends android.support.v4.app.Fragment{
+public class FragmentEventTab1 extends android.support.v4.app.Fragment{
 
     public static boolean allowRefresh;
 
-    private static final String TAG = "EventFragment";
+    private static final String TAG = "FragmentEventTab1";
 
     private static String GET_URL = "https://taroute.000webhostapp.com/getEvent.php";
     ListView lvEvents;

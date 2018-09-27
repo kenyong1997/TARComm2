@@ -2,8 +2,6 @@ package com.turkfyp.tarcomm2.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -55,7 +53,7 @@ public class EventActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Upcoming Events"));
 
         //replace default fragment
-        replaceFragment(new EventFragment());
+        replaceFragment(new FragmentEventTab1());
 
 
         //handling tab click event
@@ -63,7 +61,7 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
-                    replaceFragment(new EventFragment());
+                    replaceFragment(new FragmentEventTab1());
                 } else {
                     replaceFragment(new FragmentEventTab2());
                 }
