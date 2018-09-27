@@ -74,8 +74,9 @@ public class MarketplaceActivity extends AppCompatActivity  {
         tabLayout = (TabLayout) findViewById(R.id.tab_marketplace);
 
         //create tabs title
-        tabLayout.addTab(tabLayout.newTab().setText("Textbooks"));
-        tabLayout.addTab(tabLayout.newTab().setText("Others"));
+        tabLayout.addTab(tabLayout.newTab().setText("Want To Buy"));
+        tabLayout.addTab(tabLayout.newTab().setText("Want To Sell"));
+        tabLayout.addTab(tabLayout.newTab().setText("Want To Trade"));
         tabLayout.addTab(tabLayout.newTab().setText("Your Uploads"));
 
         //replace default fragment
@@ -90,8 +91,10 @@ public class MarketplaceActivity extends AppCompatActivity  {
                     replaceFragment(new FragmentTradingTab1());
                 } else if (tab.getPosition() == 1) {
                     replaceFragment(new FragmentTradingTab2());
-                } else {
+                } else if (tab.getPosition() == 2) {
                     replaceFragment(new FragmentTradingTab3());
+                }else{
+                    replaceFragment(new FragmentTradingTab4());
                 }
             }
 

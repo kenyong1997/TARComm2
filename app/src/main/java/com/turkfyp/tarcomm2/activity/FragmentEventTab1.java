@@ -84,8 +84,7 @@ public class FragmentEventTab1 extends android.support.v4.app.Fragment{
 
             downloadEventRecords(getActivity().getApplicationContext(), GET_URL);
 
-            //Log.d("HIIIIIIIIIIII","lullllllllllllllllllllllllllllllllllllllllllll");
-            //Log.d("context", String.valueOf(getActivity().getApplicationContext()));
+
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
