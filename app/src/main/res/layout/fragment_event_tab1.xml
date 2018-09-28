@@ -22,7 +22,7 @@
             android:layout_weight="1"
             android:paddingLeft="10dip"
             android:paddingRight="10dip"
-            android:paddingTop="1dip"
+            android:paddingTop="5dip"
             android:scrollbars="vertical"
             >
 

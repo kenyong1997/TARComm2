@@ -16,5 +16,6 @@
     <string name="title_activity_lost_and_found">LostAndFoundActivity</string>
     <string name="title_activity_event">EventActivity</string>
     <string name="title_activity_event_details">EventDetailsActivity</string>
+    <string name="title_activity_marketplace_detail">MarketplaceDetailActivity</string>
 
 </resources>
