@@ -1,6 +1,8 @@
 package com.turkfyp.tarcomm2.activity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +10,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -69,6 +73,30 @@ public class FragmentTradingTab2 extends Fragment {
             Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
+        //when a particular item was selected to view more details
+        lvMarketplace.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Item selectedItem =(Item)parent.getItemAtPosition(position);
+                Intent itemDetailIntent = new Intent(getActivity(),MarketplaceDetailActivity.class);
+                itemDetailIntent.putExtra("itemName",selectedItem.getItemName());
+                itemDetailIntent.putExtra("itemPrice",selectedItem.getItemPrice());
+                itemDetailIntent.putExtra("itemDesc",selectedItem.getItemDescription());
+                itemDetailIntent.putExtra("itemSeller",selectedItem.getItemSeller());
+                itemDetailIntent.putExtra("sellerContact",selectedItem.getSellerContact());
+                itemDetailIntent.putExtra("dateAdded",selectedItem.getDateAdded());
+                itemDetailIntent.putExtra("desiredLocation",selectedItem.getDesiredLocation());
+
+                ImageView ivImage = (ImageView) view.findViewById(R.id.ivItemImage);
+                ivImage.buildDrawingCache();
+                Bitmap image = ivImage.getDrawingCache();
+                itemDetailIntent.putExtra("Image", image);
+                itemDetailIntent.putExtra("ImageURL", selectedItem.getImageURL());
+
+                startActivity(itemDetailIntent);
+            }
+        });
+
         return v;
     }
 
@@ -105,14 +133,14 @@ public class FragmentTradingTab2 extends Fragment {
                             loadItem();
 
                         } catch (Exception e) {
-                            Toast.makeText(getActivity(), "Error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        Toast.makeText(getActivity(), "Error" + volleyError.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Error: " + volleyError.getMessage(), Toast.LENGTH_LONG).show();
 
                     }
                 });

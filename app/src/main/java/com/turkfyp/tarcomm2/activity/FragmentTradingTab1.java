@@ -3,7 +3,6 @@ package com.turkfyp.tarcomm2.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -30,7 +29,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class FragmentTradingTab1 extends Fragment {
 
     public static boolean allowRefresh;
@@ -50,7 +48,6 @@ public class FragmentTradingTab1 extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,7 +83,7 @@ public class FragmentTradingTab1 extends Fragment {
                 itemDetailIntent.putExtra("dateAdded",selectedItem.getDateAdded());
                 itemDetailIntent.putExtra("desiredLocation",selectedItem.getDesiredLocation());
 
-                ImageView ivImage = (ImageView) view.findViewById(R.id.ivTradingImage);
+                ImageView ivImage = (ImageView) view.findViewById(R.id.ivItemImage);
                 ivImage.buildDrawingCache();
                 Bitmap image = ivImage.getDrawingCache();
                 itemDetailIntent.putExtra("Image", image);
@@ -105,9 +102,7 @@ public class FragmentTradingTab1 extends Fragment {
         // Instantiate the RequestQueue
         queue = Volley.newRequestQueue(context);
 
-        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(
-                url,
-                new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
@@ -132,14 +127,14 @@ public class FragmentTradingTab1 extends Fragment {
                             loadItem();
 
                         } catch (Exception e) {
-                            Toast.makeText(getActivity(), "Error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        Toast.makeText(getActivity(), "Error" + volleyError.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Error: " + volleyError.getMessage(), Toast.LENGTH_LONG).show();
 
                     }
                 });

@@ -61,7 +61,7 @@ public class LostAndFoundActivity extends AppCompatActivity {
 
         //create tabs title
         tabLayout.addTab(tabLayout.newTab().setText("Lost and Found Items"));
-        tabLayout.addTab(tabLayout.newTab().setText("Upload Item"));
+        tabLayout.addTab(tabLayout.newTab().setText("Your Uploads"));
 
         //replace default fragment
         replaceFragment(new FragmentLostFoundTab1());

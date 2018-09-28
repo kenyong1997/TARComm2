@@ -33,14 +33,14 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         LayoutInflater inflater = (LayoutInflater) getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View rowView = inflater.inflate(R.layout.trading_records, parent, false);
+        View rowView = inflater.inflate(R.layout.item_records, parent, false);
 
         TextView tvItemName, tvItemPrice;
         ImageView ivTradingImage;
 
         tvItemName = (TextView) rowView.findViewById(R.id.tvItemName);
         tvItemPrice = (TextView) rowView.findViewById(R.id.tvItemPrice);
-        ivTradingImage = (ImageView) rowView.findViewById(R.id.ivTradingImage);
+        ivTradingImage = (ImageView) rowView.findViewById(R.id.ivItemImage);
 
         tvItemName.setText( item.getItemName());
         tvItemPrice.setText("RM: "+item.getItemPrice());

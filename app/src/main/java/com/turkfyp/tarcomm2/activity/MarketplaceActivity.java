@@ -77,7 +77,7 @@ public class MarketplaceActivity extends AppCompatActivity  {
         tabLayout.addTab(tabLayout.newTab().setText("Want To Sell"));
         tabLayout.addTab(tabLayout.newTab().setText("Want To Buy"));
         tabLayout.addTab(tabLayout.newTab().setText("Want To Trade"));
-        tabLayout.addTab(tabLayout.newTab().setText("Upload Item"));
+        tabLayout.addTab(tabLayout.newTab().setText("Your Uploads"));
 
         //replace default fragment
         replaceFragment(new FragmentTradingTab1());
