@@ -37,7 +37,7 @@ public class FragmentTradingTab3 extends Fragment {
 
     private static final String TAG = "FragmentTradingTab3";
 
-    private static String GET_URL = "https://taroute.000webhostapp.com/getOthers.php";
+    private static String GET_URL = "https://tarcomm.000webhostapp.com/getItemWTT.php";
     ListView lvMarketplace;
     SwipeRefreshLayout swipeRefreshMarketplace;
     List<Item> itemList;
@@ -81,10 +81,8 @@ public class FragmentTradingTab3 extends Fragment {
                 itemDetailIntent.putExtra("itemName",selectedItem.getItemName());
                 itemDetailIntent.putExtra("itemPrice",selectedItem.getItemPrice());
                 itemDetailIntent.putExtra("itemDesc",selectedItem.getItemDescription());
-                itemDetailIntent.putExtra("itemSeller",selectedItem.getItemSeller());
+                itemDetailIntent.putExtra("itemSeller",selectedItem.getSellerName());
                 itemDetailIntent.putExtra("sellerContact",selectedItem.getSellerContact());
-                itemDetailIntent.putExtra("dateAdded",selectedItem.getDateAdded());
-                itemDetailIntent.putExtra("desiredLocation",selectedItem.getDesiredLocation());
 
                 ImageView ivImage = (ImageView) view.findViewById(R.id.ivItemImage);
                 ivImage.buildDrawingCache();
@@ -113,17 +111,16 @@ public class FragmentTradingTab3 extends Fragment {
                             itemList.clear();
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject textbookResponse = (JSONObject) response.get(i);
-                                String itemSeller = textbookResponse.getString("itemSeller");
-                                String itemName = textbookResponse.getString("itemName");
-                                double itemPrice = Double.parseDouble(textbookResponse.getString("itemPrice"));
-                                String itemDescription = textbookResponse.getString("itemDescription");
                                 String itemCategory = textbookResponse.getString("itemCategory");
-                                String dateAdded = textbookResponse.getString("dateAdded");
+                                String itemName = textbookResponse.getString("itemName");
+                                String itemDescription = textbookResponse.getString("itemDesc");
                                 String imageURL = textbookResponse.getString("url");
-                                String sellerContact = textbookResponse.getString("contactNumber");
-                                String desiredLocation = textbookResponse.getString("desiredLocation");
+                                double itemPrice = Double.parseDouble(textbookResponse.getString("itemPrice"));
+                                String email = textbookResponse.getString("email");
+                                String sellerName = textbookResponse.getString("fullname");
+                                String sellerContact = textbookResponse.getString("contactno");
 
-                                Item item = new Item(itemSeller, itemName, itemPrice, itemDescription, itemCategory, dateAdded, imageURL, sellerContact,desiredLocation);
+                                Item item = new Item(itemCategory, itemName, itemDescription, imageURL, itemPrice, email, sellerName, sellerContact);
                                 itemList.add(item);
                             }
 

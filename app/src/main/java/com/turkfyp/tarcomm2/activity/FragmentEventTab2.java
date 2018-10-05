@@ -43,7 +43,7 @@ public class FragmentEventTab2 extends android.support.v4.app.Fragment{
 
     private static final String TAG = "FragmentEventTab2";
 
-    private static String GET_URL = "https://taroute.000webhostapp.com/getUpcomingEvent.php";
+    private static String GET_URL = "https://tarcomm.000webhostapp.com/getUpcomingEvent.php";
     ListView lvEvents;
     SwipeRefreshLayout swipeRefreshEvents;
     List<Event> eventList;
@@ -159,12 +159,13 @@ public class FragmentEventTab2 extends android.support.v4.app.Fragment{
                                         JSONObject eventResponse = (JSONObject) j.get(i);
                                         String eventName = eventResponse.getString("eventName");
                                         String eventDateTime = eventResponse.getString("eventDateTime");
-                                        String eventCreator = eventResponse.getString("eventCreator");
                                         String eventDesc = eventResponse.getString("eventDesc");
                                         String eventImageURL = eventResponse.getString("url");
                                         String eventVenue = eventResponse.getString("eventVenue");
+                                        String eventVenueName = eventResponse.getString("eventVenueName");
+                                        String eventHighlight = eventResponse.getString("eventHighlight");
 
-                                        Event event = new Event(eventName, eventCreator, eventDateTime, eventDesc, eventImageURL, eventVenue);
+                                        Event event = new Event(eventName, eventDateTime, eventDesc, eventImageURL, eventVenue, eventVenueName, eventHighlight);
                                         eventList.add(event);
                                     }
                                     loadEvents();

@@ -21,6 +21,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.turkfyp.tarcomm2.DatabaseObjects.Item;
 import com.turkfyp.tarcomm2.DatabaseObjects.ItemAdapter;
+import com.turkfyp.tarcomm2.DatabaseObjects.LostFound;
+import com.turkfyp.tarcomm2.DatabaseObjects.LostFoundAdapter;
 import com.turkfyp.tarcomm2.R;
 
 import org.json.JSONArray;
@@ -35,10 +37,10 @@ public class FragmentLostFoundTab1 extends Fragment {
 
     private static final String TAG = "FragmentLostFoundTab1";
 
-    private static String GET_URL = "https://taroute.000webhostapp.com/getHostels.php";
+    private static String GET_URL = "https://tarcomm.000webhostapp.com/getLostItem.php";
     ListView lvLostFound;
     SwipeRefreshLayout swipeRefreshLostFound;
-    List<Item> itemList;
+    List<LostFound> lostFoundList;
 
     RequestQueue queue;
 
@@ -60,7 +62,7 @@ public class FragmentLostFoundTab1 extends Fragment {
 
         try {
             //initialize textBookList
-            itemList = new ArrayList<>();
+            lostFoundList = new ArrayList<>();
 
             downloadLostFoundRecords(getActivity().getApplicationContext(), GET_URL);
 
@@ -73,21 +75,20 @@ public class FragmentLostFoundTab1 extends Fragment {
         lvLostFound.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Item selectedItem =(Item)parent.getItemAtPosition(position);
-                Intent itemDetailIntent = new Intent(getActivity(),MarketplaceDetailActivity.class);
-                itemDetailIntent.putExtra("itemName",selectedItem.getItemName());
-                itemDetailIntent.putExtra("itemPrice",selectedItem.getItemPrice());
-                itemDetailIntent.putExtra("itemDesc",selectedItem.getItemDescription());
-                itemDetailIntent.putExtra("itemSeller",selectedItem.getItemSeller());
-                itemDetailIntent.putExtra("sellerContact",selectedItem.getSellerContact());
-                itemDetailIntent.putExtra("dateAdded",selectedItem.getDateAdded());
-                itemDetailIntent.putExtra("desiredLocation",selectedItem.getDesiredLocation());
 
-                ImageView ivImage = (ImageView) view.findViewById(R.id.ivItemImage);
+                LostFound selectedItem =(LostFound) parent.getItemAtPosition(position);
+                //TODO: Change this to Lost Found Detail in future
+                Intent itemDetailIntent = new Intent(getActivity(),MarketplaceDetailActivity.class);
+                itemDetailIntent.putExtra("lostItemName",selectedItem.getLostItemName());
+                itemDetailIntent.putExtra("lostItemDesc",selectedItem.getLostItemDesc());
+                itemDetailIntent.putExtra("lostItemContactName",selectedItem.getContactName());
+                itemDetailIntent.putExtra("lostItemContactNo",selectedItem.getContactNo());
+
+                ImageView ivImage = (ImageView) view.findViewById(R.id.ivLostItemImage);
                 ivImage.buildDrawingCache();
                 Bitmap image = ivImage.getDrawingCache();
                 itemDetailIntent.putExtra("Image", image);
-                itemDetailIntent.putExtra("ImageURL", selectedItem.getImageURL());
+                itemDetailIntent.putExtra("ImageURL", selectedItem.getLostItemURL());
 
                 startActivity(itemDetailIntent);
             }
@@ -107,21 +108,19 @@ public class FragmentLostFoundTab1 extends Fragment {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
-                            itemList.clear();
+                            lostFoundList.clear();
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject textbookResponse = (JSONObject) response.get(i);
-                                String itemSeller = textbookResponse.getString("itemSeller");
-                                String itemName = textbookResponse.getString("itemName");
-                                double itemPrice = Double.parseDouble(textbookResponse.getString("itemPrice"));
-                                String itemDescription = textbookResponse.getString("itemDescription");
-                                String itemCategory = textbookResponse.getString("itemCategory");
-                                String dateAdded = textbookResponse.getString("dateAdded");
-                                String imageURL = textbookResponse.getString("url");
-                                String sellerContact = textbookResponse.getString("contactNumber");
-                                String desiredLocation = textbookResponse.getString("desiredLocation");
+                                String category = textbookResponse.getString("category");
+                                String lostItemName = textbookResponse.getString("lostItemName");
+                                String lostItemDesc = textbookResponse.getString("lostItemDesc");
+                                String lostItemURL = textbookResponse.getString("url");
+                                String email = textbookResponse.getString("email");
+                                String contactName = textbookResponse.getString("fullname");
+                                String contactNo = textbookResponse.getString("contactno");
 
-                                Item item = new Item(itemSeller, itemName, itemPrice, itemDescription, itemCategory, dateAdded, imageURL, sellerContact,desiredLocation);
-                                itemList.add(item);
+                                LostFound lostFound = new LostFound(category, lostItemName, lostItemDesc, lostItemURL, email, contactName, contactNo);
+                                lostFoundList.add(lostFound);
                             }
 
                             //load the item into adapter
@@ -151,7 +150,7 @@ public class FragmentLostFoundTab1 extends Fragment {
 
 
     private void loadItem() {
-        final ItemAdapter adapter = new ItemAdapter(getActivity(), R.layout.fragment_lost_found_tab1, itemList);
+        final LostFoundAdapter adapter = new LostFoundAdapter(getActivity(), R.layout.fragment_lost_found_tab1, lostFoundList);
         lvLostFound.setAdapter(adapter);
 
     }
@@ -163,8 +162,8 @@ public class FragmentLostFoundTab1 extends Fragment {
         super.onResume();
         if (allowRefresh) {
             allowRefresh = false;
-            if (itemList == null) {
-                itemList = new ArrayList<>();
+            if (lostFoundList == null) {
+                lostFoundList = new ArrayList<>();
                 downloadLostFoundRecords(getActivity().getApplicationContext(), GET_URL);
             } else {
                 loadItem();

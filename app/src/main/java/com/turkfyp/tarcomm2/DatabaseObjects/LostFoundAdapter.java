@@ -20,31 +20,31 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-public class ItemAdapter extends ArrayAdapter<Item> {
+public class LostFoundAdapter extends ArrayAdapter<LostFound> {
 
-    public ItemAdapter(Activity context, int resource, List<Item> list) {
+    public LostFoundAdapter(Activity context, int resource, List<LostFound> list) {
         super(context, resource, list);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Item item = getItem(position);
+        LostFound lostFound = getItem(position);
 
         LayoutInflater inflater = (LayoutInflater) getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View rowView = inflater.inflate(R.layout.item_records, parent, false);
+        View rowView = inflater.inflate(R.layout.lostfound_records, parent, false);
 
-        TextView tvItemName, tvItemPrice;
-        ImageView ivTradingImage;
+        TextView tvLostItemName, tvLostItemDesc;
+        ImageView ivLostItemImage;
 
-        tvItemName = (TextView) rowView.findViewById(R.id.tvItemName);
-        tvItemPrice = (TextView) rowView.findViewById(R.id.tvItemPrice);
-        ivTradingImage = (ImageView) rowView.findViewById(R.id.ivItemImage);
+        tvLostItemName = (TextView) rowView.findViewById(R.id.tvLostItemName);
+        tvLostItemDesc = (TextView) rowView.findViewById(R.id.tvLostItemDesc);
+        ivLostItemImage = (ImageView) rowView.findViewById(R.id.ivLostItemImage);
 
-        tvItemName.setText( item.getItemName());
-        tvItemPrice.setText(String.format("RM %.2f", item.getItemPrice()));
-        getImage(item.getImageURL(), ivTradingImage);
+        tvLostItemName.setText(lostFound.getLostItemName());
+        tvLostItemDesc.setText(lostFound.getLostItemDesc());
+        getImage(lostFound.getLostItemURL(), ivLostItemImage);
         return rowView;
     }
 

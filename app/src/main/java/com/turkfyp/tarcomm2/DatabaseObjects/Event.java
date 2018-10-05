@@ -8,35 +8,35 @@ public class Event {
 
     private String eventName;
     private String eventDateTime;
-    private String eventCreator;
     private String eventDesc;
     private String eventImageURL;
 
-
     private String eventVenue;
-
+    private String eventVenueName;
+    private String eventHighlight;
 
 
 
     public Event()
     {
         this.setEventName("");
-        this.setEventCreator("");
         this.setEventDateTime("");
         this.setEventDesc("");
         this.setEventImageURL("");
         this.setEventVenue("");
+        this.setEventVenueName("");
     }
 
 
-    public Event(String eventName, String eventCreator, String eventDateTime, String eventDesc, String eventImageURL, String eventVenue)
+    public Event(String eventName, String eventDateTime, String eventDesc, String eventImageURL, String eventVenue, String eventVenueName, String eventHighlight)
     {
         this.setEventName(eventName);
-        this.setEventCreator(eventCreator);
         this.setEventDateTime(eventDateTime);
         this.setEventDesc(eventDesc);
         this.setEventImageURL(eventImageURL);
         this.setEventVenue(eventVenue);
+        this.setEventVenueName(eventVenueName);
+        this.setEventHighlight(eventHighlight);
     }
 
 
@@ -56,14 +56,6 @@ public class Event {
 
     public void setEventDateTime(String eventDateTime) {
         this.eventDateTime = eventDateTime;
-    }
-
-    public String getEventCreator() {
-        return eventCreator;
-    }
-
-    public void setEventCreator(String eventCreator) {
-        this.eventCreator = eventCreator;
     }
 
     public String getEventDesc() {
@@ -90,4 +82,12 @@ public class Event {
     public void setEventVenue(String eventVenue) {
         this.eventVenue = eventVenue;
     }
+
+    public String getEventVenueName() { return eventVenueName; }
+
+    public void setEventVenueName(String eventVenueName) { this.eventVenueName = eventVenueName; }
+
+    public String getEventHighlight() { return eventHighlight; }
+
+    public void setEventHighlight(String eventHighlight) { this.eventHighlight = eventHighlight; }
 }

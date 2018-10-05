@@ -65,10 +65,9 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
 
         //set the text and image by using extras value
         tvDetailItemName.setText(itemName);
-        tvDetailItemPrice.setText("Item Price: " + "RM " + itemPrice);
+        tvDetailItemPrice.setText(String.format("Item Price: RM %.2f", itemPrice));
         tvDetailItemSeller.setText("Item Seller: " + itemSeller + ", "+ sellerContact);
         tvDetailItemDesc.setText("Item Description: " + itemDesc);
-
 
         Bitmap image = extras.getParcelable("Image");
         imageViewDetailItem.setImageBitmap(image);

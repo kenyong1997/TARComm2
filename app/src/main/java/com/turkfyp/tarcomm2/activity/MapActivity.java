@@ -111,20 +111,20 @@ public class MapActivity extends android.support.v4.app.Fragment implements OnMa
 
 
     //EVENT DOWNLOADING
-    private static String GET_CURRENT_EVENT_URL = "https://taroute.000webhostapp.com/getCurrentEvent.php";
-    private static String GET_UPCOMING_EVENT_URL = "https://taroute.000webhostapp.com/getUpcomingEvent.php";
+    private static String GET_CURRENT_EVENT_URL = "https://tarcomm.000webhostapp.com/getCurrentEvent.php";
+    private static String GET_UPCOMING_EVENT_URL = "https://tarcomm.000webhostapp.com/getUpcomingEvent.php";
     protected List<Event> eventList;
     protected String currentDate;
     private List<MarkerOptions> eventMarkers = new ArrayList<>();
 
     //ITEM DOWNLOADING
-    private static String GET_ITEM_URL = "https://taroute.000webhostapp.com/getItem.php";
+    private static String GET_ITEM_URL = "https://tarcomm.000webhostapp.com/getItem.php";
     protected List<Item> itemList;
     private List<MarkerOptions> itemMarkers = new ArrayList<>();
 
     public static final String STATUS_ON = "ON";
 
-    private static String GET_USER_URL = "https://taroute.000webhostapp.com/getAllUsers.php";
+    private static String GET_USER_URL = "https://tarcomm.000webhostapp.com/getAllUsers.php";
     protected List<User> userList;
     private List<MarkerOptions> userMarkers = new ArrayList<>();
 
@@ -450,9 +450,9 @@ public class MapActivity extends android.support.v4.app.Fragment implements OnMa
                     // if the current location is in service area and gps is turned on, update the current location and status to database
                     else {
 
-                        updateStatus(getContext(), "https://taroute.000webhostapp.com/updateStatus.php", STATUS_ON);
-                        updateLatitude(getContext(), "https://taroute.000webhostapp.com/updateLatitude.php", lastKnownLatitude);
-                        updateLongitude(getContext(), "https://taroute.000webhostapp.com/updateLongitude.php", lastKnownLongitude);
+                        updateStatus(getContext(), "https://tarcomm.000webhostapp.com/updateStatus.php", STATUS_ON);
+                        updateLatitude(getContext(), "https://tarcomm.000webhostapp.com/updateLatitude.php", lastKnownLatitude);
+                        updateLongitude(getContext(), "https://tarcomm.000webhostapp.com/updateLongitude.php", lastKnownLongitude);
 
 
                         // set the current location in the coordinates form
@@ -476,8 +476,8 @@ public class MapActivity extends android.support.v4.app.Fragment implements OnMa
             @Override
             public void onInfoWindowClick(Marker marker) {
                 for (int i = 0; i < userList.size(); i++) {
-                    if (marker.getTitle().toUpperCase().equals(userList.get(i).getUserName().toUpperCase())) {
-                        contactUserByWhatsapp(userList.get(i).getContactNumber());
+                    if (marker.getTitle().toUpperCase().equals(userList.get(i).getEmail().toUpperCase())) {
+                        contactUserByWhatsapp(userList.get(i).getContactno());
                     }
                 }
             }
@@ -535,7 +535,7 @@ public class MapActivity extends android.support.v4.app.Fragment implements OnMa
 /*
     public void downloadItemDetails() {
         try {
-            itemList = new ArrayList<>();
+            lostFoundList = new ArrayList<>();
             downloadItemRecords(getActivity().getApplicationContext(), GET_ITEM_URL);
 
         } catch (Exception e) {
@@ -707,14 +707,14 @@ public class MapActivity extends android.support.v4.app.Fragment implements OnMa
                                         JSONObject eventResponse = (JSONObject) j.get(i);
                                         String eventName = eventResponse.getString("eventName");
                                         String eventDateTime = eventResponse.getString("eventDateTime");
-                                        String eventCreator = eventResponse.getString("eventCreator");
                                         String eventDesc = eventResponse.getString("eventDesc");
                                         String eventImageURL = eventResponse.getString("url");
                                         String eventVenue = eventResponse.getString("eventVenue");
+                                        String eventVenueName = eventResponse.getString("eventVenueName");
+                                        String eventHighlight = eventResponse.getString("eventHighlight");
 
-                                        Event event = new Event(eventName, eventCreator, eventDateTime, eventDesc, eventImageURL, eventVenue);
+                                        Event event = new Event(eventName, eventDateTime, eventDesc, eventImageURL, eventVenue, eventVenueName, eventHighlight);
                                         eventList.add(event);
-
                                     }
                                     //addEventMarkers(eventList);
 
@@ -770,7 +770,7 @@ public class MapActivity extends android.support.v4.app.Fragment implements OnMa
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
-                            itemList.clear();
+                            lostFoundList.clear();
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject itemResponse = (JSONObject) response.get(i);
                                 String itemSeller = itemResponse.getString("itemSeller");
@@ -784,10 +784,10 @@ public class MapActivity extends android.support.v4.app.Fragment implements OnMa
                                 String desiredLocation = itemResponse.getString("desiredLocation");
 
                                 Item item = new Item(itemSeller, itemName, itemPrice, itemDescription, itemCategory, dateAdded, imageURL, sellerContact, desiredLocation);
-                                itemList.add(item);
+                                lostFoundList.add(item);
                             }
 
-                            addItemMarkers(itemList);
+                            addItemMarkers(lostFoundList);
 
                         } catch (Exception e) {
                             Toast.makeText(getActivity(), "Error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -825,15 +825,18 @@ public class MapActivity extends android.support.v4.app.Fragment implements OnMa
                             itemList.clear();
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject userResponse = (JSONObject) response.get(i);
-                                String userName = userResponse.getString("userName");
+                                String email = userResponse.getString("email");
                                 String password = userResponse.getString("password");
-                                String contactNumber = userResponse.getString("contactNumber");
-                                String userEmail = userResponse.getString("userEmail");
+                                String fullname = userResponse.getString("fullname");
+                                String gender = userResponse.getString("gender");
+                                String dateofbirth = userResponse.getString("dateofbirth");
+                                String contactno = userResponse.getString("contactno");
                                 String latitude = userResponse.getString("latitude");
                                 String longitude = userResponse.getString("longitude");
                                 String status = userResponse.getString("status");
+                                String profilepicURL = userResponse.getString("url");
 
-                                User friend = new User(userName, password, contactNumber, userEmail, latitude, longitude, status);
+                                User friend = new User(email, password, fullname, gender, dateofbirth, contactno, latitude, longitude, status, profilepicURL);
                                 userList.add(friend);
                             }
 
