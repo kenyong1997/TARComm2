@@ -26,13 +26,16 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="@string/title_activity_login" />
         <activity android:name=".activity.MapActivity2" />
         <activity
             android:name=".activity.MarketplaceActivity"
@@ -60,9 +63,7 @@
             android:name=".activity.MarketplaceDetailActivity"
             android:label="@string/title_activity_marketplace_detail"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".activity.LoginActivity"
-            android:label="@string/title_activity_login" />
+
         <activity android:name=".activity.RegisterActivity"></activity>
     </application>
 
