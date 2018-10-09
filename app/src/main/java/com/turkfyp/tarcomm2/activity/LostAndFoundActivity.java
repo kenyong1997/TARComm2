@@ -122,4 +122,13 @@ public class LostAndFoundActivity extends AppCompatActivity {
         Intent i = new Intent (this,MapActivity2.class);
         startActivity(i);
     }
+    private Session session;
+    public void logout_onclick(View view){
+        session = new Session(view.getContext());
+
+        session.setLoggedIn(false);
+        finish();
+        Intent i = new Intent (this,LoginActivity.class);
+        startActivity(i);
+    }
 }

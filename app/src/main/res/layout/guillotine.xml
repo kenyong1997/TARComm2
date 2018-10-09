@@ -213,6 +213,8 @@
 
         <com.turkfyp.tarcomm2.widget.CanaroTextView
             style="@style/TextView.GuillotineItem.Selected"
-            android:text="LOG OUT" />
+
+            android:text="LOG OUT"
+            android:onClick="logout_onclick"/>
     </LinearLayout>
 </LinearLayout>

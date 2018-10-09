@@ -10,7 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.guillotine.animation.GuillotineAnimation;
@@ -110,4 +112,18 @@ public class EventActivity extends AppCompatActivity {
         Intent i = new Intent (this,MapActivity2.class);
         startActivity(i);
     }
+    private Session session;
+    public void logout_onclick(View view){
+        session = new Session(view.getContext());
+
+        session.setLoggedIn(false);
+        finish();
+        Intent i = new Intent (this,LoginActivity.class);
+        startActivity(i);
+    }
+
+
+
+
+
 }
