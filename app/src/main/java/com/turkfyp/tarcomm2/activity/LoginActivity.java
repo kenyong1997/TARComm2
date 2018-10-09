@@ -191,6 +191,7 @@ public class LoginActivity extends AppCompatActivity {
         intent.putExtra("contactNumber", contactNumber);
         intent.putExtra("userEmail", userEmail);
         startActivity(intent);
+        finish();
     }
 
 
