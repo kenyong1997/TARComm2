@@ -21,12 +21,12 @@
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/imageVIew"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="15dp"
             android:background="@drawable/background_white"
             android:padding="5dp"
             android:src="@drawable/tarcomm" />
@@ -43,6 +43,7 @@
             android:drawableRight="@drawable/ic_person"
             android:hint="Your Email here"
             android:layout_width="match_parent"
+            android:maxLines="1"
             android:layout_height="wrap_content" />
         <TextView
             android:layout_marginTop="5dp"
@@ -55,7 +56,8 @@
             android:textColor="@color/grey"
             android:id="@+id/editTextPassword"
             android:drawableRight="@drawable/ic_person"
-            android:hint="******"
+            android:inputType="textPassword"
+            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <Button
@@ -65,6 +67,7 @@
             android:textAllCaps="false"
             android:onClick="onLoginClicked"
             android:text="Login"
+            android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <Button
@@ -74,6 +77,7 @@
             android:textAllCaps="false"
             android:onClick="onRegisterClicked"
             android:text="Register"
+            android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
