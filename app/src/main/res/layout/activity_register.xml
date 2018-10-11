@@ -25,7 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="20dp"><TextView
+            android:padding="20dp">
+            <TextView
             android:layout_marginTop="5dp"
             android:text="Email"
             android:textColor="@color/grey"
@@ -39,7 +40,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-
             <TextView
                 android:layout_marginTop="5dp"
                 android:text="Password"
@@ -50,8 +50,8 @@
                 android:drawablePadding="20dp"
                 android:textColor="@color/grey"
                 android:id="@+id/editTextPassword1"
+                android:inputType="textPassword"
                 android:drawableRight="@drawable/ic_person"
-                android:hint="Your Email here"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <TextView
@@ -65,7 +65,7 @@
                 android:textColor="@color/grey"
                 android:id="@+id/editTextConfirmPassword"
                 android:drawableRight="@drawable/ic_person"
-                android:hint="Your Email here"
+                android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <TextView
