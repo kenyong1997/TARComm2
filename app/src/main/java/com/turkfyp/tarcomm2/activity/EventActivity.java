@@ -115,7 +115,6 @@ public class EventActivity extends AppCompatActivity {
     private Session session;
     public void logout_onclick(View view){
         session = new Session(view.getContext());
-
         session.setLoggedIn(false);
         finish();
         Intent i = new Intent (this,LoginActivity.class);
