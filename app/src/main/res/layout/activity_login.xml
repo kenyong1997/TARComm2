@@ -75,8 +75,8 @@
             android:textColor="#FFF"
             android:background="@drawable/rec_gradient_fb"
             android:textAllCaps="false"
-            android:onClick="onRegisterClicked"
-            android:text="Register"
+            android:onClick="onSignUpClicked"
+            android:text="Sign Up"
             android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

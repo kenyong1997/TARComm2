@@ -1,7 +1,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorPrimaryDark"
     android:layout_width="match_parent"
-    android:background="@android:color/white"
     android:layout_height="match_parent">
 
 
@@ -11,7 +11,7 @@
         android:orientation="vertical">
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            style="@style/Toolbar">
+            style="@style/ToolbarRegister">
 
 
             <com.turkfyp.tarcomm2.widget.CanaroTextView
@@ -27,73 +27,75 @@
             android:orientation="vertical"
             android:padding="20dp">
             <TextView
-            android:layout_marginTop="5dp"
-            android:text="Email"
-            android:textColor="@color/grey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+                android:layout_marginTop="5dp"
+                android:text="Account Information"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:textSize="20sp"
+                android:text="Email"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <EditText
                 android:drawablePadding="20dp"
                 android:textColor="@color/grey"
+                android:padding="10dp"
+                android:background="@android:color/white"
                 android:id="@+id/editTextEmail"
-                android:drawableRight="@drawable/ic_person"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_marginTop="5dp"
+                android:textSize="20sp"
                 android:text="Password"
-                android:textColor="@color/grey"
+                android:textColor="@android:color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <EditText
                 android:drawablePadding="20dp"
                 android:textColor="@color/grey"
+                android:padding="10dp"
+                android:background="@android:color/white"
                 android:id="@+id/editTextPassword1"
                 android:inputType="textPassword"
-                android:drawableRight="@drawable/ic_person"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
             <TextView
-                android:layout_marginTop="5dp"
-                android:text="Confirm Password"
-                android:textColor="@color/grey"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <EditText
-                android:drawablePadding="20dp"
-                android:textColor="@color/grey"
-                android:id="@+id/editTextConfirmPassword"
-                android:drawableRight="@drawable/ic_person"
-                android:inputType="textPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_marginTop="5dp"
-                android:text="Profile"
+                android:layout_marginTop="30dp"
+                android:text="Profile Information"
                 android:textStyle="bold"
-                android:textSize="20dp"
-                android:textColor="@color/grey"
+                android:textSize="25sp"
+                android:textColor="@android:color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_marginTop="5dp"
+                android:textSize="20sp"
                 android:text="Full Name"
-                android:textColor="@color/grey"
+                android:textColor="@android:color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <EditText
                 android:drawablePadding="20dp"
                 android:textColor="@color/grey"
                 android:id="@+id/editTextFullName"
-                android:drawableRight="@drawable/ic_person"
+                android:padding="10dp"
+                android:background="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
 
             <RadioGroup
                 android:id="@+id/gender"
-                android:textColor="@color/grey"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
@@ -101,15 +103,18 @@
                 android:layout_marginBottom="10dp">
 
                 <TextView
-                    android:textColor="@color/grey"
+                    android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Gender" />
 
                 <RadioButton
-                    android:textColor="@color/grey"
                     android:id="@+id/gender_male"
+                    android:layout_marginTop="5dp"
+                    android:textSize="20sp"
                     android:layout_weight="1"
                     android:textAlignment="center"
                     android:layout_width="wrap_content"
@@ -118,37 +123,66 @@
                     android:text="Male" />
 
                 <RadioButton
-                    android:textColor="@color/grey"
                     android:id="@+id/gender_female"
+                    android:layout_marginTop="5dp"
+                    android:textSize="20sp"
                     android:layout_weight="1"
                     android:textAlignment="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Female" />
             </RadioGroup>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/imgViewProfilePic"
+                android:onClick="imgViewProfilePic_onClicked"
+                android:src="@drawable/user" />
+
 
             <TextView
+                android:layout_marginTop="5dp"
+                android:textSize="20sp"
+                android:text="Contact No."
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:drawablePadding="20dp"
                 android:textColor="@color/grey"
+                android:id="@+id/editTextContactNo"
+                android:padding="10dp"
+                android:background="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date Of Birth"/>
 
             <DatePicker
                 android:id="@+id/dob"
-                android:textColor="@color/grey"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:datePickerMode="spinner"
                 android:calendarViewShown="false"
-                android:maxDate="12/31/2000"/></LinearLayout>
+                android:maxDate="12/31/2018"/></LinearLayout>
 
         <Button
             android:layout_marginTop="10dp"
+            android:textSize="25sp"
             android:textColor="#FFF"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
             android:background="@drawable/rec_gradient_fb"
             android:textAllCaps="false"
             android:text="Register"
-            android:layout_margin="30dp"
+            android:onClick="onRegisterClicked"
             android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

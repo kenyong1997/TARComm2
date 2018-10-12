@@ -39,7 +39,13 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:background">@color/guillotine_background</item>
     </style>
-
+    <style name="ToolbarRegister">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@color/guillotine_background</item>
+    </style>
     <style name="ImageView" />
 
     <style name="ImageView.ContentItem">
