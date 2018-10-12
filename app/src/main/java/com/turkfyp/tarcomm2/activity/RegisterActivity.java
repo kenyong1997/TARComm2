@@ -78,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == R.id.gender_male){
-                    imgViewProfilePic.setImageDrawable(getResources().getDrawable(R.drawable.user));
+                    imgViewProfilePic.setImageDrawable(getResources().getDrawable(R.drawable.user_male));
                 }else if (checkedId == R.id.gender_female){
                     imgViewProfilePic.setImageDrawable(getResources().getDrawable(R.drawable.user_female));
                 }

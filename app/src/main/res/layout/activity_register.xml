@@ -138,7 +138,7 @@
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/imgViewProfilePic"
                 android:onClick="imgViewProfilePic_onClicked"
-                android:src="@drawable/user" />
+                android:src="@drawable/user_male" />
 
 
             <TextView
