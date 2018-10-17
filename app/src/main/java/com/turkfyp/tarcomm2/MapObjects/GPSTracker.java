@@ -27,7 +27,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.turkfyp.tarcomm2.activity.MapActivity;
+import com.turkfyp.tarcomm2.activity.MapFragment;
 //import com.turkfyp.tarcomm2.activity.MainActivity;
 
 
@@ -101,7 +101,7 @@ public class GPSTracker extends Service implements LocationListener {
         // if the location not out of boundary of TARUC
         if ((latitude > 3.2190 || latitude < 3.2120) || (longitude < 101.7230 || longitude > 101.73510)) {
 
-            updateStatus(context, "https://taroute.000webhostapp.com/updateStatus.php", MapActivity.STATUS_ON);
+            updateStatus(context, "https://taroute.000webhostapp.com/updateStatus.php", MapFragment.STATUS_ON);
             updateLatitude(context, "https://taroute.000webhostapp.com/updateLatitude.php", latitude);
             updateLongitude(context, "https://taroute.000webhostapp.com/updateLongitude.php", longitude);
 

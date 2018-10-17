@@ -75,7 +75,7 @@ public class MapActivity2 extends AppCompatActivity {
         }
 */
         //Set up the main page
-        MapActivity m = new MapActivity();
+        MapFragment m = new MapFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.frame, m).commit();
 
         //Define action bar

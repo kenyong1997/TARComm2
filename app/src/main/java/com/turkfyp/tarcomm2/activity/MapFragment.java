@@ -82,7 +82,7 @@ import com.turkfyp.tarcomm2.R;
 import static android.content.Context.LOCATION_SERVICE;
 
 
-public class MapActivity extends android.support.v4.app.Fragment implements OnMapReadyCallback, DirectionFinderListener {
+public class MapFragment extends android.support.v4.app.Fragment implements OnMapReadyCallback, DirectionFinderListener {
 
 
     //DECLARE THE VARIABLES
