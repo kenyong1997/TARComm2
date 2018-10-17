@@ -87,7 +87,7 @@ public class MapActivity2 extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        //make user inactive
+        //make userFullName inactive
         updateStatus(this, "https://taroute.000webhostapp.com/updateStatus.php", "OFF");
     }
 
@@ -95,12 +95,12 @@ public class MapActivity2 extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        //make user inactive
+        //make userFullName inactive
         updateStatus(this, "https://taroute.000webhostapp.com/updateStatus.php", "OFF");
     }
 
 
-    //update the status of user activity to OFF when leave application
+    //update the status of userFullName activity to OFF when leave application
     public void updateStatus(Context context, String url, final String status) {
         RequestQueue queue = Volley.newRequestQueue(context);
 

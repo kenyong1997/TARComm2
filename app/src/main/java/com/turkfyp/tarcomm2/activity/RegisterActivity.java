@@ -140,7 +140,7 @@ public class RegisterActivity extends AppCompatActivity {
                 user.setDateofbirth(strDate);
                 user.setGender(gender);
                 uploadImage();
-                //create a new user in database
+                //create a new userFullName in database
                 progressDialog = new ProgressDialog(this);
                 try {
                     makeServiceCall(this, "https://taroute.000webhostapp.com/insert_user.php", user);

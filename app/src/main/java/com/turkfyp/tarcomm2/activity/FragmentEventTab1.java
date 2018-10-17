@@ -91,7 +91,7 @@ public class FragmentEventTab1 extends android.support.v4.app.Fragment{
         }
 
 
-        //When user swipe to refresh
+        //When userFullName swipe to refresh
         swipeRefreshEvents.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

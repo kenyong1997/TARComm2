@@ -1,6 +1,7 @@
 package com.turkfyp.tarcomm2.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
@@ -20,6 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.BindView;
 
 import android.content.Intent;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,8 +50,14 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(null);
         }
 
+
         View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
         root.addView(guillotineMenu);
+
+        TextView tvUserFullName = (TextView) findViewById(R.id.tvUserFullName);
+
+        SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
+        tvUserFullName.setText(preferences.getString("loggedInUser",""));
 
         new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
                 .setStartDelay(RIPPLE_DURATION)

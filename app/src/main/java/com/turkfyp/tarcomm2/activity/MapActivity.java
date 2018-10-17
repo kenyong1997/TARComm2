@@ -233,8 +233,8 @@ public class MapActivity extends android.support.v4.app.Fragment implements OnMa
      * This callback is triggered when the map is ready to be used.
      * This is where we can add markers or lines, add listeners or move the camera. In this case,
      * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * If Google Play services is not installed on the device, the userFullName will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the userFullName has
      * installed Google Play services and returned to the app.
      */
     @Override
@@ -354,7 +354,7 @@ public class MapActivity extends android.support.v4.app.Fragment implements OnMa
         );*/
 
 
-        //Allow user to set location
+        //Allow userFullName to set location
 
         //PERMISSION CHECK
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -409,7 +409,7 @@ public class MapActivity extends android.support.v4.app.Fragment implements OnMa
                     promptForLocationService();
                 }
 
-                //create a new Gps tracker object to get the last known location of user.
+                //create a new Gps tracker object to get the last known location of userFullName.
                 gpsTracker = new GPSTracker(getView().getContext().getApplicationContext());
                 mLastKnownLocation = gpsTracker.getLastKnownLocation();
 
@@ -496,7 +496,7 @@ public class MapActivity extends android.support.v4.app.Fragment implements OnMa
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        //let user to turn on location provider
+                        //let userFullName to turn on location provider
                         Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                         startActivity(settingsIntent);
 
@@ -898,10 +898,10 @@ public class MapActivity extends android.support.v4.app.Fragment implements OnMa
             double longitude = Double.parseDouble(friend.getLongitude());
 
 
-            //make sure it is not the logged in user
+            //make sure it is not the logged in userFullName
             if (!friend.getUserName().toUpperCase().equals(MainActivity.LOGGED_IN_USER.toUpperCase())) {
 
-                //make sure the user is currently active
+                //make sure the userFullName is currently active
                 if (latitude != 0.00 && longitude != 0.00 && friend.getStatus().equals(STATUS_ON)) {
 
                     LatLng friendLocation = new LatLng(latitude, longitude);
@@ -1365,7 +1365,7 @@ public class MapActivity extends android.support.v4.app.Fragment implements OnMa
         //stop refreshing the friend markers
         handler.removeCallbacks(tryDownloadUser);
 
-        //make user status become inactive
+        //make userFullName status become inactive
         //updateStatus(getContext(), "https://taroute.000webhostapp.com/updateStatus.php","OFF");
     }
 }

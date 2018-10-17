@@ -33,12 +33,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.turkfyp.tarcomm2.widget.CanaroTextView
+            <TextView
             style="@style/TextView.GuillotineItem"
+                android:id="@+id/tvUserFullName"
             android:text="Yan Yi Ling"
             android:layout_marginLeft="7dp"
             android:textSize="25dp"/>
-            <com.turkfyp.tarcomm2.widget.CanaroTextView
+            <TextView
                 style="@style/TextView.GuillotineItem"
                 android:text="View Your Profile"
                 android:layout_marginLeft="10dp"

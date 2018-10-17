@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInstaller;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,10 +29,10 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText editTextUserName, editTextPassword;
     private ProgressDialog pDialog;
-    String user;
+    String userFullName;
+    String email;
     String checkPassword;
-    String contactNumber;
-    String userEmail;
+
 
 
     public Session session;
@@ -68,12 +67,12 @@ public class LoginActivity extends AppCompatActivity {
         } else if (password.matches("")) {
             Toast.makeText(this, "Please fill in password.", Toast.LENGTH_SHORT).show();
         }
-        validateUser(this, "https://taroute.000webhostapp.com/select_user.php", username, password);
+        validateUser(this, "https://tarcomm.000webhostapp.com/select_user.php", username, password);
 
 
     }
 
-    public void validateUser(Context context, String url, final String userName, final String password) {
+    public void validateUser(Context context, String url, final String userEmail, final String password) {
         //mPostCommentResponse.requestStarted();
         RequestQueue queue = Volley.newRequestQueue(context);
 
@@ -107,10 +106,11 @@ public class LoginActivity extends AppCompatActivity {
                                     if (pDialog.isShowing())
                                         pDialog.dismiss();
                                     if (checkPassword.equals(password)) {
-                                        user = userName;
-                                        contactNumber = jsonObject.getString("contactNumber");
-                                        userEmail = jsonObject.getString("userEmail");
-                                        Toast.makeText(getApplicationContext(), "Welcome, " + user + ".", Toast.LENGTH_LONG).show();
+                                        userFullName = jsonObject.getString("fullname");
+                                        email = userEmail;
+                                        //contactNumber = jsonObject.getString("contactNumber");
+                                        //userEmail = jsonObject.getString("userEmail");
+                                        Toast.makeText(getApplicationContext(), "Welcome, " + userFullName + ".", Toast.LENGTH_LONG).show();
 
 
                                         //Logged in successfully
@@ -119,13 +119,12 @@ public class LoginActivity extends AppCompatActivity {
                                         session.setLoggedIn(true);
 
 
-                                        //save the user details to sharedPreference
-                                        SharedPreferences pref = getSharedPreferences("tarouteUser", MODE_PRIVATE);
+                                        //save the userFullName details to sharedPreference
+                                        SharedPreferences pref = getSharedPreferences("tarcommUser", MODE_PRIVATE);
                                         SharedPreferences.Editor editor = pref.edit();
-                                        editor.putString("loggedInUser", user);
+                                        editor.putString("loggedInUser", userFullName);
                                         editor.putString("password", password);
-                                        editor.putString("contactNumber", contactNumber);
-                                        editor.putString("userEmail",userEmail);
+                                        editor.putString("email",userEmail);
 
 
                                         editor.commit();
@@ -164,7 +163,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
-                    params.put("userName", userName);
+                    params.put("email", userEmail);
                     return params;
                 }
 
@@ -183,13 +182,9 @@ public class LoginActivity extends AppCompatActivity {
 
     public void goToMain() {
         Intent intent = new Intent(this, MainActivity.class);
-        //SharedPreferences pref = getSharedPreferences("tarouteUser", MODE_PRIVATE);
 
-        //if (pref.getString("loggedInUser", "") == null) {
-
-        intent.putExtra("username", user);
-        intent.putExtra("contactNumber", contactNumber);
-        intent.putExtra("userEmail", userEmail);
+        intent.putExtra("userFullName", userFullName);
+        intent.putExtra("userEmail", email);
         startActivity(intent);
         finish();
     }

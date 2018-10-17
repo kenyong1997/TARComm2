@@ -59,7 +59,7 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
 
 
         //(WILL BE ADDED IF NEEDED)
-        //if the user logged in is the seller of item
+        //if the userFullName logged in is the seller of item
 //        String checkItemSeller = itemSeller.toUpperCase();
 //        String checkLoginUser = MainActivity.LOGGED_IN_USER.toUpperCase();
 
