@@ -66,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         imgViewProfilePic = (ImageView) findViewById(R.id.imgViewProfilePic) ;
-        editTextEmail = (EditText) findViewById(R.id.editTextUsername);
+        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword1 =(EditText) findViewById(R.id.editTextPassword1);
         editTextFullName =(EditText) findViewById(R.id.editTextFullName);
         editTextContactNo = (EditText) findViewById(R.id.editTextContactNo);
@@ -93,7 +93,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
     public void onRegisterClicked(View view){
-
 
         final String email = editTextEmail.getText().toString();
         final String password = editTextPassword1.getText().toString();
@@ -139,11 +138,12 @@ public class RegisterActivity extends AppCompatActivity {
                 user.setContactno(contactNo);
                 user.setDateofbirth(strDate);
                 user.setGender(gender);
-                uploadImage();
+                user.setProfilepicURL(uploadImage());
+
                 //create a new userFullName in database
                 progressDialog = new ProgressDialog(this);
                 try {
-                    makeServiceCall(this, "https://taroute.000webhostapp.com/insert_user.php", user);
+                    makeServiceCall(this, "https://tarcomm.000webhostapp.com/insert_user.php", user);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -228,10 +228,11 @@ public class RegisterActivity extends AppCompatActivity {
                     // put the parameters with specific values
                     params.put("email", user.getEmail());
                     params.put("password", user.getPassword());
-                    params.put("contactNo", user.getContactno());
-                    params.put("fullName", user.getFullname());
-                    params.put("dob",user.getDateofbirth());
+                    params.put("contactno", user.getContactno());
+                    params.put("fullname", user.getFullname());
+                    params.put("dateofbirth",user.getDateofbirth());
                     params.put("gender",user.getGender());
+                    params.put("profilepic", user.getProfilepicURL());
 
 
                     return params;
@@ -272,9 +273,10 @@ public class RegisterActivity extends AppCompatActivity {
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
     }
-    private void uploadImage() {
+    private String uploadImage() {
         class UploadImage extends AsyncTask<Bitmap, Void, String> {
 
+            String image;
 
             // ADD EVENT LOCATION INFORMATION LATER !!!
 
@@ -288,18 +290,17 @@ public class RegisterActivity extends AppCompatActivity {
                 Bitmap bitmap = params[0];
                 String uploadImage = getStringImage(bitmap);
 
-
-                HashMap<String, String> data = new HashMap<>();
-
+                image = uploadImage;
 
 
-                String result = rh.sendPostRequest(UPLOAD_URL, data);
 
-                return result;
+                return uploadImage;
             }
         }
         UploadImage ui = new UploadImage();
         ui.execute(bitmap);
+
+        return ui.image;
     }
 
 }
