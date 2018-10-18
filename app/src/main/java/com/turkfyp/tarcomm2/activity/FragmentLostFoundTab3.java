@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -58,7 +59,7 @@ public class FragmentLostFoundTab3 extends Fragment {
 
         lvLostFound = (ListView) v.findViewById(R.id.lvLostFound);
         swipeRefreshLostFound = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefreshLostFound);
-
+        FloatingActionButton fabAddItem = (FloatingActionButton)v.findViewById(R.id.addItemFAB);
         try {
             //initialize textBookList
             lostFoundList = new ArrayList<>();
@@ -93,6 +94,13 @@ public class FragmentLostFoundTab3 extends Fragment {
             }
         });
 
+        fabAddItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addItemIntent = new Intent(getActivity().getApplicationContext(), AddLostFoundItemActivity.class);
+                startActivity(addItemIntent);
+            }
+        });
         return v;
 
     }
@@ -179,4 +187,6 @@ public class FragmentLostFoundTab3 extends Fragment {
             queue.cancelAll(TAG);
         }
     }
+
+
 }

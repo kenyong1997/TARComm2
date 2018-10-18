@@ -41,9 +41,9 @@
             android:textColor="@color/grey"
             android:id="@+id/editTextUsername"
             android:drawableRight="@drawable/ic_person"
-            android:hint="Your Email here"
             android:layout_width="match_parent"
-            android:maxLines="1"
+            android:nextFocusDown="@+id/editTextPassword"
+            android:inputType="text"
             android:layout_height="wrap_content" />
         <TextView
             android:layout_marginTop="5dp"
@@ -55,13 +55,14 @@
             android:drawablePadding="20dp"
             android:textColor="@color/grey"
             android:id="@+id/editTextPassword"
+            android:nextFocusDown="@+id/btnLogin"
             android:drawableRight="@drawable/ic_person"
             android:inputType="textPassword"
-            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <Button
             android:textColor="#FFF"
+            android:id="@+id/btnLogin"
             android:background="@drawable/rec_gradient"
             android:layout_marginTop="20dp"
             android:textAllCaps="false"

@@ -179,6 +179,7 @@
             android:textColor="#FFF"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/rec_gradient_fb"
             android:textAllCaps="false"
             android:text="Register"

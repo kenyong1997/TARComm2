@@ -26,24 +26,25 @@
             >
 
         </ListView>
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/myFAB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_action_add"
-            app:elevation="5dp"
-            app:backgroundTint="@color/colorPrimary"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:onClick="AddNewOnClick"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="5dp"
-            app:borderWidth="0dp"
-            app:rippleColor="@color/colorPrimaryDark" />
+
     </android.support.v4.widget.SwipeRefreshLayout>
 
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addItemFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="25dp"
+        android:onClick="AddItemOnClick"
+        android:src="@mipmap/ic_action_add"
+        app:backgroundTint="@color/colorPrimary"
+        app:borderWidth="0dp"
+        app:elevation="5dp"
+        app:rippleColor="@color/colorPrimaryDark" />
 
 
 </RelativeLayout>
