@@ -1,6 +1,10 @@
 package com.turkfyp.tarcomm2.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -16,12 +20,19 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.guillotine.animation.GuillotineAnimation;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MarketplaceActivity extends AppCompatActivity  {
 
@@ -46,6 +57,16 @@ public class MarketplaceActivity extends AppCompatActivity  {
 
         View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
         trading_layout.addView(guillotineMenu);
+
+        TextView tvUserFullName = (TextView) findViewById(R.id.tvUserFullName);
+
+        SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
+        //Set User Name on Navigation Bar
+        tvUserFullName.setText(preferences.getString("loggedInUser",""));
+
+        //Set Profile Picture on Navigation Bar
+        String imageURL = preferences.getString("profilePicURL","");
+        convertImage(imageURL);
 
         new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
                 .setStartDelay(RIPPLE_DURATION)
@@ -119,28 +140,6 @@ public class MarketplaceActivity extends AppCompatActivity  {
         transaction.commit();
     }
 
-
-    //Side Menu Navigation
-    public void highlight_event_onclick(View view){
-        Intent i = new Intent (this,MainActivity.class);
-        startActivity(i);
-    }
-    public void event_onclick(View view){
-        Intent i = new Intent (this,EventActivity.class);
-        startActivity(i);
-    }
-    public void market_onclick(View view){
-        Intent i = new Intent (this,MarketplaceActivity.class);
-        startActivity(i);
-    }
-    public void lost_and_found_onclick(View view){
-        Intent i = new Intent (this,LostAndFoundActivity.class);
-        startActivity(i);
-    }
-    public void map_onclick(View view){
-        Intent i = new Intent (this,MapActivity2.class);
-        startActivity(i);
-    }
     private Session session;
     public void logout_onclick(View view){
         session = new Session(view.getContext());
@@ -190,5 +189,62 @@ public class MarketplaceActivity extends AppCompatActivity  {
             return mFragmentTitleList.get(position);
         }
     }*/
+
+
+    //Side Menu Navigation - START
+    public void highlight_event_onclick(View view){
+        Intent i = new Intent (this,MainActivity.class);
+        startActivity(i);
+    }
+    public void event_onclick(View view){
+        Intent i = new Intent (this,EventActivity.class);
+        startActivity(i);
+    }
+    public void market_onclick(View view){
+        Intent i = new Intent (this,MarketplaceActivity.class);
+        startActivity(i);
+    }
+    public void lost_and_found_onclick(View view){
+        Intent i = new Intent (this,LostAndFoundActivity.class);
+        startActivity(i);
+    }
+    public void map_onclick(View view){
+        Intent i = new Intent (this,MapActivity2.class);
+        startActivity(i);
+    }
+    //Side Menu Navigation - END
+
+    //Get Profile Image for Navigation Menu
+    private void convertImage(String imageURL){
+        class ConvertImage extends AsyncTask<String, Void, Bitmap> {
+
+            @Override
+            protected Bitmap doInBackground(String... strings) {
+                String imageURL = strings[0];
+
+                try {
+                    URL url = new URL(imageURL);
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setDoInput(true);
+                    connection.connect();
+                    InputStream input = connection.getInputStream();
+                    Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                    return myBitmap;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap bitmap) {
+                super.onPostExecute(bitmap);
+                CircleImageView profile_image = (CircleImageView) findViewById(R.id.profile_image);
+                profile_image.setImageBitmap(bitmap);
+            }
+        }
+        ConvertImage convertImage = new ConvertImage();
+        convertImage.execute(imageURL);
+    }
 }
 

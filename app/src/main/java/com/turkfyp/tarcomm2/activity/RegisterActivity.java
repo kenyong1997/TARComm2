@@ -45,7 +45,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
-    public static final String UPLOAD_URL = "https://taroute.000webhostapp.com/createEvent.php";
     private int PICK_IMAGE_REQUEST = 1;
     private Bitmap bitmap;
     private Uri filePath;
@@ -103,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
         int dpDay = dpDOB.getDayOfMonth();
         int dpMonth = dpDOB.getMonth();
         int dpYear = dpDOB.getYear();
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         Calendar d = Calendar.getInstance();
         d.set(dpYear, dpMonth, dpDay);
         String strDate = dateFormatter.format(d.getTime());
@@ -138,7 +137,7 @@ public class RegisterActivity extends AppCompatActivity {
                 user.setContactno(contactNo);
                 user.setDateofbirth(strDate);
                 user.setGender(gender);
-                user.setProfilepicURL(uploadImage());
+                uploadImage(user);
 
                 //create a new userFullName in database
                 progressDialog = new ProgressDialog(this);
@@ -273,13 +272,11 @@ public class RegisterActivity extends AppCompatActivity {
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
     }
-    private String uploadImage() {
+    private String uploadImage(final User user) {
         class UploadImage extends AsyncTask<Bitmap, Void, String> {
-
             String image;
 
             // ADD EVENT LOCATION INFORMATION LATER !!!
-
 
             ProgressDialog loading;
             ImgRequestHandler rh = new ImgRequestHandler();
@@ -292,8 +289,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 image = uploadImage;
 
-
-
+                user.setProfilepicURL(image);
                 return uploadImage;
             }
         }

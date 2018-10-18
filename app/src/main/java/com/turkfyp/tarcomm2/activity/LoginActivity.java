@@ -32,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     String userFullName;
     String email;
     String checkPassword;
+    String profilePicURL;
 
 
 
@@ -108,10 +109,9 @@ public class LoginActivity extends AppCompatActivity {
                                     if (checkPassword.equals(password)) {
                                         userFullName = jsonObject.getString("fullname");
                                         email = userEmail;
-                                        //contactNumber = jsonObject.getString("contactNumber");
-                                        //userEmail = jsonObject.getString("userEmail");
-                                        Toast.makeText(getApplicationContext(), "Welcome, " + userFullName + ".", Toast.LENGTH_LONG).show();
+                                        profilePicURL = jsonObject.getString("profilepicURL");
 
+                                        Toast.makeText(getApplicationContext(), "Welcome, " + userFullName + ".", Toast.LENGTH_LONG).show();
 
                                         //Logged in successfully
 
@@ -119,13 +119,13 @@ public class LoginActivity extends AppCompatActivity {
                                         session.setLoggedIn(true);
 
 
-                                        //save the userFullName details to sharedPreference
+                                        //save the user details to sharedPreference
                                         SharedPreferences pref = getSharedPreferences("tarcommUser", MODE_PRIVATE);
                                         SharedPreferences.Editor editor = pref.edit();
                                         editor.putString("loggedInUser", userFullName);
                                         editor.putString("password", password);
                                         editor.putString("email",userEmail);
-
+                                        editor.putString("profilePicURL", profilePicURL);
 
                                         editor.commit();
 
