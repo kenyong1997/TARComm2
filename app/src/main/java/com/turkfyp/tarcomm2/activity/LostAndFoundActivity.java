@@ -60,7 +60,8 @@ public class LostAndFoundActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tab_lostandfound);
 
         //create tabs title
-        tabLayout.addTab(tabLayout.newTab().setText("Lost and Found Items"));
+        tabLayout.addTab(tabLayout.newTab().setText("Lost"));
+        tabLayout.addTab(tabLayout.newTab().setText("Found"));
         tabLayout.addTab(tabLayout.newTab().setText("Your Uploads"));
 
         //replace default fragment
@@ -73,8 +74,10 @@ public class LostAndFoundActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
                     replaceFragment(new FragmentLostFoundTab1());
-                } else {
+                } else if(tab.getPosition()==1){
                     replaceFragment(new FragmentLostFoundTab2());
+                }else{
+                    replaceFragment(new FragmentLostFoundTab3());
                 }
             }
 
