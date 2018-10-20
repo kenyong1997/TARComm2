@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -55,10 +56,12 @@ public class FragmentTradingTab4 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_trading_tab1, container, false);
+        View v = inflater.inflate(R.layout.fragment_trading_tab4, container, false);
 
         lvMarketplace = (ListView) v.findViewById(R.id.lvMarketplace);
         swipeRefreshMarketplace = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefreshMarketplace);
+        FloatingActionButton fabAddMarketItem = (FloatingActionButton)v.findViewById(R.id.addMarketItemFAB);
+
 
         try {
             //initialize textBookList
@@ -93,6 +96,13 @@ public class FragmentTradingTab4 extends Fragment {
             }
         });
 
+        fabAddMarketItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addItemIntent = new Intent(getActivity().getApplicationContext(), AddMarketItemActivity.class);
+                startActivity(addItemIntent);
+            }
+        });
         return v;
     }
 
@@ -150,7 +160,7 @@ public class FragmentTradingTab4 extends Fragment {
 
 
     private void loadItem() {
-        final ItemAdapter adapter = new ItemAdapter(getActivity(), R.layout.fragment_trading_tab1, itemList);
+        final ItemAdapter adapter = new ItemAdapter(getActivity(), R.layout.fragment_trading_tab4, itemList);
         lvMarketplace.setAdapter(adapter);
 
     }

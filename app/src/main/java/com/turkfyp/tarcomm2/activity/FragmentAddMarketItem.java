@@ -9,13 +9,14 @@ import android.view.ViewGroup;
 
 import com.turkfyp.tarcomm2.R;
 
-public class FragmentAddLostFound extends Fragment {
+public class FragmentAddMarketItem extends Fragment {
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_add_lost_found_item, container, false);
+        View v = inflater.inflate(R.layout.fragment_add_market_item, container, false);
         return v;
     }
-    }
+}
+

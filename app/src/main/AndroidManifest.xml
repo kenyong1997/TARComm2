@@ -66,7 +66,8 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.FragmentLostFoundTab3" />
-        <activity android:name=".activity.AddLostFoundItemActivity"></activity>
+        <activity android:name=".activity.AddLostFoundItemActivity" />
+        <activity android:name=".activity.AddMarketItemActivity"></activity>
     </application>
 
 </manifest>

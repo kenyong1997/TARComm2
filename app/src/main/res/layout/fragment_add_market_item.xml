@@ -82,43 +82,32 @@
                 android:text="Item Category" />
 
             <RadioButton
-                android:id="@+id/category_lost"
+                android:id="@+id/category_sell"
                 android:textColor="@android:color/darker_gray"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="Lost" />
+                android:text="Want To Sell" />
 
             <RadioButton
-                android:id="@+id/category_found"
+                android:id="@+id/category_buy"
                 android:textColor="@android:color/darker_gray"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Found" />
-
+                android:text="Want To Buy" />
+            <RadioButton
+                android:id="@+id/category_trade"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Want To Trade" />
         </RadioGroup>
-        <TextView
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="20dp"
-            android:textColor="@android:color/darker_gray"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lost Date"/>
-
-        <DatePicker
-            android:id="@+id/lostFoundDate"
-            android:textColor="@android:color/darker_gray"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:datePickerMode="spinner"
-            android:calendarViewShown="false"
-            android:maxDate="12/31/2018"/>
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -162,4 +151,5 @@
 
 
 </FrameLayout>
+
 
