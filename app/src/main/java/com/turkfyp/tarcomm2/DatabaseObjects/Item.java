@@ -70,11 +70,9 @@ public class Item {
         this.itemCategory = itemCategory;
     }
 
-    public String getEmail() {
-        return email;
-    }
+    public String getEmail() { return email; }
 
-    public void setEmail(String itemSeller) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
