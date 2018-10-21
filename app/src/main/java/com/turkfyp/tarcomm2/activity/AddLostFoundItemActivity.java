@@ -65,6 +65,8 @@ public class AddLostFoundItemActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.addLostItem_frame, f).commit();
 
     }
+
+    
     //Get Profile Image for Navigation Menu
     private void convertImage(String imageURL){
         class ConvertImage extends AsyncTask<String, Void, Bitmap> {

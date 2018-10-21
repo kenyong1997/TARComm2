@@ -163,8 +163,10 @@ public class FragmentEventTab1 extends android.support.v4.app.Fragment{
                                         String eventVenue = eventResponse.getString("eventVenue");
                                         String eventVenueName = eventResponse.getString("eventVenueName");
                                         String eventHighlight = eventResponse.getString("eventHighlight");
+                                        String eventEndDateTime = eventResponse.getString("eventEndDateTime");
 
-                                        Event event = new Event(eventName, eventDateTime, eventDesc, eventImageURL, eventVenue, eventVenueName, eventHighlight);
+
+                                        Event event = new Event(eventName, eventDateTime, eventDesc, eventImageURL, eventVenue, eventVenueName, eventHighlight,eventEndDateTime);
                                         eventList.add(event);
                                     }
                                     loadEvents();

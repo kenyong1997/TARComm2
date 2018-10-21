@@ -123,6 +123,7 @@ public class FragmentEventTab2 extends android.support.v4.app.Fragment{
                 eventDetailIntent.putExtra("eventDateTime", selectedEvent.getEventDateTime());
                 eventDetailIntent.putExtra("eventDesc", selectedEvent.getEventDesc());
                 eventDetailIntent.putExtra("eventVenue", selectedEvent.getEventVenue());
+                eventDetailIntent.putExtra("eventEndDateTime", selectedEvent.getEventEndDateTime());
 
 
                 ImageView imageEvent = (ImageView) view.findViewById(R.id.ivImageEvent);
@@ -164,8 +165,10 @@ public class FragmentEventTab2 extends android.support.v4.app.Fragment{
                                         String eventVenue = eventResponse.getString("eventVenue");
                                         String eventVenueName = eventResponse.getString("eventVenueName");
                                         String eventHighlight = eventResponse.getString("eventHighlight");
+                                        String eventEndDateTime = eventResponse.getString("eventEndDateTime");
 
-                                        Event event = new Event(eventName, eventDateTime, eventDesc, eventImageURL, eventVenue, eventVenueName, eventHighlight);
+
+                                        Event event = new Event(eventName, eventDateTime, eventDesc, eventImageURL, eventVenue, eventVenueName, eventHighlight,eventEndDateTime);
                                         eventList.add(event);
                                     }
                                     loadEvents();

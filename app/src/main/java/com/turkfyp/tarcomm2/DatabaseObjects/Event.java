@@ -8,6 +8,7 @@ public class Event {
 
     private String eventName;
     private String eventDateTime;
+    private String eventEndDateTime;
     private String eventDesc;
     private String eventImageURL;
 
@@ -25,10 +26,11 @@ public class Event {
         this.setEventImageURL("");
         this.setEventVenue("");
         this.setEventVenueName("");
+        this.setEventEndDateTime("");
     }
 
 
-    public Event(String eventName, String eventDateTime, String eventDesc, String eventImageURL, String eventVenue, String eventVenueName, String eventHighlight)
+    public Event(String eventName, String eventDateTime, String eventDesc, String eventImageURL, String eventVenue, String eventVenueName, String eventHighlight, String eventEndDateTime)
     {
         this.setEventName(eventName);
         this.setEventDateTime(eventDateTime);
@@ -37,6 +39,7 @@ public class Event {
         this.setEventVenue(eventVenue);
         this.setEventVenueName(eventVenueName);
         this.setEventHighlight(eventHighlight);
+        this.setEventEndDateTime("");
     }
 
 
@@ -90,4 +93,12 @@ public class Event {
     public String getEventHighlight() { return eventHighlight; }
 
     public void setEventHighlight(String eventHighlight) { this.eventHighlight = eventHighlight; }
+
+    public String getEventEndDateTime() {
+        return eventEndDateTime;
+    }
+
+    public void setEventEndDateTime(String eventEndDateTime) {
+        this.eventEndDateTime = eventEndDateTime;
+    }
 }

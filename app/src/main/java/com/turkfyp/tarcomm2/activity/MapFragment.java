@@ -712,8 +712,9 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
                                         String eventVenue = eventResponse.getString("eventVenue");
                                         String eventVenueName = eventResponse.getString("eventVenueName");
                                         String eventHighlight = eventResponse.getString("eventHighlight");
+                                        String eventEndDateTime = eventResponse.getString("eventEndDateTime");
 
-                                        Event event = new Event(eventName, eventDateTime, eventDesc, eventImageURL, eventVenue, eventVenueName, eventHighlight);
+                                        Event event = new Event(eventName, eventDateTime, eventDesc, eventImageURL, eventVenue, eventVenueName, eventHighlight,eventEndDateTime);
                                         eventList.add(event);
                                     }
                                     //addEventMarkers(eventList);

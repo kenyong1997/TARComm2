@@ -36,7 +36,7 @@ public class FragmentLostFoundTab2 extends Fragment {
 
     private static final String TAG = "FragmentLostFoundTab2";
 
-    private static String GET_URL = "https://tarcomm.000webhostapp.com/getLostFoundUserPost.php";
+    private static String GET_URL = "https://tarcomm.000webhostapp.com/getFoundItem.php";
     ListView lvLostFound;
     SwipeRefreshLayout swipeRefreshLostFound;
     List<LostFound> lostFoundList;
@@ -80,6 +80,7 @@ public class FragmentLostFoundTab2 extends Fragment {
                 Intent itemDetailIntent = new Intent(getActivity(),MarketplaceDetailActivity.class);
                 itemDetailIntent.putExtra("lostItemName",selectedItem.getLostItemName());
                 itemDetailIntent.putExtra("lostItemDesc",selectedItem.getLostItemDesc());
+                itemDetailIntent.putExtra("lostDate", selectedItem.getLostDate());
                 itemDetailIntent.putExtra("lostItemContactName",selectedItem.getContactName());
                 itemDetailIntent.putExtra("lostItemContactNo",selectedItem.getContactNo());
 
@@ -118,8 +119,9 @@ public class FragmentLostFoundTab2 extends Fragment {
                                 String email = textbookResponse.getString("email");
                                 String contactName = textbookResponse.getString("fullname");
                                 String contactNo = textbookResponse.getString("contactno");
+                                String lostDate = textbookResponse.getString("lostDate");
 
-                                LostFound lostFound = new LostFound(category, lostItemName, lostItemDesc, lostItemURL, email, contactName, contactNo);
+                                LostFound lostFound = new LostFound(category, lostItemName, lostItemDesc, lostItemURL, lostDate, email, contactName, contactNo);
                                 lostFoundList.add(lostFound);
                             }
 
