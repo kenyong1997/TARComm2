@@ -29,7 +29,7 @@ public class AddLostFoundItemActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_lost_found_item_container);
+        setContentView(R.layout.activity_add_lost_found_item);
 
 
 
@@ -63,7 +63,7 @@ public class AddLostFoundItemActivity extends AppCompatActivity {
                 .build();
 
         FragmentAddLostFound f = new FragmentAddLostFound();
-        getSupportFragmentManager().beginTransaction().replace(R.id.addItem_frame, f).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.addLostItem_frame, f).commit();
 
     }
     //Get Profile Image for Navigation Menu
