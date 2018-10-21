@@ -2,6 +2,7 @@ package com.turkfyp.tarcomm2.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,10 +16,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.turkfyp.tarcomm2.DatabaseObjects.ItemAdapter;
 import com.turkfyp.tarcomm2.DatabaseObjects.LostFound;
@@ -26,10 +30,13 @@ import com.turkfyp.tarcomm2.DatabaseObjects.LostFoundAdapter;
 import com.turkfyp.tarcomm2.R;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FragmentLostFoundTab3 extends Fragment {
 
@@ -111,51 +118,70 @@ public class FragmentLostFoundTab3 extends Fragment {
         // Instantiate the RequestQueue
         queue = Volley.newRequestQueue(context);
 
-        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(
-                url,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        try {
-                            lostFoundList.clear();
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject textbookResponse = (JSONObject) response.get(i);
-                                String category = textbookResponse.getString("category");
-                                String lostItemName = textbookResponse.getString("lostItemName");
-                                String lostItemDesc = textbookResponse.getString("lostItemDesc");
-                                String lostItemURL = textbookResponse.getString("url");
-                                String email = textbookResponse.getString("email");
-                                String contactName = textbookResponse.getString("fullname");
-                                String contactNo = textbookResponse.getString("contactno");
-                                String lostDate = textbookResponse.getString("lostDate");
+        try{
+            StringRequest postRequest = new StringRequest(
+                    Request.Method.POST,
+                    url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONArray j = new JSONArray(response);
+                                try {
+                                    lostFoundList.clear();
+                                    for (int i = 0; i < j.length(); i++) {
+                                        JSONObject textbookResponse = (JSONObject) j.get(i);
+                                        String category = textbookResponse.getString("category");
+                                        String lostItemName = textbookResponse.getString("lostItemName");
+                                        String lostItemDesc = textbookResponse.getString("lostItemDesc");
+                                        String lostItemURL = textbookResponse.getString("url");
+                                        String email = textbookResponse.getString("email");
+                                        String contactName = textbookResponse.getString("fullname");
+                                        String contactNo = textbookResponse.getString("contactno");
+                                        String lostDate = textbookResponse.getString("lostDate");
 
-                                LostFound lostFound = new LostFound(category, lostItemName, lostItemDesc, lostItemURL, lostDate, email, contactName, contactNo);
-                                lostFoundList.add(lostFound);
+                                        LostFound lostFound = new LostFound(category, lostItemName, lostItemDesc, lostItemURL, lostDate, email, contactName, contactNo);
+                                        lostFoundList.add(lostFound);
+                                    }
+
+                                    //load the item into adapter
+                                    loadItem();
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-
-                            //load the item into adapter
-                            loadItem();
-
-                        } catch (Exception e) {
-                            Toast.makeText(getActivity(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Toast.makeText(getActivity(), "Error: " + volleyError.getMessage(), Toast.LENGTH_LONG).show();
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            Toast.makeText(getActivity(), "Error: " + volleyError.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }){
+                @Override
+                protected Map<String, String> getParams() {
+                    SharedPreferences preferences = getActivity().getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
 
-                    }
-                });
+                    Map<String, String> params = new HashMap<>();
+                    params.put("email", preferences.getString("email",""));
+                    return params;
+                }
 
-        // Set the tag on the request.
-        jsonObjectRequest.setTag(TAG);
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("Content-Type", "application/x-www-form-urlencoded");
+                    return params;
+                }
+            };
+            queue.add(postRequest);
 
-        // Add the request to the RequestQueue.
-        queue.add(jsonObjectRequest);
-
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

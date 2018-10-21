@@ -2,6 +2,7 @@ package com.turkfyp.tarcomm2.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,20 +17,26 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.turkfyp.tarcomm2.DatabaseObjects.Item;
 import com.turkfyp.tarcomm2.DatabaseObjects.ItemAdapter;
 import com.turkfyp.tarcomm2.R;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class FragmentTradingTab4 extends Fragment {
@@ -111,62 +118,80 @@ public class FragmentTradingTab4 extends Fragment {
         // Instantiate the RequestQueue
         queue = Volley.newRequestQueue(context);
 
-        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(
-                url,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        try {
-                            itemList.clear();
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject textbookResponse = (JSONObject) response.get(i);
-                                String itemCategory = textbookResponse.getString("itemCategory");
-                                String itemName = textbookResponse.getString("itemName");
-                                String itemDescription = textbookResponse.getString("itemDesc");
-                                String imageURL = textbookResponse.getString("url");
-                                double itemPrice = Double.parseDouble(textbookResponse.getString("itemPrice"));
-                                String email = textbookResponse.getString("email");
-                                String sellerName = textbookResponse.getString("fullname");
-                                String sellerContact = textbookResponse.getString("contactno");
+        try{
+            StringRequest postRequest = new StringRequest(
+                    Request.Method.POST,
+                    url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONArray j = new JSONArray(response);
+                                try {
+                                    itemList.clear();
+                                    for (int i = 0; i < j.length(); i++) {
+                                        JSONObject textbookResponse = (JSONObject) j.get(i);
 
-                                Item item = new Item(itemCategory, itemName, itemDescription, imageURL, itemPrice, email, sellerName, sellerContact);
-                                itemList.add(item);
+                                        String itemCategory = textbookResponse.getString("itemCategory");
+                                        String itemName = textbookResponse.getString("itemName");
+                                        String itemDescription = textbookResponse.getString("itemDesc");
+                                        String imageURL = textbookResponse.getString("url");
+                                        double itemPrice = Double.parseDouble(textbookResponse.getString("itemPrice"));
+                                        String email = textbookResponse.getString("email");
+                                        String sellerName = textbookResponse.getString("fullname");
+                                        String sellerContact = textbookResponse.getString("contactno");
+
+                                        Item item = new Item(itemCategory, itemName, itemDescription, imageURL, itemPrice, email, sellerName, sellerContact);
+                                        itemList.add(item);
+                                    }
+                                    //load the item into adapter
+                                    loadItem();
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-
-                            //load the item into adapter
-                            loadItem();
-
-                        } catch (Exception e) {
-                            Toast.makeText(getActivity(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Toast.makeText(getActivity(), "Error: " + volleyError.getMessage(), Toast.LENGTH_LONG).show();
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(getContext(), "Error. " + error.toString(), Toast.LENGTH_LONG).show();
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() {
 
-                    }
-                });
+                    SharedPreferences preferences = getActivity().getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
 
-        // Set the tag on the request.
-        jsonObjectRequest.setTag(TAG);
+                    Map<String, String> params = new HashMap<>();
+                    params.put("email", preferences.getString("email",""));
+                    return params;
+                }
 
-        // Add the request to the RequestQueue.
-        queue.add(jsonObjectRequest);
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("Content-Type", "application/x-www-form-urlencoded");
+                    return params;
+                }
+            };
+        queue.add(postRequest);
 
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
     private void loadItem() {
         final ItemAdapter adapter = new ItemAdapter(getActivity(), R.layout.fragment_trading_tab4, itemList);
         lvMarketplace.setAdapter(adapter);
-
     }
 
-
-
+    
     @Override
     public void onResume() {
         super.onResume();
