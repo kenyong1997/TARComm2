@@ -61,7 +61,6 @@ public class AddLostFoundItemActivity extends AppCompatActivity {
                 .setActionBarViewForAnimation(toolbar)
                 .setClosedOnStart(true)
                 .build();
-
         FragmentAddLostFound f = new FragmentAddLostFound();
         getSupportFragmentManager().beginTransaction().replace(R.id.addLostItem_frame, f).commit();
 
