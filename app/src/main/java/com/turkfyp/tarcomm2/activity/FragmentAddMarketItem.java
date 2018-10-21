@@ -1,7 +1,9 @@
 package com.turkfyp.tarcomm2.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -11,46 +13,68 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.turkfyp.tarcomm2.DatabaseObjects.Item;
 import com.turkfyp.tarcomm2.DatabaseObjects.User;
 import com.turkfyp.tarcomm2.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 
 public class FragmentAddMarketItem extends Fragment {
-
     private int PICK_IMAGE_REQUEST = 1;
     private Bitmap bitmap;
     private Uri filePath;
+    ProgressDialog progressDialog;
 
     RadioGroup rgItemCategory;
     RadioButton rbItemCategory;
     TextView tvItemPrice;
-    EditText etItemPrice;
+    EditText etItemPrice,etAddItemName,etAddItemDesc;
     ImageView imgViewMarketItem;
+
+    Button btnCancelAddItem, btnUploadAddItem;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_add_market_item, container, false);
 
-
         rgItemCategory = (RadioGroup)v.findViewById(R.id.rgItemCategory);
         rbItemCategory = (RadioButton)v.findViewById(rgItemCategory.getCheckedRadioButtonId());
         tvItemPrice = (TextView)v.findViewById(R.id.tvItemPrice);
         etItemPrice = (EditText)v.findViewById(R.id.etItemPrice);
+        etAddItemName = (EditText)v.findViewById(R.id.etAddItemName);
+        etAddItemDesc = (EditText)v.findViewById(R.id.etAddItemDesc);
         imgViewMarketItem =(ImageView)v.findViewById(R.id.imgViewMarketItem);
+
+        btnCancelAddItem =(Button)v.findViewById(R.id.btnCancelAddItem);
+        btnUploadAddItem =(Button)v.findViewById(R.id.btnUploadAddItem);
 
         rgItemCategory.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -72,6 +96,57 @@ public class FragmentAddMarketItem extends Fragment {
             @Override
             public void onClick(View view){
                 showFileChooser();
+            }
+        });
+
+        btnCancelAddItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
+
+        btnUploadAddItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String itemName = etAddItemName.getText().toString();
+                String itemDesc = etAddItemDesc.getText().toString();
+                String itemCategory = rbItemCategory.getText().toString();
+                double itemPrice;
+
+                if(itemCategory.equals("Want To Sell"))
+                    itemCategory = "WTS";
+                else if(itemCategory.equals("Want To Buy"))
+                    itemCategory = "WTB";
+                else if (itemCategory.equals("Want To Trade"))
+                    itemCategory = "WTT";
+
+                if(itemCategory.equals("WTT"))
+                    itemPrice = 0.0;
+                else
+                    itemPrice = Double.parseDouble(etItemPrice.getText().toString());
+
+                SharedPreferences preferences = getActivity().getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
+
+                Item item = new Item();
+                item.setItemCategory(itemCategory);
+                item.setItemName(itemName);
+                item.setItemDescription(itemDesc);
+                item.setItemPrice(itemPrice);
+                item.setEmail(preferences.getString("email",""));
+                item.setSellerName(preferences.getString("loggedInUser", ""));
+                item.setSellerContact(preferences.getString("contactNo", ""));
+                uploadImage(item);
+
+                //progressDialog = new ProgressDialog(getActivity().getApplicationContext());
+                try{
+                    makeServiceCall(getActivity().getApplicationContext(), "https://tarcomm.000webhostapp.com/createItem.php", item);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity().getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
@@ -109,15 +184,9 @@ public class FragmentAddMarketItem extends Fragment {
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
     }
-    private String uploadImage(final User user) {
+    private Item uploadImage(final Item item) {
         class UploadImage extends AsyncTask<Bitmap, Void, String> {
             String image;
-
-            // ADD EVENT LOCATION INFORMATION LATER !!!
-
-            ProgressDialog loading;
-            ImgRequestHandler rh = new ImgRequestHandler();
-
 
             @Override
             protected String doInBackground(Bitmap... params) {
@@ -126,14 +195,88 @@ public class FragmentAddMarketItem extends Fragment {
 
                 image = uploadImage;
 
-                user.setProfilepicURL(image);
+                item.setImageURL(image);
                 return uploadImage;
             }
         }
         UploadImage ui = new UploadImage();
         ui.execute(bitmap);
 
-        return ui.image;
+        return item;
+    }
+
+    public void makeServiceCall(Context context, String url, final Item item) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        try{
+
+//            if(!progressDialog.isShowing()){
+//                progressDialog.setMessage("Uploading");
+//                progressDialog.show();
+//            }
+
+            StringRequest postRequest = new StringRequest(
+                    Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            JSONObject jsonObject;
+
+                            try{
+                                jsonObject = new JSONObject(response);
+                                int success = jsonObject.getInt("success");
+                                String message = jsonObject.getString("message");
+
+                                if(success == 0){
+//                                    if (progressDialog.isShowing())
+//                                        progressDialog.dismiss();
+
+                                    Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                                } else {
+//                                    if (progressDialog.isShowing())
+//                                        progressDialog.dismiss();
+
+                                    Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                                    //startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+                                    getActivity().onBackPressed();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Error. " + error.toString(), Toast.LENGTH_LONG).show();
+                }
+            }){
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+
+                    // put the parameters with specific values
+                    params.put("itemCategory", item.getItemCategory());
+                    params.put("itemName", item.getItemName());
+                    params.put("itemDesc", item.getItemDescription());
+                    params.put("itemImage", item.getImageURL());
+                    params.put("itemPrice", String.valueOf(item.getItemPrice()));
+                    params.put("email", item.getEmail());
+
+                    return params;
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("Content-Type", "application/x-www-form-urlencoded");
+                    return params;
+                }
+            };
+
+            queue.add(postRequest);
+
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

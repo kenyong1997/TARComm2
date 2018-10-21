@@ -32,22 +32,21 @@
             android:layout_marginTop="5dp"
             android:textColor="@android:color/darker_gray"
             android:text="Item Name"/>
-
         <EditText
-            android:id="@+id/etItemName"
+            android:id="@+id/etAddItemName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textColor="@android:color/darker_gray"
             android:text="Item Description"/>
-
         <EditText
-            android:id="@+id/etItemDesc"
+            android:id="@+id/etAddItemDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -122,11 +121,11 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/btnCancelAddItem"
                 android:textColor="#FFF"
                 android:background="@drawable/rec_gradient_fb"
                 android:layout_marginTop="20dp"
                 android:textAllCaps="false"
-                android:onClick="onLoginClicked"
                 android:text="Cancel"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="20dp"
@@ -137,11 +136,11 @@
                 android:layout_height="wrap_content" />
 
             <Button
+                android:id="@+id/btnUploadAddItem"
                 android:textColor="#FFF"
                 android:background="@drawable/rec_gradient"
                 android:layout_marginTop="20dp"
                 android:textAllCaps="false"
-                android:onClick="onLoginClicked"
                 android:layout_marginBottom="10dp"
                 android:text="Upload"
                 android:layout_marginLeft="20dp"
