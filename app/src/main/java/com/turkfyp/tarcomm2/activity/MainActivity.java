@@ -16,7 +16,6 @@ import android.widget.FrameLayout;
 
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.guillotine.animation.GuillotineAnimation;
-import com.turkfyp.tarcomm2.widget.CanaroTextView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,7 +27,6 @@ import butterknife.ButterKnife;
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import android.content.Intent;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -173,7 +171,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
     public void map_onclick(View view){
-        Intent i = new Intent (this,MapActivity2.class);
+        Intent i = new Intent (this,MapActivity.class);
+        startActivity(i);
+    }
+    public void view_profile_onclick(View view){
+        Intent i = new Intent (this,ViewProfileActivity.class);
         startActivity(i);
     }
     //End Side Menu Navigation

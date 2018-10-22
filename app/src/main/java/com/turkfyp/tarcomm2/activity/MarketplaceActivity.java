@@ -12,14 +12,10 @@ import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.turkfyp.tarcomm2.R;
@@ -29,8 +25,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -209,7 +203,11 @@ public class MarketplaceActivity extends AppCompatActivity  {
         startActivity(i);
     }
     public void map_onclick(View view){
-        Intent i = new Intent (this,MapActivity2.class);
+        Intent i = new Intent (this,MapActivity.class);
+        startActivity(i);
+    }
+    public void view_profile_onclick(View view){
+        Intent i = new Intent (this,ViewProfileActivity.class);
         startActivity(i);
     }
     //Side Menu Navigation - END

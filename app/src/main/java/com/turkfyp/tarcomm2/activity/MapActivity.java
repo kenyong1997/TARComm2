@@ -38,7 +38,7 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MapActivity2 extends AppCompatActivity {
+public class MapActivity extends AppCompatActivity {
 
     private static final long RIPPLE_DURATION = 250;
     public static String LOGGED_IN_USER;
@@ -216,7 +216,11 @@ public class MapActivity2 extends AppCompatActivity {
         startActivity(i);
     }
     public void map_onclick(View view){
-        Intent i = new Intent (this,MapActivity2.class);
+        Intent i = new Intent (this,MapActivity.class);
+        startActivity(i);
+    }
+    public void view_profile_onclick(View view){
+        Intent i = new Intent (this,ViewProfileActivity.class);
         startActivity(i);
     }
     //Side Menu Navigation - END

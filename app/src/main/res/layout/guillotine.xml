@@ -23,6 +23,7 @@
             android:id="@+id/profile_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:onClick="view_profile_onclick"
             app:civ_border_width="2dp"
             app:civ_border_color="#FFFFFF"
             android:layout_marginLeft="20dp"/>
@@ -30,12 +31,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:onClick="view_profile_onclick">
 
             <TextView
             style="@style/TextView.GuillotineItem"
                 android:id="@+id/tvUserFullName"
-            android:text="Yan Yi Ling"
             android:layout_marginLeft="7dp"
             android:textSize="25dp"/>
             <TextView

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/viewprofile_layout"
+    android:background="@android:color/white"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.ViewProfileActivity">
+
+        <View
+            android:layout_gravity="top"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/guillotine_actionbar_background_view_height"
+            android:background="@color/guillotine_background" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                style="@style/Toolbar"
+                app:contentInsetStart="0dp">
+
+                <ImageView
+                    android:id="@+id/content_hamburger"
+                    style="@style/ImageView.Hamburger"
+                    android:src="@drawable/ic_menu_90" />
+
+
+            </android.support.v7.widget.Toolbar>
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:background="@color/colorPrimary">
+       <de.hdodenhof.circleimageview.CircleImageView
+           android:layout_width="170dp"
+           android:layout_height="170dp"
+           android:layout_gravity="center_horizontal"
+           android:id="@+id/imgViewProfilePic"
+           android:src="@drawable/user_male" />
+
+   </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:id="@+id/tvProfileName"
+                android:text="Tung Ken Yong"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_faculty" />
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:id="@+id/tvProfileFaculty"
+                    android:textColor="@android:color/black"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="15sp"
+                    android:text="Faculty of Computer Science"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_course" />
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvProfileCourse"
+                    android:textColor="@android:color/black"
+                    android:fontFamily="sans-serif-light"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="15sp"
+                    android:text="Bachelor in Software Engineering"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_email" />
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvProfileEmail"
+                    android:textColor="@android:color/black"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="15sp"
+                    android:text="kenyong1997@gmail.com"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_phone" />
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvProfilePhone"
+                    android:textColor="@android:color/black"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="15sp"
+                    android:text="0123456789"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:id="@+id/tvProfileFriend"
+                            android:text="54"
+                            android:textColor="@android:color/white"
+                            android:textSize="25sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:text="Friends"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/white"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimaryDark"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:id="@+id/tvProfilePost"
+                            android:text="4"
+                            android:textColor="@android:color/white"
+                            android:textSize="25sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:text="Posts"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/white"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <Button
+                android:layout_marginTop="20dp"
+                android:textSize="25sp"
+                android:textColor="#FFF"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="sans-serif-light"
+                android:background="@drawable/rec_gradient_fb"
+                android:textAllCaps="false"
+                android:text="Edit Your Profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </FrameLayout>
