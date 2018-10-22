@@ -34,7 +34,7 @@
             android:text="Item Name"/>
 
         <EditText
-            android:id="@+id/etItemName"
+            android:id="@+id/etAddLostFoundItemName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -47,7 +47,7 @@
             android:text="Item Description"/>
 
         <EditText
-            android:id="@+id/etItemDesc"
+            android:id="@+id/etAddLostFoundItemDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -104,7 +104,7 @@
             android:text="Lost Date"/>
 
         <DatePicker
-            android:id="@+id/lostFoundDate"
+            android:id="@+id/dpLostFoundDate"
             android:textColor="@android:color/darker_gray"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -120,6 +120,7 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/btnCancelAddLostFound"
                 android:textColor="#FFF"
                 android:background="@drawable/rec_gradient_fb"
                 android:layout_marginTop="20dp"
@@ -134,6 +135,7 @@
                 android:layout_height="wrap_content" />
 
             <Button
+                android:id="@+id/btnAddLostFound"
                 android:textColor="#FFF"
                 android:background="@drawable/rec_gradient"
                 android:layout_marginTop="20dp"

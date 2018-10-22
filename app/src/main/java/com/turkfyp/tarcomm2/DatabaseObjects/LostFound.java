@@ -15,7 +15,7 @@ public class LostFound {
     public LostFound() {
     }
 
-    public LostFound(String category, String lostItemName, String lostItemDesc, String lostItemURL, String losDate, String email, String contactName, String contactNo) {
+    public LostFound(String category, String lostItemName, String lostItemDesc, String lostItemURL, String lostDate, String email, String contactName, String contactNo) {
         this.category = category;
         this.lostItemName = lostItemName;
         this.lostItemDesc = lostItemDesc;
@@ -23,7 +23,7 @@ public class LostFound {
         this.lostDate = lostDate;
         this.email = email;
         this.contactName = contactName;
-        contactNo = contactNo;
+        this.contactNo = contactNo;
     }
 
     public String getCategory() {

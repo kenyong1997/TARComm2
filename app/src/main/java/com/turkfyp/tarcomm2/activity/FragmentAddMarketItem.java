@@ -64,7 +64,7 @@ public class FragmentAddMarketItem extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_add_market_item, container, false);
+        final View v = inflater.inflate(R.layout.fragment_add_market_item, container, false);
 
         rgItemCategory = (RadioGroup)v.findViewById(R.id.rgItemCategory);
         rbItemCategory = (RadioButton)v.findViewById(rgItemCategory.getCheckedRadioButtonId());
@@ -111,10 +111,14 @@ public class FragmentAddMarketItem extends Fragment {
             @Override
             public void onClick(View view) {
 
+                //Get Updated Radio Button Value
+                rbItemCategory = (RadioButton)v.findViewById(rgItemCategory.getCheckedRadioButtonId());
+
                 String itemName = etAddItemName.getText().toString();
                 String itemDesc = etAddItemDesc.getText().toString();
                 String itemCategory = rbItemCategory.getText().toString();
                 String itemPrice;
+
 
                 if(itemCategory.equals("Want To Sell"))
                     itemCategory = "WTS";
