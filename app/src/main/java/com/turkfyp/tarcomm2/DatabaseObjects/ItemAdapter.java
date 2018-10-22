@@ -43,7 +43,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         ivTradingImage = (ImageView) rowView.findViewById(R.id.ivItemImage);
 
         tvItemName.setText( item.getItemName());
-        tvItemPrice.setText(String.format("RM %.2f", item.getItemPrice()));
+        tvItemPrice.setText(String.format("RM %.2f", Double.parseDouble(item.getItemPrice())));
         getImage(item.getImageURL(), ivTradingImage);
         return rowView;
     }

@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -113,7 +114,7 @@ public class FragmentAddMarketItem extends Fragment {
                 String itemName = etAddItemName.getText().toString();
                 String itemDesc = etAddItemDesc.getText().toString();
                 String itemCategory = rbItemCategory.getText().toString();
-                double itemPrice;
+                String itemPrice;
 
                 if(itemCategory.equals("Want To Sell"))
                     itemCategory = "WTS";
@@ -123,30 +124,38 @@ public class FragmentAddMarketItem extends Fragment {
                     itemCategory = "WTT";
 
                 if(itemCategory.equals("WTT"))
-                    itemPrice = 0.0;
+                    itemPrice = "0";
                 else
-                    itemPrice = Double.parseDouble(etItemPrice.getText().toString());
+                    itemPrice = etItemPrice.getText().toString();
 
                 SharedPreferences preferences = getActivity().getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
 
-                Item item = new Item();
-                item.setItemCategory(itemCategory);
-                item.setItemName(itemName);
-                item.setItemDescription(itemDesc);
-                item.setItemPrice(itemPrice);
-                item.setEmail(preferences.getString("email",""));
-                item.setSellerName(preferences.getString("loggedInUser", ""));
-                item.setSellerContact(preferences.getString("contactNo", ""));
-                uploadImage(item);
+                if(TextUtils.isEmpty(itemName))
+                    etAddItemName.setError("This field is required.");
+                if(TextUtils.isEmpty(itemDesc))
+                    etAddItemDesc.setError("This field is required.");
+                if(TextUtils.isEmpty(itemPrice))
+                    itemPrice = "0";
 
-                //progressDialog = new ProgressDialog(getActivity().getApplicationContext());
-                try{
-                    makeServiceCall(getActivity().getApplicationContext(), "https://tarcomm.000webhostapp.com/createItem.php", item);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(getActivity().getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                if(!TextUtils.isEmpty(itemName) && !TextUtils.isEmpty(itemDesc)) {
+                    Item item = new Item();
+                    item.setItemCategory(itemCategory);
+                    item.setItemName(itemName);
+                    item.setItemDescription(itemDesc);
+                    item.setItemPrice(itemPrice);
+                    item.setEmail(preferences.getString("email", ""));
+                    item.setSellerName(preferences.getString("loggedInUser", ""));
+                    item.setSellerContact(preferences.getString("contactNo", ""));
+                    uploadImage(item);
+
+                    progressDialog = new ProgressDialog(getActivity());
+                    try {
+                        makeServiceCall(getActivity().getApplicationContext(), "https://tarcomm.000webhostapp.com/createItem.php", item);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(getActivity().getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
                 }
-
             }
         });
 
@@ -159,6 +168,7 @@ public class FragmentAddMarketItem extends Fragment {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -177,6 +187,7 @@ public class FragmentAddMarketItem extends Fragment {
             }
         }
     }
+
     public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 40, baos);
@@ -184,6 +195,7 @@ public class FragmentAddMarketItem extends Fragment {
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
     }
+
     private Item uploadImage(final Item item) {
         class UploadImage extends AsyncTask<Bitmap, Void, String> {
             String image;
@@ -210,10 +222,10 @@ public class FragmentAddMarketItem extends Fragment {
 
         try{
 
-//            if(!progressDialog.isShowing()){
-//                progressDialog.setMessage("Uploading");
-//                progressDialog.show();
-//            }
+            if(!progressDialog.isShowing()){
+                progressDialog.setMessage("Uploading");
+                progressDialog.show();
+            }
 
             StringRequest postRequest = new StringRequest(
                     Request.Method.POST, url,
@@ -228,13 +240,13 @@ public class FragmentAddMarketItem extends Fragment {
                                 String message = jsonObject.getString("message");
 
                                 if(success == 0){
-//                                    if (progressDialog.isShowing())
-//                                        progressDialog.dismiss();
+                                    if (progressDialog.isShowing())
+                                        progressDialog.dismiss();
 
                                     Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();
                                 } else {
-//                                    if (progressDialog.isShowing())
-//                                        progressDialog.dismiss();
+                                    if (progressDialog.isShowing())
+                                        progressDialog.dismiss();
 
                                     Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();
                                     //startActivity(new Intent(RegisterActivity.this,LoginActivity.class));

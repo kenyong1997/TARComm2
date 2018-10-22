@@ -11,7 +11,7 @@ public class Item {
     private String itemName;
     private String itemDescription;
     private String imageURL;
-    private double itemPrice;
+    private String itemPrice;
     private String email;
 
     private String sellerName;
@@ -20,7 +20,7 @@ public class Item {
     public Item() {
     }
 
-    public Item(String itemCategory, String itemName, String itemDescription, String imageURL, double itemPrice, String email, String sellerName, String sellerContact) {
+    public Item(String itemCategory, String itemName, String itemDescription, String imageURL, String itemPrice, String email, String sellerName, String sellerContact) {
         this.itemCategory = itemCategory;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
@@ -40,11 +40,11 @@ public class Item {
         this.itemName = itemName;
     }
 
-    public double getItemPrice() {
+    public String getItemPrice() {
         return itemPrice;
     }
 
-    public void setItemPrice(double itemPrice) {
+    public void setItemPrice(String itemPrice) {
         this.itemPrice = itemPrice;
     }
 

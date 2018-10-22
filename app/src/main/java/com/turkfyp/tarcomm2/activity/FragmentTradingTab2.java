@@ -117,7 +117,7 @@ public class FragmentTradingTab2 extends Fragment {
                                 String itemName = textbookResponse.getString("itemName");
                                 String itemDescription = textbookResponse.getString("itemDesc");
                                 String imageURL = textbookResponse.getString("url");
-                                double itemPrice = Double.parseDouble(textbookResponse.getString("itemPrice"));
+                                String itemPrice = textbookResponse.getString("itemPrice");
                                 String email = textbookResponse.getString("email");
                                 String sellerName = textbookResponse.getString("fullname");
                                 String sellerContact = textbookResponse.getString("contactno");
