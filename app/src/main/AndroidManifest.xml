@@ -68,7 +68,8 @@
         <activity android:name=".activity.FragmentLostFoundTab3" />
         <activity android:name=".activity.AddLostFoundItemActivity" />
         <activity android:name=".activity.AddMarketItemActivity" />
-        <activity android:name=".activity.ViewProfileActivity"></activity>
+        <activity android:name=".activity.ViewProfileActivity" />
+        <activity android:name=".activity.EditProfileActivity"></activity>
     </application>
 
 </manifest>

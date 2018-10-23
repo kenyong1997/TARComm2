@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     String checkPassword;
     String profilePicURL;
     String contactNo;
-    String faculty,course,biodata;
+    String faculty,course,biodata,dateofbirth,gender;
 
 
     public Session session;
@@ -109,9 +109,12 @@ public class LoginActivity extends AppCompatActivity {
                                         pDialog.dismiss();
                                     if (checkPassword.equals(password)) {
                                         userFullName = jsonObject.getString("fullname");
+
                                         email = userEmail;
+                                        gender=jsonObject.getString("gender");
                                         profilePicURL = jsonObject.getString("profilepicURL");
                                         contactNo = jsonObject.getString("contactno");
+                                        dateofbirth = jsonObject.getString("dateofbirth");
                                         faculty = jsonObject.getString("faculty");
                                         course = jsonObject.getString("course");
                                         biodata = jsonObject.getString("biodata");
@@ -128,6 +131,8 @@ public class LoginActivity extends AppCompatActivity {
                                         SharedPreferences pref = getSharedPreferences("tarcommUser", MODE_PRIVATE);
                                         SharedPreferences.Editor editor = pref.edit();
                                         editor.putString("loggedInUser", userFullName);
+                                        editor.putString("dateofbirth",dateofbirth);
+                                        editor.putString("gender",gender);
                                         editor.putString("password", password);
                                         editor.putString("email",userEmail);
                                         editor.putString("profilePicURL", profilePicURL);

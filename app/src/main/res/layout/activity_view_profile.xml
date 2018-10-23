@@ -254,6 +254,8 @@
                 android:layout_marginBottom="10dp"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/rec_gradient_fb"
+                android:id="@+id/btnEditProfile"
+                android:onClick="onEditProfileClicked"
                 android:textAllCaps="false"
                 android:text="Edit Your Profile"
                 android:layout_width="match_parent"
