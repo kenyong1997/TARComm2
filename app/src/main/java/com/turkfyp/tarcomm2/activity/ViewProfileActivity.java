@@ -26,10 +26,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ViewProfileActivity extends AppCompatActivity {
 
     private static final long RIPPLE_DURATION = 250;
+
+    TextView tvProfileName, tvProfileFaculty, tvProfileCourse, tvProfileEmail, tvProfilePhone;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
+
         // For side menu
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         FrameLayout viewprofile_layout = (FrameLayout) findViewById(R.id.viewprofile_layout);
@@ -46,6 +50,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         TextView tvUserFullName = (TextView) findViewById(R.id.tvUserFullName);
 
         SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
+
         //Set User Name on Navigation Bar
         tvUserFullName.setText(preferences.getString("loggedInUser",""));
 
@@ -59,7 +64,21 @@ public class ViewProfileActivity extends AppCompatActivity {
                 .setClosedOnStart(true)
                 .build();
 
+        //------------------------Activity Codes
+        tvProfileName = (TextView) findViewById(R.id.tvProfileName);
+        tvProfileFaculty = (TextView) findViewById(R.id.tvProfileFaculty);
+        tvProfileCourse = (TextView) findViewById(R.id.tvProfileCourse);
+        tvProfileEmail = (TextView) findViewById(R.id.tvProfileEmail);
+        tvProfilePhone = (TextView) findViewById(R.id.tvProfilePhone);
+
+        tvProfileName.setText(preferences.getString("loggedInUser",""));
+        tvProfileEmail.setText(preferences.getString("email", ""));
+        tvProfilePhone.setText(preferences.getString("contactNo", ""));
+        tvProfileFaculty.setText(preferences.getString("faculty",""));
+        tvProfileCourse.setText(preferences.getString("course",""));
+
     }
+
     private Session session;
     public void logout_onclick(View view){
         session = new Session(view.getContext());
@@ -68,6 +87,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         Intent i = new Intent (this,LoginActivity.class);
         startActivity(i);
     }
+
     //Side Menu Navigation
     public void highlight_event_onclick(View view){
         Intent i = new Intent (this,MainActivity.class);
@@ -94,6 +114,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         startActivity(i);
     }
     //End Side Menu Navigation
+
     //Get Profile Image for Navigation Menu
     private void convertImage(String imageURL){
         class ConvertImage extends AsyncTask<String, Void, Bitmap> {
@@ -121,6 +142,9 @@ public class ViewProfileActivity extends AppCompatActivity {
                 super.onPostExecute(bitmap);
                 CircleImageView profile_image = (CircleImageView) findViewById(R.id.profile_image);
                 profile_image.setImageBitmap(bitmap);
+
+                CircleImageView imgViewProfilePic = (CircleImageView) findViewById(R.id.imgViewProfilePic);
+                imgViewProfilePic.setImageBitmap(bitmap);
             }
         }
         ConvertImage convertImage = new ConvertImage();

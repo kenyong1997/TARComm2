@@ -34,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     String checkPassword;
     String profilePicURL;
     String contactNo;
+    String faculty,course,biodata;
 
 
     public Session session;
@@ -111,6 +112,9 @@ public class LoginActivity extends AppCompatActivity {
                                         email = userEmail;
                                         profilePicURL = jsonObject.getString("profilepicURL");
                                         contactNo = jsonObject.getString("contactno");
+                                        faculty = jsonObject.getString("faculty");
+                                        course = jsonObject.getString("course");
+                                        biodata = jsonObject.getString("biodata");
 
                                         Toast.makeText(getApplicationContext(), "Welcome, " + userFullName + ".", Toast.LENGTH_LONG).show();
 
@@ -128,6 +132,9 @@ public class LoginActivity extends AppCompatActivity {
                                         editor.putString("email",userEmail);
                                         editor.putString("profilePicURL", profilePicURL);
                                         editor.putString("contactNo", contactNo);
+                                        editor.putString("faculty",faculty);
+                                        editor.putString("course", course);
+                                        editor.putString("biodata", biodata);
 
                                         editor.commit();
 

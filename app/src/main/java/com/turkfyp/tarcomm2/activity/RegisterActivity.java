@@ -130,7 +130,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             if(isValidEmail(email)&&!TextUtils.isEmpty(email)&&!TextUtils.isEmpty(fullName)&&isValidEmail(email)&&isValidContact(contactNo)){
                 User user = new User();
-
+                //TODO: Add faculty, course and biodata into user
                 user.setEmail(email);
                 user.setPassword(password);
                 user.setFullname(fullName);
@@ -232,6 +232,9 @@ public class RegisterActivity extends AppCompatActivity {
                     params.put("dateofbirth",user.getDateofbirth());
                     params.put("gender",user.getGender());
                     params.put("profilepic", user.getProfilepicURL());
+                    params.put("faculty", user.getFaculty());
+                    params.put("course", user.getCourse());
+                    params.put("biodata", user.getBiodata());
 
 
                     return params;

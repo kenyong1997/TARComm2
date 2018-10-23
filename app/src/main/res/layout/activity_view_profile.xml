@@ -43,7 +43,7 @@
            android:layout_height="170dp"
            android:layout_gravity="center_horizontal"
            android:id="@+id/imgViewProfilePic"
-           android:src="@drawable/user_male" />
+           />
 
    </LinearLayout>
             <TextView

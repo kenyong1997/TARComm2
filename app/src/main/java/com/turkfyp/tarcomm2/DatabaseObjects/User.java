@@ -16,6 +16,9 @@ public class User {
     private String longitude;
     private String status;
     private String profilepicURL;
+    private String faculty;
+    private String course;
+    private String biodata;
 
 
     public User(){
@@ -23,7 +26,7 @@ public class User {
 
     }
 
-    public User(String email, String password, String fullname, String gender, String dateofbirth, String contactno, String profilepicURL) {
+    public User(String email, String password, String fullname, String gender, String dateofbirth, String contactno, String profilepicURL, String faculty, String course, String biodata) {
         this.email = email;
         this.password = password;
         this.fullname = fullname;
@@ -31,9 +34,12 @@ public class User {
         this.dateofbirth = dateofbirth;
         this.contactno = contactno;
         this.profilepicURL = profilepicURL;
+        this.faculty = faculty;
+        this.course = course;
+        this.biodata = biodata;
     }
 
-    public User(String email, String password, String fullname, String gender, String dateofbirth, String contactno, String latitude, String longitude, String status, String profilepicURL) {
+    public User(String email, String password, String fullname, String gender, String dateofbirth, String contactno, String latitude, String longitude, String status, String profilepicURL, String faculty, String course, String biodata) {
         this.email = email;
         this.password = password;
         this.fullname = fullname;
@@ -44,6 +50,9 @@ public class User {
         this.longitude = longitude;
         this.status = status;
         this.profilepicURL = profilepicURL;
+        this.faculty = faculty;
+        this.course = course;
+        this.biodata = biodata;
     }
 
     public String getEmail() { return email; }
@@ -85,4 +94,28 @@ public class User {
     public String getProfilepicURL() { return profilepicURL; }
 
     public void setProfilepicURL(String profilepicURL) { this.profilepicURL = profilepicURL; }
+
+    public String getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
+    }
+
+    public String getBiodata() {
+        return biodata;
+    }
+
+    public void setBiodata(String biodata) {
+        this.biodata = biodata;
+    }
 }
