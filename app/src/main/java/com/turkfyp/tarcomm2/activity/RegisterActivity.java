@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -50,13 +51,14 @@ public class RegisterActivity extends AppCompatActivity {
     private Uri filePath;
 
 
-    EditText editTextEmail, editTextPassword1,editTextContactNo,editTextFullName;
+    EditText editTextEmail, editTextPassword1,editTextContactNo,editTextFullName,editTextCourse, editTextBioData;
     DatePicker dpDOB;
     RadioGroup rgGender;
     RadioButton rbGender;
     ImageView imgViewProfilePic;
     boolean picChosen;
     ProgressDialog progressDialog;
+    Spinner faculty_spinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -72,6 +74,9 @@ public class RegisterActivity extends AppCompatActivity {
         rgGender = (RadioGroup) findViewById(R.id.gender);
         dpDOB = (DatePicker) findViewById(R.id.dob);
         rbGender = (RadioButton) findViewById(rgGender.getCheckedRadioButtonId());
+        faculty_spinner = (Spinner) findViewById(R.id.faculty_spinner);
+        editTextCourse = (EditText) findViewById(R.id.editTextCourse);
+        editTextBioData = (EditText) findViewById(R.id.editTextBioData);
 
         rgGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -98,6 +103,9 @@ public class RegisterActivity extends AppCompatActivity {
         final String fullName = editTextFullName.getText().toString();
         final String contactNo = editTextContactNo.getText().toString();
         final String gender = rbGender.getText().toString();
+        final String faculty = faculty_spinner.getSelectedItem().toString();
+        final String course = editTextCourse.getText().toString();
+        final String biodata = editTextBioData.getText().toString();
 
         int dpDay = dpDOB.getDayOfMonth();
         int dpMonth = dpDOB.getMonth();
@@ -137,6 +145,9 @@ public class RegisterActivity extends AppCompatActivity {
                 user.setContactno(contactNo);
                 user.setDateofbirth(strDate);
                 user.setGender(gender);
+                user.setFaculty(faculty);
+                user.setCourse(course);
+                user.setBiodata(biodata);
                 uploadImage(user);
 
                 //create a new userFullName in database

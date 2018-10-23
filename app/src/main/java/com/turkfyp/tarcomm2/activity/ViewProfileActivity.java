@@ -27,7 +27,7 @@ public class ViewProfileActivity extends AppCompatActivity {
 
     private static final long RIPPLE_DURATION = 250;
 
-    TextView tvProfileName, tvProfileFaculty, tvProfileCourse, tvProfileEmail, tvProfilePhone;
+    TextView tvProfileName, tvProfileFaculty, tvProfileCourse, tvProfileEmail, tvProfilePhone,tvProfileBioData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,12 +70,14 @@ public class ViewProfileActivity extends AppCompatActivity {
         tvProfileCourse = (TextView) findViewById(R.id.tvProfileCourse);
         tvProfileEmail = (TextView) findViewById(R.id.tvProfileEmail);
         tvProfilePhone = (TextView) findViewById(R.id.tvProfilePhone);
+        tvProfileBioData = (TextView) findViewById(R.id.tvProfileBioData);
 
         tvProfileName.setText(preferences.getString("loggedInUser",""));
         tvProfileEmail.setText(preferences.getString("email", ""));
         tvProfilePhone.setText(preferences.getString("contactNo", ""));
         tvProfileFaculty.setText(preferences.getString("faculty",""));
         tvProfileCourse.setText(preferences.getString("course",""));
+        tvProfileBioData.setText(preferences.getString("biodata",""));
 
     }
 

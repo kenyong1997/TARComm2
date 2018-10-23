@@ -29,6 +29,7 @@
             <TextView
                 android:layout_marginTop="5dp"
                 android:text="Account Information"
+                android:fontFamily="sans-serif-light"
                 android:textStyle="bold"
                 android:textSize="25sp"
                 android:textColor="@android:color/white"
@@ -37,6 +38,7 @@
             <TextView
                 android:layout_marginTop="5dp"
                 android:textSize="20sp"
+                android:fontFamily="sans-serif-light"
                 android:text="Email"
                 android:textColor="@android:color/white"
                 android:layout_width="wrap_content"
@@ -44,6 +46,7 @@
             <EditText
                 android:drawablePadding="20dp"
                 android:textColor="@color/grey"
+                android:fontFamily="sans-serif-light"
                 android:padding="10dp"
                 android:background="@android:color/white"
                 android:id="@+id/editTextEmail"
@@ -53,12 +56,14 @@
             <TextView
                 android:layout_marginTop="5dp"
                 android:textSize="20sp"
+                android:fontFamily="sans-serif-light"
                 android:text="Password"
                 android:textColor="@android:color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <EditText
                 android:drawablePadding="20dp"
+                android:fontFamily="sans-serif-light"
                 android:textColor="@color/grey"
                 android:padding="10dp"
                 android:background="@android:color/white"
@@ -69,6 +74,7 @@
 
             <TextView
                 android:layout_marginTop="30dp"
+                android:fontFamily="sans-serif-light"
                 android:text="Profile Information"
                 android:textStyle="bold"
                 android:textSize="25sp"
@@ -77,6 +83,7 @@
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif-light"
                 android:textSize="20sp"
                 android:text="Full Name"
                 android:textColor="@android:color/white"
@@ -84,6 +91,7 @@
                 android:layout_height="wrap_content" />
             <EditText
                 android:drawablePadding="20dp"
+                android:fontFamily="sans-serif-light"
                 android:textColor="@color/grey"
                 android:id="@+id/editTextFullName"
                 android:padding="10dp"
@@ -94,6 +102,7 @@
 
             <RadioGroup
                 android:id="@+id/gender"
+                android:fontFamily="sans-serif-light"
                 android:textSize="20sp"
                 android:textColor="@android:color/white"
                 android:layout_width="match_parent"
@@ -104,6 +113,7 @@
 
                 <TextView
                     android:layout_marginTop="5dp"
+                    android:fontFamily="sans-serif-light"
                     android:layout_width="wrap_content"
                     android:textColor="@android:color/white"
                     android:textSize="20sp"
@@ -113,6 +123,7 @@
 
                 <RadioButton
                     android:id="@+id/gender_male"
+                    android:fontFamily="sans-serif-light"
                     android:layout_marginTop="5dp"
                     android:textSize="20sp"
                     android:layout_weight="1"
@@ -124,6 +135,7 @@
 
                 <RadioButton
                     android:id="@+id/gender_female"
+                    android:fontFamily="sans-serif-light"
                     android:layout_marginTop="5dp"
                     android:textSize="20sp"
                     android:layout_weight="1"
@@ -143,6 +155,7 @@
 
             <TextView
                 android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif-light"
                 android:textSize="20sp"
                 android:text="Contact No."
                 android:textColor="@android:color/white"
@@ -150,6 +163,7 @@
                 android:layout_height="wrap_content" />
             <EditText
                 android:drawablePadding="20dp"
+                android:fontFamily="sans-serif-light"
                 android:textColor="@color/grey"
                 android:id="@+id/editTextContactNo"
                 android:padding="10dp"
@@ -158,6 +172,7 @@
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif-light"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
@@ -167,25 +182,87 @@
             <DatePicker
                 android:id="@+id/dob"
                 android:textSize="20sp"
+                android:fontFamily="sans-serif-light"
                 android:textColor="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:datePickerMode="spinner"
                 android:calendarViewShown="false"
-                android:maxDate="12/31/2018"/></LinearLayout>
+                android:maxDate="12/31/2018"/>
+            <TextView
+                android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Faculty"/>
+
+            <Spinner
+                android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif-light"
+                android:id="@+id/faculty_spinner"
+                style="@style/spinner_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:prompt="@string/faculty_prompt"
+                android:entries="@array/faculty_arrays"/>
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif-light"
+                android:textSize="20sp"
+                android:text="Course Study"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:drawablePadding="20dp"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@color/grey"
+                android:id="@+id/editTextCourse"
+                android:padding="10dp"
+                android:background="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif-light"
+                android:textSize="20sp"
+                android:text="Bio"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:drawablePadding="20dp"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@color/grey"
+                android:lines="3"
+                android:maxLines="3"
+                android:id="@+id/editTextBioData"
+                android:gravity="top|left"
+                android:padding="10dp"
+                android:maxLength="90"
+                android:background="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
 
         <Button
             android:layout_marginTop="10dp"
             android:textSize="25sp"
             android:textColor="#FFF"
             android:layout_marginLeft="60dp"
+            android:fontFamily="sans-serif-condensed"
             android:layout_marginRight="60dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="15dp"
             android:background="@drawable/rec_gradient_fb"
             android:textAllCaps="false"
             android:text="Register"
             android:onClick="onRegisterClicked"
-            android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

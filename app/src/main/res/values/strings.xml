@@ -30,5 +30,20 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="faculty_prompt">Faculty</string>
+    <string-array name="faculty_arrays">
+        <item>Faculty of Accountancy, Finance and Business</item>
+        <item>Faculty of Applied Sciences</item>
+        <item>Faculty of Computing and Information Technology</item>
+        <item>Faculty of Engineering and Technology</item>
+        <item>Faculty of Communication and Creative Industries</item>
+        <item>Faculty of Social Science and Humanities</item>
+        <item>Centre for Pre-University Studies</item>
+        <item>Centre for Postgraduates Studies and Research</item>
+        <item>Centre for Continuing and Professional Education</item>
+        <item>Centre for Business Incubation and Entrepreneurial Ventures</item>
+    </string-array>
+
+
 
 </resources>

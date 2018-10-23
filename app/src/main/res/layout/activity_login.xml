@@ -9,7 +9,6 @@
 
 
     <LinearLayout
-
         android:id="@+id/layoutInput"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
@@ -19,6 +18,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <ImageView
             android:id="@+id/imageVIew"
             android:layout_width="150dp"
@@ -33,6 +33,7 @@
         <TextView
             android:layout_marginTop="5dp"
             android:text="Email"
+            android:fontFamily="sans-serif-light"
             android:textColor="@color/grey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -48,12 +49,15 @@
         <TextView
             android:layout_marginTop="5dp"
             android:textColor="@color/grey"
+
+            android:fontFamily="sans-serif-light"
             android:text="Password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
             android:drawablePadding="20dp"
             android:textColor="@color/grey"
+            android:fontFamily="sans-serif-light"
             android:id="@+id/editTextPassword"
             android:nextFocusDown="@+id/btnLogin"
             android:drawableRight="@drawable/ic_person"
@@ -63,12 +67,13 @@
         <Button
             android:textColor="#FFF"
             android:id="@+id/btnLogin"
+            android:fontFamily="sans-serif-condensed"
             android:background="@drawable/rec_gradient"
             android:layout_marginTop="20dp"
             android:textAllCaps="false"
             android:onClick="onLoginClicked"
+            android:textSize="20sp"
             android:text="Login"
-            android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <Button
@@ -78,7 +83,8 @@
             android:textAllCaps="false"
             android:onClick="onSignUpClicked"
             android:text="Sign Up"
-            android:textStyle="bold"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-condensed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
