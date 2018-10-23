@@ -28,6 +28,7 @@
 
         <TextView
             android:layout_width="wrap_content"
+            android:textSize="15sp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textColor="@android:color/darker_gray"
@@ -35,12 +36,12 @@
 
         <EditText
             android:id="@+id/etAddLostFoundItemName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ems="10" />
+            android:layout_marginTop="8dp" />
         <TextView
             android:layout_width="wrap_content"
+            android:textSize="15sp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textColor="@android:color/darker_gray"
@@ -49,6 +50,8 @@
         <EditText
             android:id="@+id/etAddLostFoundItemDesc"
             android:layout_width="match_parent"
+            android:lines="3"
+            android:gravity="left|bottom"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:inputType="textMultiLine"/>
@@ -69,6 +72,7 @@
 
             <TextView
                 android:layout_marginTop="5dp"
+                android:textSize="15sp"
                 android:textColor="@android:color/darker_gray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -97,6 +101,7 @@
         </RadioGroup>
         <TextView
             android:layout_marginTop="5dp"
+            android:textSize="15sp"
             android:id="@+id/tvLostFoundDate"
             android:textColor="@android:color/darker_gray"
             android:layout_width="wrap_content"
@@ -126,7 +131,9 @@
                 android:layout_marginTop="20dp"
                 android:textAllCaps="false"
                 android:text="Cancel"
+                android:textSize="20sp"
                 android:layout_marginBottom="10dp"
+                android:fontFamily="sans-serif-condensed"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:textStyle="bold"
@@ -139,8 +146,10 @@
                 android:textColor="#FFF"
                 android:background="@drawable/rec_gradient"
                 android:layout_marginTop="20dp"
+                android:textSize="20sp"
                 android:textAllCaps="false"
                 android:layout_marginBottom="10dp"
+                android:fontFamily="sans-serif-condensed"
                 android:text="Upload"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"

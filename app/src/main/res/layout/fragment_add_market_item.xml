@@ -30,24 +30,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:textSize="15sp"
             android:textColor="@android:color/darker_gray"
             android:text="Item Name"/>
         <EditText
             android:id="@+id/etAddItemName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ems="10" />
+            android:layout_marginTop="8dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="15sp"
             android:layout_marginTop="5dp"
             android:textColor="@android:color/darker_gray"
             android:text="Item Description"/>
         <EditText
             android:id="@+id/etAddItemDesc"
             android:layout_width="match_parent"
+            android:lines="3"
+            android:gravity="left|bottom"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:inputType="textMultiLine"/>
@@ -58,7 +61,7 @@
 
         <RadioGroup
             android:id="@+id/rgItemCategory"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:layout_width="match_parent"
             android:textColor="@android:color/darker_gray"
             android:layout_height="match_parent"
@@ -68,6 +71,7 @@
 
             <TextView
                 android:layout_marginTop="5dp"
+                android:textSize="15sp"
                 android:textColor="@android:color/darker_gray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -106,6 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:id="@+id/tvItemPrice"
+            android:textSize="15sp"
             android:textColor="@android:color/darker_gray"
             android:text="Item Price"/>
 
@@ -127,9 +132,11 @@
                 android:layout_marginTop="20dp"
                 android:textAllCaps="false"
                 android:text="Cancel"
+                android:fontFamily="sans-serif-condensed"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
@@ -142,6 +149,8 @@
                 android:layout_marginTop="20dp"
                 android:textAllCaps="false"
                 android:layout_marginBottom="10dp"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="20sp"
                 android:text="Upload"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
