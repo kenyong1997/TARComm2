@@ -71,7 +71,6 @@ public class EditProfileActivity extends AppCompatActivity {
     RadioGroup rgEditGender;
     RadioButton rbEditGender,rb_male,rb_female;
 
-    SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +92,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         TextView tvUserFullName = (TextView) findViewById(R.id.tvUserFullName);
 
+        SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
 
         //Set User Name on Navigation Bar
         tvUserFullName.setText(preferences.getString("loggedInUser",""));
@@ -168,6 +168,8 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     public  void onSaveEditProfileClicked(View view){
+
+        SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
 
         final String email = preferences.getString("email","");
         final String password = preferences.getString("password","");
@@ -289,6 +291,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                     finish();
                                 }
 
+                                SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
                                 SharedPreferences.Editor editor = preferences.edit();
 
                                 editor.putString("loggedInUser", user.getFullname());

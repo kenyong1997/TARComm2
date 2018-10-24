@@ -252,8 +252,8 @@ public class FragmentAddMarketItem extends Fragment {
                                         progressDialog.dismiss();
 
                                     Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                                    //startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
-                                    getActivity().onBackPressed();
+                                    startActivity(new Intent(getActivity(),MarketplaceActivity.class));
+                                    getActivity().finish();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

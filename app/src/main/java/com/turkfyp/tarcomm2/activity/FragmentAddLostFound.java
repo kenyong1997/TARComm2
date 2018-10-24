@@ -246,7 +246,8 @@ public class FragmentAddLostFound extends Fragment {
                                         progressDialog.dismiss();
 
                                     Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                                    getActivity().onBackPressed();
+                                    startActivity(new Intent(getActivity(),LostAndFoundActivity.class));
+                                    getActivity().finish();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
