@@ -85,6 +85,7 @@ public class ViewProfileActivity extends AppCompatActivity {
     public void onEditProfileClicked(View view){
         Intent i = new Intent (this,EditProfileActivity.class);
         startActivity(i);
+        finish();
     }
     private Session session;
     public void logout_onclick(View view){

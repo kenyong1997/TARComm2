@@ -294,12 +294,14 @@ public class EditProfileActivity extends AppCompatActivity {
                                 SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
                                 SharedPreferences.Editor editor = preferences.edit();
 
+                                String imgURL = "https://tarcomm.000webhostapp.com/getUserImage.php?email="+user.getEmail();
+
                                 editor.putString("loggedInUser", user.getFullname());
                                 editor.putString("dateofbirth",user.getDateofbirth());
                                 editor.putString("gender",user.getGender());
                                 editor.putString("password", user.getPassword());
                                 editor.putString("email",user.getEmail());
-                                editor.putString("profilePicURL", user.getProfilepicURL());
+                                editor.putString("profilePicURL", imgURL);
                                 editor.putString("contactNo", user.getContactno());
                                 editor.putString("faculty",user.getFaculty());
                                 editor.putString("course", user.getCourse());
