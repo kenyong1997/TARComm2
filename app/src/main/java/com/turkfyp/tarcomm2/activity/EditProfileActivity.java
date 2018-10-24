@@ -117,9 +117,9 @@ public class EditProfileActivity extends AppCompatActivity {
         edit_faculty_spinner = (Spinner) findViewById(R.id.edit_faculty_spinner);
         dpEditDOB = (DatePicker)findViewById(R.id.dpEditDOB);
         rgEditGender = (RadioGroup) findViewById(R.id.rgEditGender);
-        rbEditGender = (RadioButton) findViewById(rgEditGender.getCheckedRadioButtonId());
         rb_male = (RadioButton)findViewById(R.id.rb_male);
         rb_female = (RadioButton) findViewById(R.id.rb_female);
+        rbEditGender = (RadioButton) findViewById(rgEditGender.getCheckedRadioButtonId());
 
         //set spinner and date
         String faculty = preferences.getString("faculty","");
@@ -170,7 +170,7 @@ public class EditProfileActivity extends AppCompatActivity {
     public  void onSaveEditProfileClicked(View view){
 
         SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
-
+        rbEditGender = (RadioButton) findViewById(rgEditGender.getCheckedRadioButtonId());
         final String email = preferences.getString("email","");
         final String password = preferences.getString("password","");
         final String fullName = etEditName.getText().toString();
@@ -220,7 +220,7 @@ public class EditProfileActivity extends AppCompatActivity {
             //create a new userFullName in database
             progressDialog = new ProgressDialog(this);
             try {
-                makeServiceCall(this, "https://tarcomm.000webhostapp.com/insert_user.php", user);
+                makeServiceCall(this, "https://tarcomm.000webhostapp.com/updateUserProfile.php", user);
             } catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();

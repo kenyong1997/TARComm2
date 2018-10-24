@@ -73,7 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
         editTextContactNo = (EditText) findViewById(R.id.editTextContactNo);
         rgGender = (RadioGroup) findViewById(R.id.gender);
         dpDOB = (DatePicker) findViewById(R.id.dob);
-        rbGender = (RadioButton) findViewById(rgGender.getCheckedRadioButtonId());
+
         faculty_spinner = (Spinner) findViewById(R.id.faculty_spinner);
         editTextCourse = (EditText) findViewById(R.id.editTextCourse);
         editTextBioData = (EditText) findViewById(R.id.editTextBioData);
@@ -98,6 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
     public void onRegisterClicked(View view){
 
+        rbGender = (RadioButton) findViewById(rgGender.getCheckedRadioButtonId());
         final String email = editTextEmail.getText().toString();
         final String password = editTextPassword1.getText().toString();
         final String fullName = editTextFullName.getText().toString();
