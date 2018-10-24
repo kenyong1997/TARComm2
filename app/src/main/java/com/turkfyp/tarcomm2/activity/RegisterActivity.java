@@ -138,7 +138,6 @@ public class RegisterActivity extends AppCompatActivity {
 
             if(isValidEmail(email)&&!TextUtils.isEmpty(email)&&!TextUtils.isEmpty(fullName)&&isValidEmail(email)&&isValidContact(contactNo)){
                 User user = new User();
-                //TODO: Add faculty, course and biodata into user
                 user.setEmail(email);
                 user.setPassword(password);
                 user.setFullname(fullName);
@@ -177,12 +176,14 @@ public class RegisterActivity extends AppCompatActivity {
         Matcher matcher = pattern.matcher(string);
         return matcher.matches();
     }
+
     private void showFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
+
     public void makeServiceCall(Context context, String url, final User user) {
 
         RequestQueue queue = Volley.newRequestQueue(context);
