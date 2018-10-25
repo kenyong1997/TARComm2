@@ -28,6 +28,8 @@
                 android:layout_gravity="center"
                 android:text="Item Details"
                 android:textSize="@dimen/guillotine_item_text_size" />
+
+
         </android.support.v7.widget.Toolbar>
 
         <TextView
