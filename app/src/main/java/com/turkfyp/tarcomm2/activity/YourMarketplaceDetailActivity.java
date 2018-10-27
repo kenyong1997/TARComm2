@@ -1,6 +1,7 @@
 package com.turkfyp.tarcomm2.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,12 +14,13 @@ import android.widget.TextView;
 
 import com.turkfyp.tarcomm2.R;
 
-public class MarketplaceDetailActivity extends AppCompatActivity {
+public class YourMarketplaceDetailActivity extends AppCompatActivity {
 
-    protected TextView tvDetailItemName, tvDetailItemPrice, tvDetailItemDesc, tvDetailItemSeller,tvDetailSellerContact;
+    protected TextView tvDetailItemName, tvDetailItemPrice, tvDetailItemDesc, tvDetailItemSeller, tvDetailSellerContact;
     protected ImageView imageViewDetailItem;
     protected String sellerContact, itemSeller, itemName, itemDesc;
     protected double itemPrice;
+    protected String strItemPrice;
 
     int itemID;
     private ProgressDialog pDialog;
@@ -26,7 +28,7 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_marketplace_detail);
+        setContentView(R.layout.activity_your_marketplace_detail);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -40,7 +42,7 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
         tvDetailItemPrice = (TextView) findViewById(R.id.tvDetailItemPrice);
         tvDetailItemDesc = (TextView) findViewById(R.id.tvDetailItemDesc);
         tvDetailItemSeller = (TextView) findViewById(R.id.tvDetailItemSeller);
-        tvDetailSellerContact = (TextView)findViewById(R.id.tvDetailSellerContact);
+        tvDetailSellerContact=(TextView)findViewById(R.id.tvDetailSellerContact);
         imageViewDetailItem = (ImageView) findViewById(R.id.imageViewDetailItem);
 
         pDialog = new ProgressDialog(this);
@@ -53,6 +55,7 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
         itemName = extras.getString("itemName");
         itemDesc = extras.getString("itemDesc");
         itemPrice = extras.getDouble("itemPrice");
+        strItemPrice=Double.toString(itemPrice);
 
 
         //(WILL BE ADDED IF NEEDED)
@@ -74,7 +77,10 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
         itemID = Integer.parseInt(imageURL.split("=")[1]);
     }
 
+
     public void onBackClicked(View view){
         finish();
     }
 }
+
+

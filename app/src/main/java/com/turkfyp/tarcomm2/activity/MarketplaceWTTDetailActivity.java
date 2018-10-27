@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.turkfyp.tarcomm2.R;
 
-public class MarketplaceDetailActivity extends AppCompatActivity {
+public class MarketplaceWTTDetailActivity extends AppCompatActivity {
 
     protected TextView tvDetailItemName, tvDetailItemPrice, tvDetailItemDesc, tvDetailItemSeller,tvDetailSellerContact;
     protected ImageView imageViewDetailItem;
@@ -26,7 +26,7 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_marketplace_detail);
+        setContentView(R.layout.activity_marketplace_trade_detail);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -37,7 +37,6 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
 
         //Link code to UI
         tvDetailItemName = (TextView) findViewById(R.id.tvDetailItemName);
-        tvDetailItemPrice = (TextView) findViewById(R.id.tvDetailItemPrice);
         tvDetailItemDesc = (TextView) findViewById(R.id.tvDetailItemDesc);
         tvDetailItemSeller = (TextView) findViewById(R.id.tvDetailItemSeller);
         tvDetailSellerContact = (TextView)findViewById(R.id.tvDetailSellerContact);
@@ -52,7 +51,6 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
         sellerContact = extras.getString("sellerContact");
         itemName = extras.getString("itemName");
         itemDesc = extras.getString("itemDesc");
-        itemPrice = extras.getDouble("itemPrice");
 
 
         //(WILL BE ADDED IF NEEDED)
@@ -62,7 +60,6 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
 
         //set the text and image by using extras value
         tvDetailItemName.setText(itemName);
-        tvDetailItemPrice.setText(String.format("RM %.2f", itemPrice));
         tvDetailItemSeller.setText(itemSeller);
         tvDetailItemDesc.setText(itemDesc);
         tvDetailSellerContact.setText(sellerContact);
@@ -78,3 +75,4 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
         finish();
     }
 }
+

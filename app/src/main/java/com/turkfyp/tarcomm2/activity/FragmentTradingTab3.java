@@ -3,7 +3,6 @@ package com.turkfyp.tarcomm2.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -38,7 +37,7 @@ public class FragmentTradingTab3 extends Fragment {
     private static final String TAG = "FragmentTradingTab3";
 
     private static String GET_URL = "https://tarcomm.000webhostapp.com/getItemWTT.php";
-    ListView lvMarketplace;
+    ListView lvTradeMarketplace;
     SwipeRefreshLayout swipeRefreshMarketplace;
     List<Item> itemList;
 
@@ -58,7 +57,7 @@ public class FragmentTradingTab3 extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_trading_tab3, container, false);
 
-        lvMarketplace = (ListView) v.findViewById(R.id.lvMarketplace);
+        lvTradeMarketplace = (ListView) v.findViewById(R.id.lvTradeMarketplace);
         swipeRefreshMarketplace = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefreshMarketplace);
 
         try {
@@ -73,18 +72,17 @@ public class FragmentTradingTab3 extends Fragment {
         }
 
         //when a particular item was selected to view more details
-        lvMarketplace.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvTradeMarketplace.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Item selectedItem =(Item)parent.getItemAtPosition(position);
-                Intent itemDetailIntent = new Intent(getActivity(),MarketplaceDetailActivity.class);
+                Intent itemDetailIntent = new Intent(getActivity(),MarketplaceWTTDetailActivity.class);
                 itemDetailIntent.putExtra("itemName",selectedItem.getItemName());
-                itemDetailIntent.putExtra("itemPrice",selectedItem.getItemPrice());
                 itemDetailIntent.putExtra("itemDesc",selectedItem.getItemDescription());
                 itemDetailIntent.putExtra("itemSeller",selectedItem.getSellerName());
                 itemDetailIntent.putExtra("sellerContact",selectedItem.getSellerContact());
 
-                ImageView ivImage = (ImageView) view.findViewById(R.id.ivItemImage);
+                ImageView ivImage = (ImageView) view.findViewById(R.id.ivTradeItemImage);
                 ivImage.buildDrawingCache();
                 Bitmap image = ivImage.getDrawingCache();
                 itemDetailIntent.putExtra("Image", image);
@@ -152,7 +150,7 @@ public class FragmentTradingTab3 extends Fragment {
 
     private void loadItem() {
         final ItemAdapter adapter = new ItemAdapter(getActivity(), R.layout.fragment_trading_tab3, itemList);
-        lvMarketplace.setAdapter(adapter);
+        lvTradeMarketplace.setAdapter(adapter);
 
     }
 

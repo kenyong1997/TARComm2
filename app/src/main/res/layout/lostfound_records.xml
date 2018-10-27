@@ -26,7 +26,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="20dp"
             android:layout_weight="0.64"
-            android:text="Event Name"
+            android:text="Lost Item Name"
             android:textColor="@android:color/black"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textSize="20dp" />
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:textColor="@android:color/black"
-            android:text="Event Date Time"
+            android:text="Lost Item Desc"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
 

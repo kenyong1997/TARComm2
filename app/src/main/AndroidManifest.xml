@@ -69,7 +69,9 @@
         <activity android:name=".activity.AddLostFoundItemActivity" />
         <activity android:name=".activity.AddMarketItemActivity" />
         <activity android:name=".activity.ViewProfileActivity" />
-        <activity android:name=".activity.EditProfileActivity"></activity>
+        <activity android:name=".activity.EditProfileActivity" />
+        <activity android:name=".activity.YourMarketplaceDetailActivity" />
+        <activity android:name=".activity.MarketplaceWTTDetailActivity"></activity>
     </application>
 
 </manifest>
