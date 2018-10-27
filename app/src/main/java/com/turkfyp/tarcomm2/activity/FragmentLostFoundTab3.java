@@ -85,18 +85,19 @@ public class FragmentLostFoundTab3 extends Fragment {
 
                 LostFound selectedItem =(LostFound) parent.getItemAtPosition(position);
                 //TODO: Change this to Lost Found Detail in future
-                Intent itemDetailIntent = new Intent(getActivity(),MarketplaceDetailActivity.class);
+                Intent itemDetailIntent = new Intent(getActivity(),LostFoundDetailActivity.class);
                 itemDetailIntent.putExtra("lostItemName",selectedItem.getLostItemName());
                 itemDetailIntent.putExtra("lostItemDesc",selectedItem.getLostItemDesc());
                 itemDetailIntent.putExtra("lostDate", selectedItem.getLostDate());
                 itemDetailIntent.putExtra("lostItemContactName",selectedItem.getContactName());
                 itemDetailIntent.putExtra("lostItemContactNo",selectedItem.getContactNo());
+                itemDetailIntent.putExtra("checkYourUpload",true);
 
-                ImageView ivImage = (ImageView) view.findViewById(R.id.ivLostItemImage);
+                ImageView ivImage = (ImageView) view.findViewById(R.id.imageViewLostItemImage);
                 ivImage.buildDrawingCache();
                 Bitmap image = ivImage.getDrawingCache();
-                itemDetailIntent.putExtra("Image", image);
-                itemDetailIntent.putExtra("ImageURL", selectedItem.getLostItemURL());
+                itemDetailIntent.putExtra("LostImage", image);
+                itemDetailIntent.putExtra("LostImageURL", selectedItem.getLostItemURL());
 
                 startActivity(itemDetailIntent);
             }
@@ -186,7 +187,7 @@ public class FragmentLostFoundTab3 extends Fragment {
 
 
     private void loadItem() {
-        final LostFoundAdapter adapter = new LostFoundAdapter(getActivity(), R.layout.fragment_lost_found_tab2, lostFoundList);
+        final LostFoundAdapter adapter = new LostFoundAdapter(getActivity(), R.layout.fragment_lost_found_tab3, lostFoundList);
         lvLostFound.setAdapter(adapter);
 
     }

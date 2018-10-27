@@ -41,7 +41,7 @@ public class LostFoundAdapter extends ArrayAdapter<LostFound> {
         tvLostItemName = (TextView) rowView.findViewById(R.id.tvLostItemName);
         tvLostItemDate = (TextView) rowView.findViewById(R.id.tvLostItemDate);
         tvLostItemOwner = (TextView)rowView.findViewById(R.id.tvLostItemOwner);
-        ivLostItemImage = (ImageView) rowView.findViewById(R.id.ivLostItemImage);
+        ivLostItemImage = (ImageView) rowView.findViewById(R.id.imageViewLostItemImage);
 
         tvLostItemName.setText(lostFound.getLostItemName());
         tvLostItemDate.setText(lostFound.getLostDate());

@@ -7,7 +7,7 @@
     android:background="@drawable/card_purpleborder">
 
     <ImageView
-        android:id="@+id/ivLostItemImage"
+        android:id="@+id/imageViewLostItemImage"
         android:layout_width="130dp"
         android:layout_marginLeft="10dp"
         android:padding="5dp"

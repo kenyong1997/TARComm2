@@ -42,7 +42,24 @@
                     android:text="Item Details"
                     android:textAlignment="center"
                     android:textSize="@dimen/guillotine_item_text_size" />
-
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/ivDeleteItem"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="55dp"
+                    android:src="@drawable/ic_delete"
+                    android:visibility="invisible"/>
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/ivEditItem"
+                    android:layout_marginRight="15dp"
+                    android:visibility="invisible"
+                    android:src="@drawable/ic_edit" />
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
         <ScrollView

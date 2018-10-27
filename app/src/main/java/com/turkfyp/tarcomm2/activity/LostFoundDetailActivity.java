@@ -16,8 +16,9 @@ import com.turkfyp.tarcomm2.R;
 public class LostFoundDetailActivity extends AppCompatActivity {
 
     protected TextView tvDetailLostItemName, tvDetailLostItemDesc, tvDetailLostItemOwner,tvDetailOwnerContact;
-    protected ImageView imageViewLostItem;
+    protected ImageView imageViewLostItem,ivEditItem,ivDeleteItem;
     protected String ownerContact, itemOwner, lostItemName, lostItemDesc;
+    protected Boolean checkYourUpload;
 
     int itemID;
     private ProgressDialog pDialog;
@@ -40,7 +41,8 @@ public class LostFoundDetailActivity extends AppCompatActivity {
         tvDetailLostItemOwner = (TextView) findViewById(R.id.tvDetailLostItemOwner);
         tvDetailOwnerContact = (TextView)findViewById(R.id.tvDetailOwnerContact);
         imageViewLostItem= (ImageView) findViewById(R.id.ivLostItemImage);
-
+        ivDeleteItem = (ImageView) findViewById(R.id.ivDeleteItem);
+        ivEditItem = (ImageView) findViewById(R.id.ivEditItem);
         pDialog = new ProgressDialog(this);
 
 
@@ -50,8 +52,12 @@ public class LostFoundDetailActivity extends AppCompatActivity {
         itemOwner=extras.getString("lostItemContactName");
         lostItemName=extras.getString("lostItemName");
         lostItemDesc=extras.getString("lostItemDesc");
+        checkYourUpload=extras.getBoolean("checkYourUpload");
 
-
+        if(checkYourUpload){
+            ivEditItem.setVisibility(View.VISIBLE);
+            ivDeleteItem.setVisibility(View.VISIBLE);
+        }
 
         //(WILL BE ADDED IF NEEDED)
         //if the userFullName logged in is the seller of item
@@ -64,10 +70,10 @@ public class LostFoundDetailActivity extends AppCompatActivity {
         tvDetailLostItemDesc.setText(lostItemDesc);
         tvDetailOwnerContact.setText(ownerContact);
 
-        Bitmap image = extras.getParcelable("Image");
+        Bitmap image = extras.getParcelable("LostImage");
         imageViewLostItem.setImageBitmap(image);
 
-        String imageURL = extras.getString("ImageURL");
+        String imageURL = extras.getString("LostImageURL");
         itemID = Integer.parseInt(imageURL.split("=")[1]);
     }
 

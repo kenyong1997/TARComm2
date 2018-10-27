@@ -84,12 +84,13 @@ public class FragmentLostFoundTab1 extends Fragment {
                 itemDetailIntent.putExtra("lostDate", selectedItem.getLostDate());
                 itemDetailIntent.putExtra("lostItemContactName",selectedItem.getContactName());
                 itemDetailIntent.putExtra("lostItemContactNo",selectedItem.getContactNo());
+                itemDetailIntent.putExtra("checkYourUpload",false);
 
-                ImageView ivImage = (ImageView) view.findViewById(R.id.ivLostItemImage);
+                ImageView ivImage = (ImageView) view.findViewById(R.id.imageViewLostItemImage);
                 ivImage.buildDrawingCache();
                 Bitmap image = ivImage.getDrawingCache();
-                itemDetailIntent.putExtra("Image", image);
-                itemDetailIntent.putExtra("ImageURL", selectedItem.getLostItemURL());
+                itemDetailIntent.putExtra("LostImage", image);
+                itemDetailIntent.putExtra("LostImageURL", selectedItem.getLostItemURL());
 
                 startActivity(itemDetailIntent);
             }
