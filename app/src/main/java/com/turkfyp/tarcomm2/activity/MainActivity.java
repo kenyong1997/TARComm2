@@ -1,5 +1,6 @@
 package com.turkfyp.tarcomm2.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -14,6 +15,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.turkfyp.tarcomm2.DatabaseObjects.Event;
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.guillotine.animation.GuillotineAnimation;
 
@@ -21,7 +30,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.BindView;
@@ -29,6 +44,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
     private static final long RIPPLE_DURATION = 250;
@@ -43,7 +62,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.content_hamburger)
     View contentHamburger;
 
-
+    private static String GET_URL = "https://tarcomm.000webhostapp.com/getHighlightedEvent.php";
+    String currentDate;
+    List<Event> eventList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,32 +99,21 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         //Navigation Menu - END
 
-        mViewpager = (ViewPager) findViewById(R.id.viewpager);
-        mContents = new ArrayList<>();
-        int images[] =  {R.drawable.one,R.drawable.two,R.drawable.three,R.drawable.four,R.drawable.five,R.drawable.six};
-        String names[] = {"One","Two","Three","Four","Five","Six"};
-        String desc[] = {"Event","Event","Event","Event","Event","Event"};
-        String location[] = {"Main Campus","Main Campus","Main Campus","Main Campus","Main Campus","Main Campus"};
+        //Get Current date
+        Date cal = Calendar.getInstance().getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        currentDate = dateFormat.format(cal);
 
+        try{
+            //Initialize Event List
+            eventList = new ArrayList<>();
 
-        for(int i =0;i<images.length;i++)
-        {
-            ViewPagerModel viewPagerModel = new ViewPagerModel();
+            downloadHighlightEvent(getApplicationContext(), GET_URL);
 
-            viewPagerModel.images = images[i];
-            viewPagerModel.name = names[i];
-            viewPagerModel.desc = desc[i];
-            viewPagerModel.location = location[i];
-
-            mContents.add(viewPagerModel);
-
-
+        }catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
-        mAdapter = new ViewPagerAdapter(mContents,this);
-        mViewpager.setPageTransformer(true, new ViewPagerStack());
-        mViewpager.setOffscreenPageLimit(6);
-        mViewpager.setAdapter(mAdapter);
-
     }
 
     private class ViewPagerStack implements ViewPager.PageTransformer{
@@ -118,6 +128,94 @@ public class MainActivity extends AppCompatActivity {
                 page.setTranslationY(-30*position);
             }
         }
+    }
+
+    //retrieve the records from database
+    public void downloadHighlightEvent(Context context, String url) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        //Send data
+        try {
+            StringRequest postRequest = new StringRequest(
+                    Request.Method.POST,
+                    url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONArray j = new JSONArray(response);
+                                try {
+                                    for (int i = 0; i < j.length(); i++) {
+                                        JSONObject eventResponse = (JSONObject) j.get(i);
+                                        String eventName = eventResponse.getString("eventName");
+                                        String eventDateTime = eventResponse.getString("eventDateTime");
+                                        String eventDesc = eventResponse.getString("eventDesc");
+                                        String eventImageURL = eventResponse.getString("url");
+                                        String eventVenue = eventResponse.getString("eventVenue");
+                                        String eventVenueName = eventResponse.getString("eventVenueName");
+                                        String eventHighlight = eventResponse.getString("eventHighlight");
+                                        String eventEndDateTime = eventResponse.getString("eventEndDateTime");
+
+                                        Event event = new Event(eventName, eventDateTime, eventDesc, eventImageURL, eventVenue, eventVenueName, eventHighlight,eventEndDateTime);
+                                        eventList.add(event);
+                                    }
+
+                                    mViewpager = (ViewPager) findViewById(R.id.viewpager);
+                                    mContents = new ArrayList<>();
+//                                    int images[] =  {R.drawable.one,R.drawable.two,R.drawable.three,R.drawable.four,R.drawable.five,R.drawable.six};
+//                                    String names[] = {"One","Two","Three","Four","Five","Six"};
+//                                    String desc[] = {"Event","Event","Event","Event","Event","Event"};
+//                                    String location[] = {"Main Campus","Main Campus","Main Campus","Main Campus","Main Campus","Main Campus"};
+
+                                    for(int i =0;i<eventList.size();i++)
+                                    {
+                                        ViewPagerModel viewPagerModel = new ViewPagerModel();
+
+                                        viewPagerModel.image = eventList.get(i).getEventImageURL();
+                                        viewPagerModel.name = eventList.get(i).getEventName();
+                                        viewPagerModel.desc = eventList.get(i).getEventDesc();
+                                        viewPagerModel.location = eventList.get(i).getEventVenueName();
+
+                                        mContents.add(viewPagerModel);
+                                    }
+                                    mAdapter = new ViewPagerAdapter(mContents,getApplicationContext());
+                                    mViewpager.setPageTransformer(true, new ViewPagerStack());
+                                    mViewpager.setOffscreenPageLimit(6);
+                                    mViewpager.setAdapter(mAdapter);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(getApplicationContext(), "Error. " + error.toString(), Toast.LENGTH_LONG).show();
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("date", currentDate);
+                    return params;
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("Content-Type", "application/x-www-form-urlencoded");
+                    return params;
+                }
+            };
+            queue.add(postRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private Session session;
