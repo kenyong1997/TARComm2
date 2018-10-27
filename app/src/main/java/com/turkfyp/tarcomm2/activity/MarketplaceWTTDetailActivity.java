@@ -18,7 +18,6 @@ public class MarketplaceWTTDetailActivity extends AppCompatActivity {
     protected TextView tvDetailItemName, tvDetailItemPrice, tvDetailItemDesc, tvDetailItemSeller,tvDetailSellerContact;
     protected ImageView imageViewDetailItem;
     protected String sellerContact, itemSeller, itemName, itemDesc;
-    protected double itemPrice;
 
     int itemID;
     private ProgressDialog pDialog;
@@ -33,6 +32,7 @@ public class MarketplaceWTTDetailActivity extends AppCompatActivity {
 
         //No Activity Title
         getSupportActionBar().setTitle(null);
+
 
 
         //Link code to UI

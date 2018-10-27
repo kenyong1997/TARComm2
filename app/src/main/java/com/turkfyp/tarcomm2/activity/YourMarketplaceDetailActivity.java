@@ -18,10 +18,7 @@ public class YourMarketplaceDetailActivity extends AppCompatActivity {
 
     protected TextView tvDetailItemName, tvDetailItemPrice, tvDetailItemDesc, tvDetailItemSeller, tvDetailSellerContact;
     protected ImageView imageViewDetailItem;
-    protected String sellerContact, itemSeller, itemName, itemDesc;
-    protected double itemPrice;
-    protected String strItemPrice;
-
+    protected String sellerContact, itemSeller, itemName, itemDesc,itemPrice;
     int itemID;
     private ProgressDialog pDialog;
 
@@ -54,8 +51,8 @@ public class YourMarketplaceDetailActivity extends AppCompatActivity {
         sellerContact = extras.getString("sellerContact");
         itemName = extras.getString("itemName");
         itemDesc = extras.getString("itemDesc");
-        itemPrice = extras.getDouble("itemPrice");
-        strItemPrice=Double.toString(itemPrice);
+        itemPrice = extras.getString("itemPrice");
+
 
 
         //(WILL BE ADDED IF NEEDED)
@@ -65,7 +62,7 @@ public class YourMarketplaceDetailActivity extends AppCompatActivity {
 
         //set the text and image by using extras value
         tvDetailItemName.setText(itemName);
-        tvDetailItemPrice.setText(String.format("RM %.2f", itemPrice));
+        tvDetailItemPrice.setText(String.format("RM %.2f", Double.parseDouble(itemPrice)));
         tvDetailItemSeller.setText(itemSeller);
         tvDetailItemDesc.setText(itemDesc);
         tvDetailSellerContact.setText(sellerContact);
