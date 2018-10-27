@@ -35,15 +35,17 @@ public class LostFoundAdapter extends ArrayAdapter<LostFound> {
 
         View rowView = inflater.inflate(R.layout.lostfound_records, parent, false);
 
-        TextView tvLostItemName, tvLostItemDesc;
+        TextView tvLostItemName, tvLostItemDate, tvLostItemOwner;
         ImageView ivLostItemImage;
 
         tvLostItemName = (TextView) rowView.findViewById(R.id.tvLostItemName);
-        tvLostItemDesc = (TextView) rowView.findViewById(R.id.tvLostItemDesc);
+        tvLostItemDate = (TextView) rowView.findViewById(R.id.tvLostItemDate);
+        tvLostItemOwner = (TextView)rowView.findViewById(R.id.tvLostItemOwner);
         ivLostItemImage = (ImageView) rowView.findViewById(R.id.ivLostItemImage);
 
         tvLostItemName.setText(lostFound.getLostItemName());
-        tvLostItemDesc.setText(lostFound.getLostItemDesc());
+        tvLostItemDate.setText(lostFound.getLostDate());
+        tvLostItemOwner.setText(lostFound.getContactName());
         getImage(lostFound.getLostItemURL(), ivLostItemImage);
         return rowView;
     }
