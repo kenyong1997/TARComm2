@@ -77,14 +77,14 @@ public class FragmentLostFoundTab2 extends Fragment {
 
                 LostFound selectedItem =(LostFound) parent.getItemAtPosition(position);
                 //TODO: Change this to Lost Found Detail in future
-                Intent itemDetailIntent = new Intent(getActivity(),MarketplaceDetailActivity.class);
+                Intent itemDetailIntent = new Intent(getActivity(),LostFoundDetailActivity.class);
                 itemDetailIntent.putExtra("lostItemName",selectedItem.getLostItemName());
                 itemDetailIntent.putExtra("lostItemDesc",selectedItem.getLostItemDesc());
                 itemDetailIntent.putExtra("lostDate", selectedItem.getLostDate());
                 itemDetailIntent.putExtra("lostItemContactName",selectedItem.getContactName());
                 itemDetailIntent.putExtra("lostItemContactNo",selectedItem.getContactNo());
 
-                ImageView ivImage = (ImageView) view.findViewById(R.id.ivItemImage);
+                ImageView ivImage = (ImageView) view.findViewById(R.id.ivLostItemImage);
                 ivImage.buildDrawingCache();
                 Bitmap image = ivImage.getDrawingCache();
                 itemDetailIntent.putExtra("Image", image);

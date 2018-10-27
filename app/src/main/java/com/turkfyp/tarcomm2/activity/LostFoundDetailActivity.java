@@ -13,11 +13,11 @@ import android.widget.TextView;
 
 import com.turkfyp.tarcomm2.R;
 
-public class MarketplaceWTTDetailActivity extends AppCompatActivity {
+public class LostFoundDetailActivity extends AppCompatActivity {
 
-    protected TextView tvDetailItemName, tvDetailItemPrice, tvDetailItemDesc, tvDetailItemSeller,tvDetailSellerContact;
-    protected ImageView imageViewDetailItem;
-    protected String sellerContact, itemSeller, itemName, itemDesc;
+    protected TextView tvDetailLostItemName, tvDetailLostItemDesc, tvDetailLostItemOwner,tvDetailOwnerContact;
+    protected ImageView imageViewLostItem;
+    protected String ownerContact, itemOwner, lostItemName, lostItemDesc;
 
     int itemID;
     private ProgressDialog pDialog;
@@ -25,7 +25,7 @@ public class MarketplaceWTTDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_marketplace_trade_detail);
+        setContentView(R.layout.activity_lost_found_detail);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -34,23 +34,23 @@ public class MarketplaceWTTDetailActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(null);
 
 
-
         //Link code to UI
-        tvDetailItemName = (TextView) findViewById(R.id.tvDetailItemName);
-        tvDetailItemDesc = (TextView) findViewById(R.id.tvDetailItemDesc);
-        tvDetailItemSeller = (TextView) findViewById(R.id.tvDetailItemSeller);
-        tvDetailSellerContact = (TextView)findViewById(R.id.tvDetailSellerContact);
-        imageViewDetailItem = (ImageView) findViewById(R.id.imageViewDetailItem);
+        tvDetailLostItemName = (TextView) findViewById(R.id.tvDetailLostItemName);
+        tvDetailLostItemDesc = (TextView) findViewById(R.id.tvDetailLostItemDesc);
+        tvDetailLostItemOwner = (TextView) findViewById(R.id.tvDetailLostItemOwner);
+        tvDetailOwnerContact = (TextView)findViewById(R.id.tvDetailOwnerContact);
+        imageViewLostItem= (ImageView) findViewById(R.id.ivLostItemImage);
 
         pDialog = new ProgressDialog(this);
 
 
         //get the extras and values
         Bundle extras = getIntent().getExtras();
-        itemSeller = extras.getString("itemSeller");
-        sellerContact = extras.getString("sellerContact");
-        itemName = extras.getString("itemName");
-        itemDesc = extras.getString("itemDesc");
+        ownerContact = extras.getString("lostItemContactNo");
+        itemOwner=extras.getString("lostItemContactName");
+        lostItemName=extras.getString("lostItemName");
+        lostItemDesc=extras.getString("lostItemDesc");
+
 
 
         //(WILL BE ADDED IF NEEDED)
@@ -59,13 +59,13 @@ public class MarketplaceWTTDetailActivity extends AppCompatActivity {
 //        String checkLoginUser = MainActivity.LOGGED_IN_USER.toUpperCase();
 
         //set the text and image by using extras value
-        tvDetailItemName.setText(itemName);
-        tvDetailItemSeller.setText(itemSeller);
-        tvDetailItemDesc.setText(itemDesc);
-        tvDetailSellerContact.setText(sellerContact);
+        tvDetailLostItemName.setText(lostItemName);
+        tvDetailLostItemOwner.setText(itemOwner);
+        tvDetailLostItemDesc.setText(lostItemDesc);
+        tvDetailOwnerContact.setText(ownerContact);
 
         Bitmap image = extras.getParcelable("Image");
-        imageViewDetailItem.setImageBitmap(image);
+        imageViewLostItem.setImageBitmap(image);
 
         String imageURL = extras.getString("ImageURL");
         itemID = Integer.parseInt(imageURL.split("=")[1]);

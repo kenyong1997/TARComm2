@@ -2,11 +2,11 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/marketplace_trade_details_layout"
+    android:id="@+id/lostfound_details_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/guillotine_background_dark"
-    tools:context=".activity.MarketplaceWTTDetailActivity">
+    tools:context=".activity.LostFoundDetailActivity">
 
     <View
         android:layout_gravity="top"
@@ -39,42 +39,28 @@
                 <com.turkfyp.tarcomm2.widget.CanaroTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Your Item Details"
+                    android:text="Item Details"
                     android:textAlignment="center"
                     android:textSize="@dimen/guillotine_item_text_size" />
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="55dp"
-                    android:src="@drawable/ic_delete" />
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/ic_edit" />
+
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
-
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_marginRight="15dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_height="wrap_content">
+            android:layout_marginRight="15dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/tvDetailItemName"
+                    android:id="@+id/tvDetailLostItemName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginStart="15dp"
                     android:textAlignment="center"
                     android:text="Item Name"
                     android:fontFamily="sans-serif-smallcaps"
@@ -88,7 +74,7 @@
                     android:layout_gravity="center_horizontal">
 
                     <ImageView
-                        android:id="@+id/imageViewDetailItem"
+                        android:id="@+id/ivLostItemImage"
                         android:layout_width="220dp"
                         android:layout_height="220dp"
                         android:layout_gravity="center_horizontal"
@@ -96,10 +82,6 @@
                         android:layout_marginTop="15dp" />
 
                 </RelativeLayout>
-
-
-
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_marginTop="20dp"
@@ -111,15 +93,19 @@
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_desc"/>
                     <TextView
-                        android:id="@+id/tvDetailItemDesc"
+                        android:id="@+id/tvDetailLostItemDesc"
                         android:fontFamily="sans-serif-light"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Item Description"
                         android:layout_marginLeft="15dp"
+                        android:text="Lost Item Desc"
                         android:textSize="20dp"
                         android:textColor="@android:color/black"/>
                 </LinearLayout>
+
+
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_marginTop="20dp"
@@ -131,12 +117,12 @@
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_seller"/>
                     <TextView
-                        android:id="@+id/tvDetailItemSeller"
+                        android:id="@+id/tvDetailLostItemOwner"
                         android:fontFamily="sans-serif-light"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Item Owner"
                         android:layout_marginLeft="15dp"
-                        android:text="Item Seller"
                         android:textSize="20dp"
                         android:textColor="@android:color/black"/>
                 </LinearLayout>
@@ -144,7 +130,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <ImageView
@@ -153,16 +138,17 @@
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_phone"/>
                     <TextView
-                        android:id="@+id/tvDetailSellerContact"
+                        android:id="@+id/tvDetailOwnerContact"
                         android:fontFamily="sans-serif-light"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Owner Contact"
                         android:layout_marginLeft="15dp"
-                        android:text="Seller Contact"
+                        android:layout_marginRight="15dp"
                         android:textSize="20dp"
                         android:textColor="@android:color/black"/>
                 </LinearLayout>
-            </LinearLayout>
-        </ScrollView>
+            </LinearLayout></ScrollView>
+
     </LinearLayout>
 </FrameLayout>

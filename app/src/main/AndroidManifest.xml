@@ -71,7 +71,7 @@
         <activity android:name=".activity.ViewProfileActivity" />
         <activity android:name=".activity.EditProfileActivity" />
         <activity android:name=".activity.YourMarketplaceDetailActivity" />
-        <activity android:name=".activity.MarketplaceWTTDetailActivity"></activity>
+        <activity android:name=".activity.LostFoundDetailActivity" />
     </application>
 
 </manifest>

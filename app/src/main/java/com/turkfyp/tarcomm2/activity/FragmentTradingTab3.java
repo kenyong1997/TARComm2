@@ -76,11 +76,13 @@ public class FragmentTradingTab3 extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Item selectedItem =(Item)parent.getItemAtPosition(position);
-                Intent itemDetailIntent = new Intent(getActivity(),MarketplaceWTTDetailActivity.class);
+                Intent itemDetailIntent = new Intent(getActivity(),MarketplaceDetailActivity.class);
                 itemDetailIntent.putExtra("itemName",selectedItem.getItemName());
                 itemDetailIntent.putExtra("itemDesc",selectedItem.getItemDescription());
                 itemDetailIntent.putExtra("itemSeller",selectedItem.getSellerName());
+                itemDetailIntent.putExtra("itemPrice",selectedItem.getItemPrice());
                 itemDetailIntent.putExtra("sellerContact",selectedItem.getSellerContact());
+                itemDetailIntent.putExtra("checkWTT",true);
 
                 ImageView ivImage = (ImageView) view.findViewById(R.id.ivItemImage);
                 ivImage.buildDrawingCache();

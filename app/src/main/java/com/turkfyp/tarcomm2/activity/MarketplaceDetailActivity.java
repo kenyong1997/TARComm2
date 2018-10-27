@@ -2,13 +2,16 @@ package com.turkfyp.tarcomm2.activity;
 
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.turkfyp.tarcomm2.R;
@@ -16,8 +19,10 @@ import com.turkfyp.tarcomm2.R;
 public class MarketplaceDetailActivity extends AppCompatActivity {
 
     protected TextView tvDetailItemName, tvDetailItemPrice, tvDetailItemDesc, tvDetailItemSeller,tvDetailSellerContact;
-    protected ImageView imageViewDetailItem;
+    protected ImageView imageViewDetailItem,ivEditItem,ivDeleteItem,ivItemPrice;
+    protected LinearLayout llItemPrice;
     protected String sellerContact, itemSeller, itemName, itemDesc, itemPrice;
+    protected Boolean checkYourUpload,checkWTT;
 
     int itemID;
     private ProgressDialog pDialog;
@@ -41,7 +46,10 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
         tvDetailItemSeller = (TextView) findViewById(R.id.tvDetailItemSeller);
         tvDetailSellerContact = (TextView)findViewById(R.id.tvDetailSellerContact);
         imageViewDetailItem = (ImageView) findViewById(R.id.imageViewDetailItem);
-
+        ivDeleteItem = (ImageView)findViewById(R.id.ivDeleteItem);
+        ivEditItem = (ImageView)findViewById(R.id.ivEditItem);
+        ivItemPrice = (ImageView) findViewById(R.id.ivItemPrice);
+        llItemPrice = (LinearLayout) findViewById(R.id.llItemPrice);
         pDialog = new ProgressDialog(this);
 
 
@@ -52,6 +60,9 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
         itemName = extras.getString("itemName");
         itemDesc = extras.getString("itemDesc");
         itemPrice = extras.getString("itemPrice");
+        checkYourUpload = extras.getBoolean("checkYourUpload");
+        checkWTT = extras.getBoolean("checkWTT");
+
 
 
         //(WILL BE ADDED IF NEEDED)
@@ -66,6 +77,15 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
         tvDetailItemDesc.setText(itemDesc);
         tvDetailSellerContact.setText(sellerContact);
 
+        if(checkYourUpload){
+            ivEditItem.setVisibility(View.VISIBLE);
+            ivDeleteItem.setVisibility(View.VISIBLE);
+        }
+        if(checkWTT){
+            tvDetailItemPrice.setVisibility(View.GONE);
+            ivItemPrice.setVisibility(View.GONE);
+            llItemPrice.setVisibility(View.GONE);
+        }
         Bitmap image = extras.getParcelable("Image");
         imageViewDetailItem.setImageBitmap(image);
 

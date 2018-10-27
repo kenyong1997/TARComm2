@@ -92,7 +92,7 @@ public class FragmentLostFoundTab3 extends Fragment {
                 itemDetailIntent.putExtra("lostItemContactName",selectedItem.getContactName());
                 itemDetailIntent.putExtra("lostItemContactNo",selectedItem.getContactNo());
 
-                ImageView ivImage = (ImageView) view.findViewById(R.id.ivItemImage);
+                ImageView ivImage = (ImageView) view.findViewById(R.id.ivLostItemImage);
                 ivImage.buildDrawingCache();
                 Bitmap image = ivImage.getDrawingCache();
                 itemDetailIntent.putExtra("Image", image);
