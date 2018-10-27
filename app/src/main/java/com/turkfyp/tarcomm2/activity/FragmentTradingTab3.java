@@ -37,7 +37,7 @@ public class FragmentTradingTab3 extends Fragment {
     private static final String TAG = "FragmentTradingTab3";
 
     private static String GET_URL = "https://tarcomm.000webhostapp.com/getItemWTT.php";
-    ListView lvTradeMarketplace;
+    ListView lvMarketplace;
     SwipeRefreshLayout swipeRefreshMarketplace;
     List<Item> itemList;
 
@@ -57,7 +57,7 @@ public class FragmentTradingTab3 extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_trading_tab3, container, false);
 
-        lvTradeMarketplace = (ListView) v.findViewById(R.id.lvTradeMarketplace);
+        lvMarketplace = (ListView) v.findViewById(R.id.lvMarketplace);
         swipeRefreshMarketplace = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefreshMarketplace);
 
         try {
@@ -72,7 +72,7 @@ public class FragmentTradingTab3 extends Fragment {
         }
 
         //when a particular item was selected to view more details
-        lvTradeMarketplace.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvMarketplace.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Item selectedItem =(Item)parent.getItemAtPosition(position);
@@ -82,7 +82,7 @@ public class FragmentTradingTab3 extends Fragment {
                 itemDetailIntent.putExtra("itemSeller",selectedItem.getSellerName());
                 itemDetailIntent.putExtra("sellerContact",selectedItem.getSellerContact());
 
-                ImageView ivImage = (ImageView) view.findViewById(R.id.ivTradeItemImage);
+                ImageView ivImage = (ImageView) view.findViewById(R.id.ivItemImage);
                 ivImage.buildDrawingCache();
                 Bitmap image = ivImage.getDrawingCache();
                 itemDetailIntent.putExtra("Image", image);
@@ -150,7 +150,7 @@ public class FragmentTradingTab3 extends Fragment {
 
     private void loadItem() {
         final ItemAdapter adapter = new ItemAdapter(getActivity(), R.layout.fragment_trading_tab3, itemList);
-        lvTradeMarketplace.setAdapter(adapter);
+        lvMarketplace.setAdapter(adapter);
 
     }
 

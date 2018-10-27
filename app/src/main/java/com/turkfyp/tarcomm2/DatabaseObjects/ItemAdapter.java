@@ -35,15 +35,24 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
         View rowView = inflater.inflate(R.layout.item_records, parent, false);
 
-        TextView tvItemName, tvItemPrice;
-        ImageView ivTradingImage;
+        TextView tvItemName, tvItemPrice,tvItemSeller;
+        ImageView ivTradingImage,ivPrice;
 
         tvItemName = (TextView) rowView.findViewById(R.id.tvItemName);
         tvItemPrice = (TextView) rowView.findViewById(R.id.tvItemPrice);
+        tvItemSeller= (TextView) rowView.findViewById(R.id.tvItemSeller);
         ivTradingImage = (ImageView) rowView.findViewById(R.id.ivItemImage);
+        ivPrice = (ImageView) rowView.findViewById(R.id.ivPrice);
 
         tvItemName.setText( item.getItemName());
-        tvItemPrice.setText(String.format("RM %.2f", Double.parseDouble(item.getItemPrice())));
+        tvItemSeller.setText(item.getSellerName());
+        if(!item.getItemCategory().equals("WTT")){
+            tvItemPrice.setText(String.format("RM %.2f", Double.parseDouble(item.getItemPrice())));
+
+        }else{
+            tvItemPrice.setText(null);
+            ivPrice.setVisibility(View.GONE);
+        }
         getImage(item.getImageURL(), ivTradingImage);
         return rowView;
     }
