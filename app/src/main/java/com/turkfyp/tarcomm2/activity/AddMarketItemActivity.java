@@ -25,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddMarketItemActivity extends AppCompatActivity {
 
-    private static final long RIPPLE_DURATION = 250;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,63 +44,15 @@ public class AddMarketItemActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(null);
         }
 
-        View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
-        trading_layout.addView(guillotineMenu);
-
-        TextView tvUserFullName = (TextView) findViewById(R.id.tvUserFullName);
-
-        SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
-        //Set User Name on Navigation Bar
-        tvUserFullName.setText(preferences.getString("loggedInUser",""));
-
-        //Set Profile Picture on Navigation Bar
-        String imageURL = preferences.getString("profilePicURL","");
-        convertImage(imageURL);
-
-        new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
-                .setStartDelay(RIPPLE_DURATION)
-                .setActionBarViewForAnimation(toolbar)
-                .setClosedOnStart(true)
-                .build();
 
         FragmentAddMarketItem f = new FragmentAddMarketItem();
         getSupportFragmentManager().beginTransaction().replace(R.id.addMarketItem_frame, f).commit();
 
     }
-    private Session session;
-    public void logout_onclick(View view){
-        session = new Session(view.getContext());
-        session.setLoggedIn(false);
+
+    public void onBackClicked(View view){
         finish();
-        Intent i = new Intent (this,LoginActivity.class);
-        startActivity(i);
     }
-    //Side Menu Navigation
-    public void highlight_event_onclick(View view){
-        Intent i = new Intent (this,MainActivity.class);
-        startActivity(i);
-    }
-    public void event_onclick(View view){
-        Intent i = new Intent (this,EventActivity.class);
-        startActivity(i);
-    }
-    public void market_onclick(View view){
-        Intent i = new Intent (this,MarketplaceActivity.class);
-        startActivity(i);
-    }
-    public void lost_and_found_onclick(View view){
-        Intent i = new Intent (this,LostAndFoundActivity.class);
-        startActivity(i);
-    }
-    public void map_onclick(View view){
-        Intent i = new Intent (this,MapActivity.class);
-        startActivity(i);
-    }
-    public void view_profile_onclick(View view){
-        Intent i = new Intent (this,ViewProfileActivity.class);
-        startActivity(i);
-    }
-    //End Side Menu Navigation
     //Get Profile Image for Navigation Menu
     private void convertImage(String imageURL){
         class ConvertImage extends AsyncTask<String, Void, Bitmap> {

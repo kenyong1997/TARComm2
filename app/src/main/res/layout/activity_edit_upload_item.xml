@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        android:id="@+id/EditMarketItemLayout"
+        tools:context=".activity.EditUploadItemActivity">
+
+        <View
+            android:layout_gravity="top"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/guillotine_actionbar_background_view_height"
+            android:background="@color/guillotine_background" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                style="@style/Toolbar"
+                app:contentInsetStart="0dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_back"
+                    android:layout_alignParentLeft="true"
+                    android:onClick="onBackClicked"
+                    android:layout_marginLeft="15dp"/>
+
+                <com.turkfyp.tarcomm2.widget.CanaroTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@android:color/white"
+                    android:text="Edit Your Upload"
+                    android:textSize="@dimen/guillotine_item_text_size" />
+            </android.support.v7.widget.Toolbar>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical">
+
+
+
+
+                <ImageView
+                    android:id="@+id/imgViewEditMarketItem"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:background="@mipmap/ic_add_image" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textSize="15sp"
+                    android:textColor="@android:color/darker_gray"
+                    android:text="Item Name"/>
+                <EditText
+                    android:id="@+id/etEditItemName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@android:color/darker_gray"
+                    android:text="Item Description"/>
+                <EditText
+                    android:id="@+id/etEditItemDesc"
+                    android:layout_width="match_parent"
+                    android:lines="3"
+                    android:gravity="left|bottom"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:inputType="textMultiLine"/>
+
+
+
+
+
+                <RadioGroup
+                    android:id="@+id/rgItemCategory"
+                    android:textSize="15sp"
+                    android:layout_width="match_parent"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:maxLines="1"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textSize="15sp"
+                        android:textColor="@android:color/darker_gray"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Item Category" />
+
+                    <RadioButton
+                        android:id="@+id/category_sell"
+                        android:textColor="@android:color/darker_gray"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Want To Sell" />
+
+                    <RadioButton
+                        android:id="@+id/category_buy"
+                        android:textColor="@android:color/darker_gray"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Want To Buy" />
+                    <RadioButton
+                        android:id="@+id/category_trade"
+                        android:textColor="@android:color/darker_gray"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Want To Trade" />
+                </RadioGroup>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/tvEditItemPrice"
+                    android:textSize="15sp"
+                    android:textColor="@android:color/darker_gray"
+                    android:text="Item Price"/>
+
+                <EditText
+                    android:id="@+id/etEditItemPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:inputType="numberDecimal"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnCancelEditItem"
+                        android:textColor="#FFF"
+                        android:background="@drawable/rec_gradient_fb"
+                        android:layout_marginTop="20dp"
+                        android:textAllCaps="false"
+                        android:text="Cancel"
+                        android:fontFamily="sans-serif-condensed"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <Button
+                        android:id="@+id/btnUploadEditItem"
+                        android:textColor="#FFF"
+                        android:background="@drawable/rec_gradient"
+                        android:layout_marginTop="20dp"
+                        android:textAllCaps="false"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textSize="20sp"
+                        android:text="Upload"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </FrameLayout>
+</ScrollView>
