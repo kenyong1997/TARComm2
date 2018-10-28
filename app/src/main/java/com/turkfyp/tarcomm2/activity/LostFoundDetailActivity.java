@@ -43,6 +43,7 @@ public class LostFoundDetailActivity extends AppCompatActivity {
     int lostID;
     String confirmation;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
