@@ -5,12 +5,16 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -24,20 +28,20 @@ import java.net.URL;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ViewProfileActivity extends AppCompatActivity {
+public class ViewPostActivity extends AppCompatActivity  {
 
     private static final long RIPPLE_DURATION = 250;
+    //    private ViewPager viewPager;
+    private TabLayout tabLayout;
 
-    TextView tvProfileName, tvProfileFaculty, tvProfileCourse, tvProfileEmail, tvProfilePhone,tvProfileBioData;
-    Button btnEditProfile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_profile);
+        setContentView(R.layout.activity_view_post);
 
         // For side menu
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        FrameLayout viewprofile_layout = (FrameLayout) findViewById(R.id.viewprofile_layout);
+        FrameLayout viewpost_layout = (FrameLayout) findViewById(R.id.viewpost_layout);
         View contentHamburger = (View) findViewById(R.id.content_hamburger);
 
         if (toolbar != null) {
@@ -46,12 +50,11 @@ public class ViewProfileActivity extends AppCompatActivity {
         }
 
         View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
-        viewprofile_layout.addView(guillotineMenu);
+        viewpost_layout.addView(guillotineMenu);
 
         TextView tvUserFullName = (TextView) findViewById(R.id.tvUserFullName);
 
         SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
-
         //Set User Name on Navigation Bar
         tvUserFullName.setText(preferences.getString("loggedInUser",""));
 
@@ -65,38 +68,36 @@ public class ViewProfileActivity extends AppCompatActivity {
                 .setClosedOnStart(true)
                 .build();
 
-        //------------------------Activity Codes
-        tvProfileName = (TextView) findViewById(R.id.tvProfileName);
-        tvProfileFaculty = (TextView) findViewById(R.id.tvProfileFaculty);
-        tvProfileCourse = (TextView) findViewById(R.id.tvProfileCourse);
-        tvProfileEmail = (TextView) findViewById(R.id.tvProfileEmail);
-        tvProfilePhone = (TextView) findViewById(R.id.tvProfilePhone);
-        tvProfileBioData = (TextView) findViewById(R.id.tvProfileBioData);
-        btnEditProfile = (Button) findViewById(R.id.btnEditProfile);
 
-        tvProfileName.setText(preferences.getString("loggedInUser",""));
-        tvProfileEmail.setText(preferences.getString("email", ""));
-        tvProfilePhone.setText(preferences.getString("contactNo", ""));
-        tvProfileFaculty.setText(preferences.getString("faculty",""));
-        tvProfileCourse.setText(preferences.getString("course",""));
-        tvProfileBioData.setText(preferences.getString("biodata",""));
+
+        //replace default fragment
+        replaceFragment(new FragmentTradingTab4());
+
+
+
 
     }
-    public void onEditProfileClicked(View view){
-        Intent i = new Intent (this,EditProfileActivity.class);
-        startActivity(i);
-        finish();
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.viewpost_container, fragment);
+
+        transaction.commit();
     }
+
     private Session session;
     public void logout_onclick(View view){
         session = new Session(view.getContext());
+
         session.setLoggedIn(false);
         finish();
         Intent i = new Intent (this,LoginActivity.class);
         startActivity(i);
     }
 
-    //Side Menu Navigation
+
+    //Side Menu Navigation - START
     public void highlight_event_onclick(View view){
         Intent i = new Intent (this,MainActivity.class);
         startActivity(i);
@@ -121,11 +122,8 @@ public class ViewProfileActivity extends AppCompatActivity {
         Intent i = new Intent (this,ViewProfileActivity.class);
         startActivity(i);
     }
-    //End Side Menu Navigation
-    public void onViewPostClicked(View view){
-        Intent i = new Intent (this,ViewPostActivity.class);
-        startActivity(i);
-    }
+    //Side Menu Navigation - END
+
     //Get Profile Image for Navigation Menu
     private void convertImage(String imageURL){
         class ConvertImage extends AsyncTask<String, Void, Bitmap> {
@@ -153,12 +151,11 @@ public class ViewProfileActivity extends AppCompatActivity {
                 super.onPostExecute(bitmap);
                 CircleImageView profile_image = (CircleImageView) findViewById(R.id.profile_image);
                 profile_image.setImageBitmap(bitmap);
-
-                CircleImageView imgViewProfilePic = (CircleImageView) findViewById(R.id.imgViewProfilePic);
-                imgViewProfilePic.setImageBitmap(bitmap);
             }
         }
         ConvertImage convertImage = new ConvertImage();
         convertImage.execute(imageURL);
     }
 }
+
+

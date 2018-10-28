@@ -220,6 +220,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
+                        android:onClick="onViewPostClicked"
                         android:orientation="vertical">
 
                         <TextView

@@ -77,6 +77,12 @@ public class ViewOtherProfileActivity extends AppCompatActivity {
     public void onBackClicked(View view){
         finish();
     }
+
+    public void view_profile_onclick(View view){
+        Intent i = new Intent (this,ViewProfileActivity.class);
+        startActivity(i);
+    }
+
     public void findUser(Context context, String url, final String userEmail) {
         //mPostCommentResponse.requestStarted();
         RequestQueue queue = Volley.newRequestQueue(context);
