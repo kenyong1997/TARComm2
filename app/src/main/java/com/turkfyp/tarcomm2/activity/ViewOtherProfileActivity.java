@@ -64,12 +64,7 @@ public class ViewOtherProfileActivity extends AppCompatActivity {
 
         findUser(this,"https://tarcomm.000webhostapp.com/select_user.php",email);
 
-        tvProfileName.setText(name);
-        tvProfileEmail.setText(email);
-        tvProfilePhone.setText(contactNo);
-        tvProfileFaculty.setText(faculty);
-        tvProfileCourse.setText(course);
-        tvProfileBioData.setText(biodata);
+
 
     }
 
@@ -102,7 +97,6 @@ public class ViewOtherProfileActivity extends AppCompatActivity {
                             try {
 
                                 jsonObject = new JSONObject(response);
-
                                         email = userEmail;
                                         name = jsonObject.getString("fullname");
                                         gender=jsonObject.getString("gender");
@@ -116,6 +110,13 @@ public class ViewOtherProfileActivity extends AppCompatActivity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                            tvProfileName.setText(name);
+                            tvProfileEmail.setText(email);
+                            tvProfilePhone.setText(contactNo);
+                            tvProfileFaculty.setText(faculty);
+                            tvProfileCourse.setText(course);
+                            tvProfileBioData.setText(biodata);
+                            convertImage(profilePicURL);
                         }
                     },
                     new Response.ErrorListener() {
