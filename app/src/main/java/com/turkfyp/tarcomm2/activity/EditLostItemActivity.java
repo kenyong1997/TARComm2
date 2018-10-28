@@ -70,7 +70,7 @@ public class EditLostItemActivity extends AppCompatActivity {
 
 
     protected ImageView ivEditLostFoundItem;
-    protected int itemID;
+    protected int lostID;
     protected EditText etEditLostFoundItemName,etEditLostFoundItemDesc;
     protected RadioGroup rgEditLostCategory;
     protected RadioButton category_lost,category_found, rbEditLostItemCategory;
@@ -108,8 +108,10 @@ public class EditLostItemActivity extends AppCompatActivity {
         Bitmap image = extras.getParcelable("Image");
         ivEditLostFoundItem.setImageBitmap(image);
 
+        bitmap = image;
+
         String imageURL = extras.getString("ImageURL");
-        itemID = Integer.parseInt(imageURL.split("=")[1]);
+        lostID = Integer.parseInt(imageURL.split("=")[1]);
 
         //set text on edittext
         etEditLostFoundItemName.setText(lostItemName);
@@ -145,66 +147,117 @@ public class EditLostItemActivity extends AppCompatActivity {
             }
         });
 
-        btnEditLostFound.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //Get Updated Radio Button Value
-                rbEditLostItemCategory = (RadioButton) findViewById(rgEditLostCategory.getCheckedRadioButtonId());
-
-                String lostItemName = etEditLostFoundItemName.getText().toString();
-                String lostItemDesc = etEditLostFoundItemDesc.getText().toString();
-                String lostItemCategory = rbEditLostItemCategory.getText().toString();
-
-
-
-                int dpDay = dpEditLostFoundDate.getDayOfMonth();
-                int dpMonth = dpEditLostFoundDate.getMonth();
-                int dpYear = dpEditLostFoundDate.getYear();
-                SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-                Calendar d = Calendar.getInstance();
-                d.set(dpYear, dpMonth, dpDay);
-                String strDate = dateFormatter.format(d.getTime());
-
-
-
-                SharedPreferences preferences = getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
-
-                if(TextUtils.isEmpty(lostItemName))
-                    etEditLostFoundItemName.setError("This field is required.");
-                if(TextUtils.isEmpty(lostItemDesc))
-                    etEditLostFoundItemDesc.setError("This field is required.");
-
-
-
-                if(!TextUtils.isEmpty(lostItemName) && !TextUtils.isEmpty(lostItemDesc)) {
-                    LostFound lostFoundItem = new LostFound();
-                    lostFoundItem.setContactName(itemOwner);
-                    lostFoundItem.setCategory(lostItemCategory);
-                    lostFoundItem.setContactNo(ownerContact);
-                    lostFoundItem.setLostDate(strDate);
-                    lostFoundItem.setLostItemDesc(lostItemDesc);
-                    lostFoundItem.setLostItemName(lostItemName);
-                    lostFoundItem.setEmail(preferences.getString("email", ""));
-                    uploadImage(lostFoundItem);
-
-
-
-                    progressDialog = new ProgressDialog(getApplicationContext());
-                    try {
-                        makeServiceCall(getApplicationContext(), "https://tarcomm.000webhostapp.com/createItem.php", lostFoundItem);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Toast.makeText(getApplicationContext() , "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-
-                }
-            }
-        });
-
+//        btnEditLostFound.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                //Get Updated Radio Button Value
+//                rbEditLostItemCategory = (RadioButton) findViewById(rgEditLostCategory.getCheckedRadioButtonId());
+//
+//                String lostItemName = etEditLostFoundItemName.getText().toString();
+//                String lostItemDesc = etEditLostFoundItemDesc.getText().toString();
+//                String lostItemCategory = rbEditLostItemCategory.getText().toString();
+//
+//
+//
+//                int dpDay = dpEditLostFoundDate.getDayOfMonth();
+//                int dpMonth = dpEditLostFoundDate.getMonth();
+//                int dpYear = dpEditLostFoundDate.getYear();
+//                SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+//                Calendar d = Calendar.getInstance();
+//                d.set(dpYear, dpMonth, dpDay);
+//                String strDate = dateFormatter.format(d.getTime());
+//
+//
+//
+//                SharedPreferences preferences = getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
+//
+//                if(TextUtils.isEmpty(lostItemName))
+//                    etEditLostFoundItemName.setError("This field is required.");
+//                if(TextUtils.isEmpty(lostItemDesc))
+//                    etEditLostFoundItemDesc.setError("This field is required.");
+//
+//
+//
+//                if(!TextUtils.isEmpty(lostItemName) && !TextUtils.isEmpty(lostItemDesc)) {
+//                    LostFound lostFoundItem = new LostFound();
+//                    lostFoundItem.setContactName(itemOwner);
+//                    lostFoundItem.setCategory(lostItemCategory);
+//                    lostFoundItem.setContactNo(ownerContact);
+//                    lostFoundItem.setLostDate(strDate);
+//                    lostFoundItem.setLostItemDesc(lostItemDesc);
+//                    lostFoundItem.setLostItemName(lostItemName);
+//                    lostFoundItem.setEmail(preferences.getString("email", ""));
+//                    uploadImage(lostFoundItem);
+//
+//
+//
+//                    progressDialog = new ProgressDialog(getApplicationContext());
+//                    try {
+//                        makeServiceCall(getApplicationContext(), "https://tarcomm.000webhostapp.com/createItem.php", lostFoundItem);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                        Toast.makeText(getApplicationContext() , "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+//                    }
+//
+//                }
+//            }
+//        });
+//
 
     }
 
+    public void onSaveEditLostItemClicked(View view){
+        //Get Updated Radio Button Value
+        rbEditLostItemCategory = (RadioButton) findViewById(rgEditLostCategory.getCheckedRadioButtonId());
+
+        String lostItemName = etEditLostFoundItemName.getText().toString();
+        String lostItemDesc = etEditLostFoundItemDesc.getText().toString();
+        String lostItemCategory = rbEditLostItemCategory.getText().toString();
+
+
+
+        int dpDay = dpEditLostFoundDate.getDayOfMonth();
+        int dpMonth = dpEditLostFoundDate.getMonth();
+        int dpYear = dpEditLostFoundDate.getYear();
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar d = Calendar.getInstance();
+        d.set(dpYear, dpMonth, dpDay);
+        String strDate = dateFormatter.format(d.getTime());
+
+
+
+        SharedPreferences preferences = getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
+
+        if(TextUtils.isEmpty(lostItemName))
+            etEditLostFoundItemName.setError("This field is required.");
+        if(TextUtils.isEmpty(lostItemDesc))
+            etEditLostFoundItemDesc.setError("This field is required.");
+
+
+
+        if(!TextUtils.isEmpty(lostItemName) && !TextUtils.isEmpty(lostItemDesc)) {
+            LostFound lostFoundItem = new LostFound();
+            lostFoundItem.setContactName(itemOwner);
+            lostFoundItem.setCategory(lostItemCategory);
+            lostFoundItem.setContactNo(ownerContact);
+            lostFoundItem.setLostDate(strDate);
+            lostFoundItem.setLostItemDesc(lostItemDesc);
+            lostFoundItem.setLostItemName(lostItemName);
+            lostFoundItem.setEmail(preferences.getString("email", ""));
+            uploadImage(lostFoundItem);
+
+
+
+            progressDialog = new ProgressDialog(this);
+            try {
+                makeServiceCall(getApplicationContext(), "https://tarcomm.000webhostapp.com/updateLostFoundItem.php", lostFoundItem);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext() , "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 
 
     public void onImgEditProfileClicked(View view){
@@ -236,7 +289,7 @@ public class EditLostItemActivity extends AppCompatActivity {
         try{
 
             if(!progressDialog.isShowing()){
-                progressDialog.setMessage("Uploading");
+                progressDialog.setMessage("Saving");
                 progressDialog.show();
             }
 
@@ -283,8 +336,8 @@ public class EditLostItemActivity extends AppCompatActivity {
                     params.put("lostItemName", lostFound.getLostItemName());
                     params.put("lostItemDesc", lostFound.getLostItemDesc());
                     params.put("lostItemImage", lostFound.getLostItemURL());
-                    params.put("email", lostFound.getEmail());
                     params.put("lostDate", lostFound.getLostDate());
+                    params.put("lostID", String.valueOf(lostID));
 
                     return params;
                 }
