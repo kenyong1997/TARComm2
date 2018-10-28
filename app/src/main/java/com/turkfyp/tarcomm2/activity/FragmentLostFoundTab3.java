@@ -120,6 +120,7 @@ public class FragmentLostFoundTab3 extends Fragment {
                 selectedItem = listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition);
 
                 Intent lostFoundDetail = new Intent(getActivity(),LostFoundDetailActivity.class);
+                lostFoundDetail.putExtra("lostCategory",selectedItem.getCategory());
                 lostFoundDetail.putExtra("lostItemName",selectedItem.getLostItemName());
                 lostFoundDetail.putExtra("lostItemDesc",selectedItem.getLostItemDesc());
                 lostFoundDetail.putExtra("lostDate", selectedItem.getLostDate());

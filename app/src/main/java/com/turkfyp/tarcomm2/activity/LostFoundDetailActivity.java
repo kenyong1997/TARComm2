@@ -1,6 +1,7 @@
 package com.turkfyp.tarcomm2.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,10 +16,12 @@ import com.turkfyp.tarcomm2.R;
 
 public class LostFoundDetailActivity extends AppCompatActivity {
 
-    protected TextView tvDetailLostItemName, tvDetailLostItemDesc, tvDetailLostItemOwner,tvDetailOwnerContact;
+    protected TextView tvDetailLostItemName, tvDetailLostItemDesc, tvDetailLostItemOwner,tvDetailOwnerContact,tvDetailLostDate;
     protected ImageView imageViewLostItem,ivEditItem,ivDeleteItem;
-    protected String ownerContact, itemOwner, lostItemName, lostItemDesc;
+    protected String ownerContact, itemOwner, lostItemName, lostItemDesc, lostDate;
     protected Boolean checkYourUpload;
+    protected Bitmap image;
+    protected String imageURL,itemCategory;
 
     int itemID;
     private ProgressDialog pDialog;
@@ -40,6 +43,7 @@ public class LostFoundDetailActivity extends AppCompatActivity {
         tvDetailLostItemDesc = (TextView) findViewById(R.id.tvDetailLostItemDesc);
         tvDetailLostItemOwner = (TextView) findViewById(R.id.tvDetailLostItemOwner);
         tvDetailOwnerContact = (TextView)findViewById(R.id.tvDetailOwnerContact);
+        tvDetailLostDate = (TextView)findViewById(R.id.tvDetailLostDate);
         imageViewLostItem= (ImageView) findViewById(R.id.ivLostItemImage);
         ivDeleteItem = (ImageView) findViewById(R.id.ivDeleteItem);
         ivEditItem = (ImageView) findViewById(R.id.ivEditItem);
@@ -52,6 +56,8 @@ public class LostFoundDetailActivity extends AppCompatActivity {
         itemOwner=extras.getString("lostItemContactName");
         lostItemName=extras.getString("lostItemName");
         lostItemDesc=extras.getString("lostItemDesc");
+        itemCategory=extras.getString("lostCategory");
+        lostDate = extras.getString("lostDate");
         checkYourUpload=extras.getBoolean("checkYourUpload");
 
         if(checkYourUpload){
@@ -69,16 +75,32 @@ public class LostFoundDetailActivity extends AppCompatActivity {
         tvDetailLostItemOwner.setText(itemOwner);
         tvDetailLostItemDesc.setText(lostItemDesc);
         tvDetailOwnerContact.setText(ownerContact);
+        tvDetailLostDate.setText(lostDate);
 
-        Bitmap image = extras.getParcelable("LostImage");
+        image = extras.getParcelable("LostImage");
         imageViewLostItem.setImageBitmap(image);
 
-        String imageURL = extras.getString("LostImageURL");
+        imageURL = extras.getString("LostImageURL");
         itemID = Integer.parseInt(imageURL.split("=")[1]);
     }
 
     public void onBackClicked(View view){
         finish();
+    }
+
+    public void onEditLostItemClicked(View view){
+
+        Intent itemDetailIntent = new Intent(this,EditLostItemActivity.class);
+        itemDetailIntent.putExtra("lostItemContactNo",ownerContact);
+        itemDetailIntent.putExtra("lostItemContactName",itemOwner);
+        itemDetailIntent.putExtra("lostItemName",lostItemName);
+        itemDetailIntent.putExtra("lostItemDesc",lostItemDesc);
+        itemDetailIntent.putExtra("lostDate",lostDate);
+        itemDetailIntent.putExtra("itemCategory",itemCategory);
+        itemDetailIntent.putExtra("Image", image);
+        itemDetailIntent.putExtra("ImageURL", imageURL);
+
+        startActivity(itemDetailIntent);
     }
 }
 
