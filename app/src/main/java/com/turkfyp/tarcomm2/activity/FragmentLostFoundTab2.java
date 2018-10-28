@@ -77,22 +77,37 @@ public class FragmentLostFoundTab2 extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 LostFound selectedItem =(LostFound) parent.getItemAtPosition(position);
-                //TODO: Change this to Lost Found Detail in future
-                Intent itemDetailIntent = new Intent(getActivity(),LostFoundDetailActivity.class);
-                itemDetailIntent.putExtra("lostItemName",selectedItem.getLostItemName());
-                itemDetailIntent.putExtra("lostItemDesc",selectedItem.getLostItemDesc());
-                itemDetailIntent.putExtra("lostDate", selectedItem.getLostDate());
-                itemDetailIntent.putExtra("lostItemContactName",selectedItem.getContactName());
-                itemDetailIntent.putExtra("lostItemContactNo",selectedItem.getContactNo());
-                itemDetailIntent.putExtra("checkYourUpload",false);
+                Intent lostFoundDetailIntent = new Intent(getActivity(),LostFoundDetailActivity.class);
+                lostFoundDetailIntent.putExtra("lostItemName",selectedItem.getLostItemName());
+                lostFoundDetailIntent.putExtra("lostItemDesc",selectedItem.getLostItemDesc());
+                lostFoundDetailIntent.putExtra("lostDate", selectedItem.getLostDate());
+                lostFoundDetailIntent.putExtra("lostItemContactName",selectedItem.getContactName());
+                lostFoundDetailIntent.putExtra("lostItemContactNo",selectedItem.getContactNo());
+                lostFoundDetailIntent.putExtra("checkYourUpload",false);
 
                 ImageView ivImage = (ImageView) view.findViewById(R.id.imageViewLostItemImage);
                 ivImage.buildDrawingCache();
                 Bitmap image = ivImage.getDrawingCache();
-                itemDetailIntent.putExtra("LostImage", image);
-                itemDetailIntent.putExtra("LostImageURL", selectedItem.getLostItemURL());
+                lostFoundDetailIntent.putExtra("LostImage", image);
+                lostFoundDetailIntent.putExtra("LostImageURL", selectedItem.getLostItemURL());
 
-                startActivity(itemDetailIntent);
+                startActivity(lostFoundDetailIntent);
+            }
+        });
+
+        swipeRefreshLostFound.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                swipeRefreshLostFound.setRefreshing(true);
+                try {
+                    downloadLostFoundRecords(getActivity().getApplicationContext(), GET_URL);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+                swipeRefreshLostFound.setRefreshing(false);
             }
         });
 

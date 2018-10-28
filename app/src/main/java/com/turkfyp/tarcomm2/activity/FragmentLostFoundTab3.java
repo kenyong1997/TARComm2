@@ -72,7 +72,6 @@ public class FragmentLostFoundTab3 extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_lost_found_tab3, container, false);
 
-//        lvLostFound = (ListView) v.findViewById(R.id.lvLostFound);
         elvLostFoundUpload = (ExpandableListView) v.findViewById(R.id.elvLostFoundUpload);
         swipeRefreshLostFound = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefreshLostFound);
         FloatingActionButton fabAddItem = (FloatingActionButton)v.findViewById(R.id.addItemFAB);
@@ -87,31 +86,6 @@ public class FragmentLostFoundTab3 extends Fragment {
             e.printStackTrace();
             Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
-
-        //when a particular item was selected to view more details
-//        lvLostFound.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                LostFound selectedItem =(LostFound) parent.getItemAtPosition(position);
-//                //TODO: Change this to Lost Found Detail in future
-//                Intent itemDetailIntent = new Intent(getActivity(),LostFoundDetailActivity.class);
-//                itemDetailIntent.putExtra("lostItemName",selectedItem.getLostItemName());
-//                itemDetailIntent.putExtra("lostItemDesc",selectedItem.getLostItemDesc());
-//                itemDetailIntent.putExtra("lostDate", selectedItem.getLostDate());
-//                itemDetailIntent.putExtra("lostItemContactName",selectedItem.getContactName());
-//                itemDetailIntent.putExtra("lostItemContactNo",selectedItem.getContactNo());
-//                itemDetailIntent.putExtra("checkYourUpload",true);
-//
-//                ImageView ivImage = (ImageView) view.findViewById(R.id.imageViewLostItemImage);
-//                ivImage.buildDrawingCache();
-//                Bitmap image = ivImage.getDrawingCache();
-//                itemDetailIntent.putExtra("LostImage", image);
-//                itemDetailIntent.putExtra("LostImageURL", selectedItem.getLostItemURL());
-//
-//                startActivity(itemDetailIntent);
-//            }
-//        });
 
         elvLostFoundUpload.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
@@ -146,6 +120,23 @@ public class FragmentLostFoundTab3 extends Fragment {
                 startActivity(addItemIntent);
             }
         });
+
+        swipeRefreshLostFound.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                swipeRefreshLostFound.setRefreshing(true);
+                try {
+                    downloadLostFoundRecords(getActivity().getApplicationContext(), GET_URL);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+                swipeRefreshLostFound.setRefreshing(false);
+            }
+        });
+
         return v;
 
     }

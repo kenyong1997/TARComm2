@@ -94,6 +94,22 @@ public class FragmentTradingTab3 extends Fragment {
             }
         });
 
+        swipeRefreshMarketplace.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                swipeRefreshMarketplace.setRefreshing(true);
+                try {
+                    downloadTradingRecords(getActivity().getApplicationContext(), GET_URL);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+                swipeRefreshMarketplace.setRefreshing(false);
+            }
+        });
+
         return v;
     }
 

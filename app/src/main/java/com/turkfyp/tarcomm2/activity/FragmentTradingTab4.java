@@ -84,7 +84,6 @@ public class FragmentTradingTab4 extends Fragment {
         swipeRefreshMarketplace = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefreshMarketplace);
         FloatingActionButton fabAddMarketItem = (FloatingActionButton)v.findViewById(R.id.addMarketItemFAB);
 
-
         try {
             //initialize textBookList
             itemList = new ArrayList<>();
@@ -95,30 +94,6 @@ public class FragmentTradingTab4 extends Fragment {
             e.printStackTrace();
             Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
-
-        //when a particular item was selected to view more details
-//        lvMarketplace.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Item selectedItem =(Item)parent.getItemAtPosition(position);
-//                Intent itemDetailIntent = new Intent(getActivity(),MarketplaceDetailActivity.class);
-//                itemDetailIntent.putExtra("itemCategory", selectedItem.getItemCategory());
-//                itemDetailIntent.putExtra("itemName",selectedItem.getItemName());
-//                itemDetailIntent.putExtra("itemPrice",selectedItem.getItemPrice());
-//                itemDetailIntent.putExtra("itemDesc",selectedItem.getItemDescription());
-//                itemDetailIntent.putExtra("itemSeller",selectedItem.getSellerName());
-//                itemDetailIntent.putExtra("sellerContact",selectedItem.getSellerContact());
-//                itemDetailIntent.putExtra("checkYourUpload",true);
-//
-//                ImageView ivImage = (ImageView) view.findViewById(R.id.ivItemImage);
-//                ivImage.buildDrawingCache();
-//                Bitmap image = ivImage.getDrawingCache();
-//                itemDetailIntent.putExtra("Image", image);
-//                itemDetailIntent.putExtra("ImageURL", selectedItem.getImageURL());
-//
-//                startActivity(itemDetailIntent);
-//            }
-//        });
 
         elvItemUpload.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
@@ -145,6 +120,7 @@ public class FragmentTradingTab4 extends Fragment {
                 return false;
             }
         });
+
         fabAddMarketItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,6 +128,23 @@ public class FragmentTradingTab4 extends Fragment {
                 startActivity(addItemIntent);
             }
         });
+
+        swipeRefreshMarketplace.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                swipeRefreshMarketplace.setRefreshing(true);
+                try {
+                    downloadTradingRecords(getActivity().getApplicationContext(), GET_URL);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+                swipeRefreshMarketplace.setRefreshing(false);
+            }
+        });
+
         return v;
     }
 

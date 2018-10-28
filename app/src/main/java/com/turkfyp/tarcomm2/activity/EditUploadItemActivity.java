@@ -108,6 +108,8 @@ public class EditUploadItemActivity extends AppCompatActivity {
         Bitmap image = extras.getParcelable("Image");
         imgViewEditMarketItem.setImageBitmap(image);
 
+        bitmap = image;
+
         String imageURL = extras.getString("ImageURL");
         itemID = Integer.parseInt(imageURL.split("=")[1]);
 
@@ -153,70 +155,63 @@ public class EditUploadItemActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
-        btnUploadEditItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //Get Updated Radio Button Value
-                rbEditItemCategory = (RadioButton) findViewById(rgItemCategory.getCheckedRadioButtonId());
-
-                String itemName = etEditItemName.getText().toString();
-                String itemDesc = etEditItemDesc.getText().toString();
-                String itemCategory = rbEditItemCategory.getText().toString();
-                String itemPrice;
-
-
-                if(itemCategory.equals("Want To Sell"))
-                    itemCategory = "WTS";
-                else if(itemCategory.equals("Want To Buy"))
-                    itemCategory = "WTB";
-                else if (itemCategory.equals("Want To Trade"))
-                    itemCategory = "WTT";
-
-                if(itemCategory.equals("WTT"))
-                    itemPrice = "0";
-                else
-                    itemPrice = etEditItemPrice.getText().toString();
-
-                SharedPreferences preferences = getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
-
-                if(TextUtils.isEmpty(itemName))
-                    etEditItemName.setError("This field is required.");
-                if(TextUtils.isEmpty(itemDesc))
-                    etEditItemDesc.setError("This field is required.");
-                if(TextUtils.isEmpty(itemPrice))
-                    itemPrice = "0";
-
-
-                if(!TextUtils.isEmpty(itemName) && !TextUtils.isEmpty(itemDesc)) {
-                    Item item = new Item();
-                    item.setItemCategory(itemCategory);
-                    item.setItemName(itemName);
-                    item.setItemDescription(itemDesc);
-                    item.setItemPrice(itemPrice);
-                    item.setEmail(preferences.getString("email", ""));
-                    item.setSellerName(preferences.getString("loggedInUser", ""));
-                    item.setSellerContact(preferences.getString("contactNo", ""));
-                    uploadImage(item);
-
-
-                    progressDialog = new ProgressDialog(getApplicationContext());
-                    try {
-                        makeServiceCall(getApplicationContext(), "https://tarcomm.000webhostapp.com/createItem.php", item);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Toast.makeText(getApplicationContext() , "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-
-                }
-            }
-        });
-
-
     }
 
+    public void onSaveEditUploadItemClicked(View view){
 
+        //Get Updated Radio Button Value
+        rbEditItemCategory = (RadioButton) findViewById(rgItemCategory.getCheckedRadioButtonId());
+
+        String itemName = etEditItemName.getText().toString();
+        String itemDesc = etEditItemDesc.getText().toString();
+        String itemCategory = rbEditItemCategory.getText().toString();
+        String itemPrice;
+
+
+        if(itemCategory.equals("Want To Sell"))
+            itemCategory = "WTS";
+        else if(itemCategory.equals("Want To Buy"))
+            itemCategory = "WTB";
+        else if (itemCategory.equals("Want To Trade"))
+            itemCategory = "WTT";
+
+        if(itemCategory.equals("WTT"))
+            itemPrice = "0";
+        else
+            itemPrice = etEditItemPrice.getText().toString();
+
+        SharedPreferences preferences = getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
+
+        if(TextUtils.isEmpty(itemName))
+            etEditItemName.setError("This field is required.");
+        if(TextUtils.isEmpty(itemDesc))
+            etEditItemDesc.setError("This field is required.");
+        if(TextUtils.isEmpty(itemPrice))
+            itemPrice = "0";
+
+
+        if(!TextUtils.isEmpty(itemName) && !TextUtils.isEmpty(itemDesc)) {
+            Item item = new Item();
+            item.setItemCategory(itemCategory);
+            item.setItemName(itemName);
+            item.setItemDescription(itemDesc);
+            item.setItemPrice(itemPrice);
+            item.setEmail(preferences.getString("email", ""));
+            item.setSellerName(preferences.getString("loggedInUser", ""));
+            item.setSellerContact(preferences.getString("contactNo", ""));
+            uploadImage(item);
+
+
+            progressDialog = new ProgressDialog(this);
+            try {
+                makeServiceCall(getApplicationContext(), "https://tarcomm.000webhostapp.com/updateItem.php", item);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext() , "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+
+        }
+    }
 
     public void onImgEditProfileClicked(View view){
         showFileChooser();
@@ -247,7 +242,7 @@ public class EditUploadItemActivity extends AppCompatActivity {
         try{
 
             if(!progressDialog.isShowing()){
-                progressDialog.setMessage("Uploading");
+                progressDialog.setMessage("Saving");
                 progressDialog.show();
             }
 
@@ -295,6 +290,7 @@ public class EditUploadItemActivity extends AppCompatActivity {
                     params.put("itemDesc", item.getItemDescription());
                     params.put("itemImage", item.getImageURL());
                     params.put("itemPrice", String.valueOf(item.getItemPrice()));
+                    params.put("itemID", String.valueOf(itemID));
                     params.put("email", item.getEmail());
 
                     return params;
