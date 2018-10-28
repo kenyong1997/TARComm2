@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -27,6 +29,7 @@ import com.android.volley.toolbox.Volley;
 import com.turkfyp.tarcomm2.DatabaseObjects.ItemAdapter;
 import com.turkfyp.tarcomm2.DatabaseObjects.LostFound;
 import com.turkfyp.tarcomm2.DatabaseObjects.LostFoundAdapter;
+import com.turkfyp.tarcomm2.DatabaseObjects.LostFoundUploadAdapter;
 import com.turkfyp.tarcomm2.R;
 
 import org.json.JSONArray;
@@ -49,6 +52,11 @@ public class FragmentLostFoundTab3 extends Fragment {
     SwipeRefreshLayout swipeRefreshLostFound;
     List<LostFound> lostFoundList;
 
+    ExpandableListView elvLostFoundUpload;
+    LostFoundUploadAdapter lostFoundUploadAdapter;
+    List<String> listDataHeader;
+    HashMap<String, List<LostFound>> listDataChild;
+
     RequestQueue queue;
 
     public FragmentLostFoundTab3() {}
@@ -64,11 +72,13 @@ public class FragmentLostFoundTab3 extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_lost_found_tab3, container, false);
 
-        lvLostFound = (ListView) v.findViewById(R.id.lvLostFound);
+//        lvLostFound = (ListView) v.findViewById(R.id.lvLostFound);
+        elvLostFoundUpload = (ExpandableListView) v.findViewById(R.id.elvLostFoundUpload);
         swipeRefreshLostFound = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefreshLostFound);
         FloatingActionButton fabAddItem = (FloatingActionButton)v.findViewById(R.id.addItemFAB);
+
         try {
-            //initialize textBookList
+            //initialize lostFoundList
             lostFoundList = new ArrayList<>();
 
             downloadLostFoundRecords(getActivity().getApplicationContext(), GET_URL);
@@ -79,27 +89,52 @@ public class FragmentLostFoundTab3 extends Fragment {
         }
 
         //when a particular item was selected to view more details
-        lvLostFound.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//        lvLostFound.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                LostFound selectedItem =(LostFound) parent.getItemAtPosition(position);
+//                //TODO: Change this to Lost Found Detail in future
+//                Intent itemDetailIntent = new Intent(getActivity(),LostFoundDetailActivity.class);
+//                itemDetailIntent.putExtra("lostItemName",selectedItem.getLostItemName());
+//                itemDetailIntent.putExtra("lostItemDesc",selectedItem.getLostItemDesc());
+//                itemDetailIntent.putExtra("lostDate", selectedItem.getLostDate());
+//                itemDetailIntent.putExtra("lostItemContactName",selectedItem.getContactName());
+//                itemDetailIntent.putExtra("lostItemContactNo",selectedItem.getContactNo());
+//                itemDetailIntent.putExtra("checkYourUpload",true);
+//
+//                ImageView ivImage = (ImageView) view.findViewById(R.id.imageViewLostItemImage);
+//                ivImage.buildDrawingCache();
+//                Bitmap image = ivImage.getDrawingCache();
+//                itemDetailIntent.putExtra("LostImage", image);
+//                itemDetailIntent.putExtra("LostImageURL", selectedItem.getLostItemURL());
+//
+//                startActivity(itemDetailIntent);
+//            }
+//        });
 
-                LostFound selectedItem =(LostFound) parent.getItemAtPosition(position);
-                //TODO: Change this to Lost Found Detail in future
-                Intent itemDetailIntent = new Intent(getActivity(),LostFoundDetailActivity.class);
-                itemDetailIntent.putExtra("lostItemName",selectedItem.getLostItemName());
-                itemDetailIntent.putExtra("lostItemDesc",selectedItem.getLostItemDesc());
-                itemDetailIntent.putExtra("lostDate", selectedItem.getLostDate());
-                itemDetailIntent.putExtra("lostItemContactName",selectedItem.getContactName());
-                itemDetailIntent.putExtra("lostItemContactNo",selectedItem.getContactNo());
-                itemDetailIntent.putExtra("checkYourUpload",true);
+        elvLostFoundUpload.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
+                LostFound selectedItem;
+                selectedItem = listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition);
+
+                Intent lostFoundDetail = new Intent(getActivity(),LostFoundDetailActivity.class);
+                lostFoundDetail.putExtra("lostItemName",selectedItem.getLostItemName());
+                lostFoundDetail.putExtra("lostItemDesc",selectedItem.getLostItemDesc());
+                lostFoundDetail.putExtra("lostDate", selectedItem.getLostDate());
+                lostFoundDetail.putExtra("lostItemContactName",selectedItem.getContactName());
+                lostFoundDetail.putExtra("lostItemContactNo",selectedItem.getContactNo());
+                lostFoundDetail.putExtra("checkYourUpload",true);
 
                 ImageView ivImage = (ImageView) view.findViewById(R.id.imageViewLostItemImage);
                 ivImage.buildDrawingCache();
                 Bitmap image = ivImage.getDrawingCache();
-                itemDetailIntent.putExtra("LostImage", image);
-                itemDetailIntent.putExtra("LostImageURL", selectedItem.getLostItemURL());
+                lostFoundDetail.putExtra("LostImage", image);
+                lostFoundDetail.putExtra("LostImageURL", selectedItem.getLostItemURL());
 
-                startActivity(itemDetailIntent);
+                startActivity(lostFoundDetail);
+                return false;
             }
         });
 
@@ -119,6 +154,12 @@ public class FragmentLostFoundTab3 extends Fragment {
         // Instantiate the RequestQueue
         queue = Volley.newRequestQueue(context);
 
+        listDataHeader = new ArrayList<String>();
+        listDataChild = new HashMap<String, List<LostFound>>();
+
+        listDataHeader.add("Lost Item");
+        listDataHeader.add("Found Item");
+
         try{
             StringRequest postRequest = new StringRequest(
                     Request.Method.POST,
@@ -130,23 +171,38 @@ public class FragmentLostFoundTab3 extends Fragment {
                                 JSONArray j = new JSONArray(response);
                                 try {
                                     lostFoundList.clear();
+
+                                    List<LostFound> lostList = new ArrayList<>();
+                                    List<LostFound> foundList = new ArrayList<>();
+
                                     for (int i = 0; i < j.length(); i++) {
-                                        JSONObject textbookResponse = (JSONObject) j.get(i);
-                                        String category = textbookResponse.getString("category");
-                                        String lostItemName = textbookResponse.getString("lostItemName");
-                                        String lostItemDesc = textbookResponse.getString("lostItemDesc");
-                                        String lostItemURL = textbookResponse.getString("url");
-                                        String email = textbookResponse.getString("email");
-                                        String contactName = textbookResponse.getString("fullname");
-                                        String contactNo = textbookResponse.getString("contactno");
-                                        String lostDate = textbookResponse.getString("lostDate");
+                                        JSONObject lostFoundResponse = (JSONObject) j.get(i);
+                                        String category = lostFoundResponse.getString("category");
+                                        String lostItemName = lostFoundResponse.getString("lostItemName");
+                                        String lostItemDesc = lostFoundResponse.getString("lostItemDesc");
+                                        String lostItemURL = lostFoundResponse.getString("url");
+                                        String email = lostFoundResponse.getString("email");
+                                        String contactName = lostFoundResponse.getString("fullname");
+                                        String contactNo = lostFoundResponse.getString("contactno");
+                                        String lostDate = lostFoundResponse.getString("lostDate");
 
                                         LostFound lostFound = new LostFound(category, lostItemName, lostItemDesc, lostItemURL, lostDate, email, contactName, contactNo);
-                                        lostFoundList.add(lostFound);
-                                    }
 
+                                        if(category.toUpperCase().equals("LOST"))
+                                            lostList.add(lostFound);
+                                        else
+                                            foundList.add(lostFound);
+
+//                                        lostFoundList.add(lostFound);
+                                    }
                                     //load the item into adapter
-                                    loadItem();
+//                                    loadItem();
+
+                                    listDataChild.put(listDataHeader.get(0), lostList);
+                                    listDataChild.put(listDataHeader.get(1), foundList);
+
+                                    lostFoundUploadAdapter = new LostFoundUploadAdapter(getActivity(),listDataHeader, listDataChild);
+                                    elvLostFoundUpload.setAdapter(lostFoundUploadAdapter);
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
