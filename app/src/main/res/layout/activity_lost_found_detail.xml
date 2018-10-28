@@ -159,6 +159,7 @@
                         android:fontFamily="sans-serif-light"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:onClick="onSellerClicked"
                         android:text="Item Owner"
                         android:layout_marginLeft="15dp"
                         android:textSize="20dp"

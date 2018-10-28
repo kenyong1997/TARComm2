@@ -34,7 +34,7 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
     protected TextView tvDetailItemName, tvDetailItemPrice, tvDetailItemDesc, tvDetailItemSeller,tvDetailSellerContact;
     protected ImageView imageViewDetailItem,ivEditItem,ivDeleteItem,ivItemPrice;
     protected LinearLayout llItemPrice;
-    protected String sellerContact, itemSeller, itemName, itemDesc, itemPrice, imageURL, itemCategory;
+    protected String sellerContact, itemSeller, itemName, itemDesc, itemPrice, imageURL, itemCategory,email;
     protected Boolean checkYourUpload,checkWTT;
     protected Bitmap image;
 
@@ -66,6 +66,7 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
         llItemPrice = (LinearLayout) findViewById(R.id.llItemPrice);
 
 
+
         //get the extras and values
         Bundle extras = getIntent().getExtras();
         itemSeller = extras.getString("itemSeller");
@@ -76,6 +77,7 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
         checkYourUpload = extras.getBoolean("checkYourUpload");
         checkWTT = extras.getBoolean("checkWTT");
         itemCategory = extras.getString("itemCategory");
+        email = extras.getString("email");
 
 
 
@@ -148,6 +150,14 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
         itemDetailIntent.putExtra("ImageURL", imageURL);
 
         startActivity(itemDetailIntent);
+    }
+
+    public void onSellerClicked(View view){
+
+        Intent sellerIntent = new Intent(this,ViewOtherProfileActivity.class);
+        sellerIntent.putExtra("email",email);
+
+        startActivity(sellerIntent);
     }
     public void onBackClicked(View view){
         finish();

@@ -96,6 +96,7 @@ public class FragmentLostFoundTab3 extends Fragment {
                 Intent lostFoundDetail = new Intent(getActivity(),LostFoundDetailActivity.class);
                 lostFoundDetail.putExtra("lostCategory",selectedItem.getCategory());
                 lostFoundDetail.putExtra("lostItemName",selectedItem.getLostItemName());
+                lostFoundDetail.putExtra("email",selectedItem.getEmail());
                 lostFoundDetail.putExtra("lostItemDesc",selectedItem.getLostItemDesc());
                 lostFoundDetail.putExtra("lostDate", selectedItem.getLostDate());
                 lostFoundDetail.putExtra("lostItemContactName",selectedItem.getContactName());

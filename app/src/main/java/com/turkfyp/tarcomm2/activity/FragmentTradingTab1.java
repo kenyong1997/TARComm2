@@ -80,6 +80,7 @@ public class FragmentTradingTab1 extends Fragment {
                 itemDetailIntent.putExtra("itemDesc",selectedItem.getItemDescription());
                 itemDetailIntent.putExtra("itemSeller",selectedItem.getSellerName());
                 itemDetailIntent.putExtra("sellerContact",selectedItem.getSellerContact());
+                itemDetailIntent.putExtra("email",selectedItem.getEmail());
                 itemDetailIntent.putExtra("checkYourUpload",false);
 
                 ImageView ivImage = (ImageView) view.findViewById(R.id.ivItemImage);

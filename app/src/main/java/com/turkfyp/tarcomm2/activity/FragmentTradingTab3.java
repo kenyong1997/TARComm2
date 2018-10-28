@@ -82,6 +82,7 @@ public class FragmentTradingTab3 extends Fragment {
                 itemDetailIntent.putExtra("itemSeller",selectedItem.getSellerName());
                 itemDetailIntent.putExtra("itemPrice",selectedItem.getItemPrice());
                 itemDetailIntent.putExtra("sellerContact",selectedItem.getSellerContact());
+                itemDetailIntent.putExtra("email",selectedItem.getEmail());
                 itemDetailIntent.putExtra("checkWTT",true);
 
                 ImageView ivImage = (ImageView) view.findViewById(R.id.ivItemImage);

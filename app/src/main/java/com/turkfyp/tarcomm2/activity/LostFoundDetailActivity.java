@@ -18,7 +18,7 @@ public class LostFoundDetailActivity extends AppCompatActivity {
 
     protected TextView tvDetailLostItemName, tvDetailLostItemDesc, tvDetailLostItemOwner,tvDetailOwnerContact,tvDetailLostDate;
     protected ImageView imageViewLostItem,ivEditItem,ivDeleteItem;
-    protected String ownerContact, itemOwner, lostItemName, lostItemDesc, lostDate;
+    protected String ownerContact, itemOwner, lostItemName, lostItemDesc, lostDate,email;
     protected Boolean checkYourUpload;
     protected Bitmap image;
     protected String imageURL,itemCategory;
@@ -59,6 +59,7 @@ public class LostFoundDetailActivity extends AppCompatActivity {
         itemCategory=extras.getString("lostCategory");
         lostDate = extras.getString("lostDate");
         checkYourUpload=extras.getBoolean("checkYourUpload");
+        email =extras.getString("email");
 
         if(checkYourUpload){
             ivEditItem.setVisibility(View.VISIBLE);
@@ -87,7 +88,13 @@ public class LostFoundDetailActivity extends AppCompatActivity {
     public void onBackClicked(View view){
         finish();
     }
+    public void onSellerClicked(View view){
 
+        Intent sellerIntent = new Intent(this,ViewOtherProfileActivity.class);
+        sellerIntent.putExtra("email",email);
+
+        startActivity(sellerIntent);
+    }
     public void onEditLostItemClicked(View view){
 
         Intent itemDetailIntent = new Intent(this,EditLostItemActivity.class);
