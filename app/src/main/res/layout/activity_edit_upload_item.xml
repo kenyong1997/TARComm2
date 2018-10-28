@@ -190,7 +190,7 @@
                         android:layout_marginBottom="10dp"
                         android:fontFamily="sans-serif-condensed"
                         android:textSize="20sp"
-                        android:text="Upload"
+                        android:text="Save"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:textStyle="bold"

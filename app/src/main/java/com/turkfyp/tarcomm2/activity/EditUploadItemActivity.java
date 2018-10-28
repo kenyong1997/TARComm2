@@ -74,6 +74,7 @@ public class EditUploadItemActivity extends AppCompatActivity {
     protected TextView tvEditItemPrice;
     protected RadioGroup rgItemCategory;
     protected RadioButton category_sell,category_buy,category_trade, rbEditItemCategory;
+    protected Button btnCancelEditItem,btnUploadEditItem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +89,8 @@ public class EditUploadItemActivity extends AppCompatActivity {
         category_trade = (RadioButton) findViewById(R.id.category_trade);
         imgViewEditMarketItem = (ImageView) findViewById(R.id.imgViewEditMarketItem);
         tvEditItemPrice = (TextView) findViewById(R.id.tvEditItemPrice);
+        btnCancelEditItem = (Button) findViewById(R.id.btnCancelEditItem);
+        btnUploadEditItem = (Button) findViewById(R.id.btnUploadEditItem);
 
         //put on click
         //rbEditItemCategory = (RadioButton) findViewById(rgItemCategory.getCheckedRadioButtonId());
@@ -137,6 +140,80 @@ public class EditUploadItemActivity extends AppCompatActivity {
                 }
             }
         });
+
+        imgViewEditMarketItem.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                showFileChooser();
+            }
+        });
+        btnCancelEditItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        btnUploadEditItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //Get Updated Radio Button Value
+                rbEditItemCategory = (RadioButton) findViewById(rgItemCategory.getCheckedRadioButtonId());
+
+                String itemName = etEditItemName.getText().toString();
+                String itemDesc = etEditItemDesc.getText().toString();
+                String itemCategory = rbEditItemCategory.getText().toString();
+                String itemPrice;
+
+
+                if(itemCategory.equals("Want To Sell"))
+                    itemCategory = "WTS";
+                else if(itemCategory.equals("Want To Buy"))
+                    itemCategory = "WTB";
+                else if (itemCategory.equals("Want To Trade"))
+                    itemCategory = "WTT";
+
+                if(itemCategory.equals("WTT"))
+                    itemPrice = "0";
+                else
+                    itemPrice = etEditItemPrice.getText().toString();
+
+                SharedPreferences preferences = getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
+
+                if(TextUtils.isEmpty(itemName))
+                    etEditItemName.setError("This field is required.");
+                if(TextUtils.isEmpty(itemDesc))
+                    etEditItemDesc.setError("This field is required.");
+                if(TextUtils.isEmpty(itemPrice))
+                    itemPrice = "0";
+
+
+                if(!TextUtils.isEmpty(itemName) && !TextUtils.isEmpty(itemDesc)) {
+                    Item item = new Item();
+                    item.setItemCategory(itemCategory);
+                    item.setItemName(itemName);
+                    item.setItemDescription(itemDesc);
+                    item.setItemPrice(itemPrice);
+                    item.setEmail(preferences.getString("email", ""));
+                    item.setSellerName(preferences.getString("loggedInUser", ""));
+                    item.setSellerContact(preferences.getString("contactNo", ""));
+                    uploadImage(item);
+
+
+                    progressDialog = new ProgressDialog(getApplicationContext());
+                    try {
+                        makeServiceCall(getApplicationContext(), "https://tarcomm.000webhostapp.com/createItem.php", item);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext() , "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            }
+        });
+
+
     }
 
 
@@ -148,59 +225,45 @@ public class EditUploadItemActivity extends AppCompatActivity {
     public  void onCancelEditProfileClicked(View view){
         onBackPressed();
     }
-
-
-
-
-    public void onEditProfileClicked(View view){
-        Intent i = new Intent (this,EditProfileActivity.class);
-        startActivity(i);
+    public void onBackClicked(View view){
+        finish();
     }
+
+
+
     private void showFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
-    public void onBackClicked(View view){
-        finish();
-    }
-    public boolean isValidContact(String string) {
-        String PATTERN;
 
-        //PATTERN = only 1 - 9 and length is 12
-        PATTERN = "^[0-9]{10}$";
 
-        Pattern pattern = Pattern.compile(PATTERN);
-        Matcher matcher = pattern.matcher(string);
-        return matcher.matches();
-    }
 
-    public void makeServiceCall(Context context, String url, final User user) {
 
+    public void makeServiceCall(Context context, String url, final Item item) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        //Send data
-        try {
+        try{
 
-            //setting up progress dialog
-            if (!progressDialog.isShowing()) ;
-            progressDialog.setMessage("Saving");
-            progressDialog.show();
+            if(!progressDialog.isShowing()){
+                progressDialog.setMessage("Uploading");
+                progressDialog.show();
+            }
 
             StringRequest postRequest = new StringRequest(
-                    Request.Method.POST,
-                    url,
+                    Request.Method.POST, url,
                     new Response.Listener<String>() {
-
                         @Override
                         public void onResponse(String response) {
                             JSONObject jsonObject;
-                            try {
+
+                            try{
                                 jsonObject = new JSONObject(response);
                                 int success = jsonObject.getInt("success");
                                 String message = jsonObject.getString("message");
-                                if (success == 0) {
+
+                                if(success == 0){
                                     if (progressDialog.isShowing())
                                         progressDialog.dismiss();
 
@@ -210,54 +273,29 @@ public class EditUploadItemActivity extends AppCompatActivity {
                                         progressDialog.dismiss();
 
                                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                                    startActivity(new Intent(EditUploadItemActivity.this,ViewProfileActivity.class));
+                                    startActivity(new Intent(EditUploadItemActivity.this,MarketplaceActivity.class));
                                     finish();
                                 }
-
-                                SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
-                                SharedPreferences.Editor editor = preferences.edit();
-
-                                String imgURL = "https://tarcomm.000webhostapp.com/getUserImage.php?email="+user.getEmail();
-
-                                editor.putString("loggedInUser", user.getFullname());
-                                editor.putString("dateofbirth",user.getDateofbirth());
-                                editor.putString("gender",user.getGender());
-                                editor.putString("password", user.getPassword());
-                                editor.putString("email",user.getEmail());
-                                editor.putString("profilePicURL", imgURL);
-                                editor.putString("contactNo", user.getContactno());
-                                editor.putString("faculty",user.getFaculty());
-                                editor.putString("course", user.getCourse());
-                                editor.putString("biodata", user.getBiodata());
-
-                                editor.apply();
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getApplicationContext(), "Error. " + error.toString(), Toast.LENGTH_LONG).show();
-                        }
-                    }) {
+                    }, new Response.ErrorListener() {
                 @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getApplicationContext(), "Error. " + error.toString(), Toast.LENGTH_LONG).show();
+                }
+            }){
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
 
                     // put the parameters with specific values
-                    params.put("email", user.getEmail());
-                    params.put("profilepicURL", user.getProfilepicURL());
-                    params.put("fullName", user.getFullname());
-                    params.put("gender",user.getGender());
-                    params.put("contactNo", user.getContactno());
-                    params.put("dob",user.getDateofbirth());
-                    params.put("faculty", user.getFaculty());
-                    params.put("course", user.getCourse());
-                    params.put("biodata", user.getBiodata());
-
+                    params.put("itemCategory", item.getItemCategory());
+                    params.put("itemName", item.getItemName());
+                    params.put("itemDesc", item.getItemDescription());
+                    params.put("itemImage", item.getImageURL());
+                    params.put("itemPrice", String.valueOf(item.getItemPrice()));
+                    params.put("email", item.getEmail());
 
                     return params;
                 }
@@ -269,49 +307,18 @@ public class EditUploadItemActivity extends AppCompatActivity {
                     return params;
                 }
             };
+
             queue.add(postRequest);
-        } catch (Exception e) {
+
+        }catch(Exception e) {
             e.printStackTrace();
-
         }
     }
 
 
 
-    //Get Profile Image for Navigation Menu
-    private void convertImage(String imageURL){
-        class ConvertImage extends AsyncTask<String, Void, Bitmap> {
-
-            @Override
-            protected Bitmap doInBackground(String... strings) {
-                String imageURL = strings[0];
-
-                try {
-                    URL url = new URL(imageURL);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setDoInput(true);
-                    connection.connect();
-                    InputStream input = connection.getInputStream();
-                    Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                    return myBitmap;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-
-            @Override
-            protected void onPostExecute(Bitmap bitmap) {
-                super.onPostExecute(bitmap);
 
 
-                ImageView imgViewProfilePic = (ImageView) findViewById(R.id.imgViewEditMarketItem);
-                imgViewProfilePic.setImageBitmap(bitmap);
-            }
-        }
-        ConvertImage convertImage = new ConvertImage();
-        convertImage.execute(imageURL);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -321,8 +328,9 @@ public class EditUploadItemActivity extends AppCompatActivity {
             filePath = data.getData();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                imgViewEditMarketItem.setBackgroundColor(Color.WHITE);
                 imgViewEditMarketItem.setImageBitmap(bitmap);
-                imgViewEditMarketItem.setBackgroundResource(0);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -337,7 +345,7 @@ public class EditUploadItemActivity extends AppCompatActivity {
         return encodedImage;
     }
 
-    private String uploadImage(final User user) {
+    private Item uploadImage(final Item item) {
         class UploadImage extends AsyncTask<Bitmap, Void, String> {
             String image;
 
@@ -348,14 +356,14 @@ public class EditUploadItemActivity extends AppCompatActivity {
 
                 image = uploadImage;
 
-                user.setProfilepicURL(image);
+                item.setImageURL(image);
                 return uploadImage;
             }
         }
         UploadImage ui = new UploadImage();
         ui.execute(bitmap);
 
-        return ui.image;
+        return item;
     }
 }
 
