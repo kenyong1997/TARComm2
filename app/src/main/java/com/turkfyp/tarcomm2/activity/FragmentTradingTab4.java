@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +62,7 @@ public class FragmentTradingTab4 extends Fragment {
     ItemUploadAdapter itemUploadAdapter;
     List<String> listDataHeader;
     HashMap<String, List<Item>> listDataChild;
+    ImageView ivAddMinus;
 
     RequestQueue queue;
 
