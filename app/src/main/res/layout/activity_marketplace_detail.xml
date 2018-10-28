@@ -59,6 +59,7 @@
                     android:id="@+id/ivEditItem"
                     android:layout_marginRight="15dp"
                     android:visibility="invisible"
+                    android:onClick="onEditItemClicked"
                     android:src="@drawable/ic_edit" />
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>

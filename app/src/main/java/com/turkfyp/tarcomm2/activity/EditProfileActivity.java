@@ -57,7 +57,6 @@ import java.util.regex.Pattern;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditProfileActivity extends AppCompatActivity {
-    private static final long RIPPLE_DURATION = 250;
     private int PICK_IMAGE_REQUEST = 1;
     private Bitmap bitmap;
     private Uri filePath;
@@ -77,35 +76,14 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        // For side menu
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        FrameLayout editprofile_layout = (FrameLayout) findViewById(R.id.editprofile_layout);
-        View contentHamburger = (View) findViewById(R.id.content_hamburger);
-
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle(null);
-        }
-
-        View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
-        editprofile_layout.addView(guillotineMenu);
-
-        TextView tvUserFullName = (TextView) findViewById(R.id.tvUserFullName);
-
         SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
 
-        //Set User Name on Navigation Bar
-        tvUserFullName.setText(preferences.getString("loggedInUser",""));
 
         //Set Profile Picture on Navigation Bar
         String imageURL = preferences.getString("profilePicURL","");
         convertImage(imageURL);
 
-        new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
-                .setStartDelay(RIPPLE_DURATION)
-                .setActionBarViewForAnimation(toolbar)
-                .setClosedOnStart(true)
-                .build();
+
 
         //------------------------Activity Codes
 
@@ -234,14 +212,15 @@ public class EditProfileActivity extends AppCompatActivity {
         Intent i = new Intent (this,EditProfileActivity.class);
         startActivity(i);
     }
-
     private void showFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
-
+    public void onBackClicked(View view){
+        finish();
+    }
     public boolean isValidContact(String string) {
         String PATTERN;
 
@@ -414,8 +393,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(Bitmap bitmap) {
                 super.onPostExecute(bitmap);
-                CircleImageView profile_image = (CircleImageView) findViewById(R.id.profile_image);
-                profile_image.setImageBitmap(bitmap);
+
 
                 CircleImageView imgViewProfilePic = (CircleImageView) findViewById(R.id.imgViewEditProfilePic);
                 imgViewProfilePic.setImageBitmap(bitmap);

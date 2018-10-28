@@ -1,6 +1,7 @@
 package com.turkfyp.tarcomm2.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
@@ -10,10 +11,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.turkfyp.tarcomm2.DatabaseObjects.Item;
 import com.turkfyp.tarcomm2.R;
 
 public class MarketplaceDetailActivity extends AppCompatActivity {
@@ -21,8 +24,9 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
     protected TextView tvDetailItemName, tvDetailItemPrice, tvDetailItemDesc, tvDetailItemSeller,tvDetailSellerContact;
     protected ImageView imageViewDetailItem,ivEditItem,ivDeleteItem,ivItemPrice;
     protected LinearLayout llItemPrice;
-    protected String sellerContact, itemSeller, itemName, itemDesc, itemPrice;
+    protected String sellerContact, itemSeller, itemName, itemDesc, itemPrice, imageURL, itemCategory;
     protected Boolean checkYourUpload,checkWTT;
+    protected Bitmap image;
 
     int itemID;
     private ProgressDialog pDialog;
@@ -62,6 +66,7 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
         itemPrice = extras.getString("itemPrice");
         checkYourUpload = extras.getBoolean("checkYourUpload");
         checkWTT = extras.getBoolean("checkWTT");
+        itemCategory = extras.getString("itemCategory");
 
 
 
@@ -86,13 +91,28 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
             ivItemPrice.setVisibility(View.GONE);
             llItemPrice.setVisibility(View.GONE);
         }
-        Bitmap image = extras.getParcelable("Image");
+        image = extras.getParcelable("Image");
         imageViewDetailItem.setImageBitmap(image);
 
-        String imageURL = extras.getString("ImageURL");
+        imageURL = extras.getString("ImageURL");
         itemID = Integer.parseInt(imageURL.split("=")[1]);
+
+
     }
 
+    public void onEditItemClicked(View view){
+
+        Intent itemDetailIntent = new Intent(this,EditUploadItemActivity.class);
+        itemDetailIntent.putExtra("itemCategory",itemCategory);
+        itemDetailIntent.putExtra("itemName",itemName);
+        itemDetailIntent.putExtra("itemPrice",itemPrice);
+        itemDetailIntent.putExtra("itemDesc",itemDesc);
+        itemDetailIntent.putExtra("itemCategory",itemCategory);
+        itemDetailIntent.putExtra("Image", image);
+        itemDetailIntent.putExtra("ImageURL", imageURL);
+
+        startActivity(itemDetailIntent);
+    }
     public void onBackClicked(View view){
         finish();
     }

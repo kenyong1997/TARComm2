@@ -86,8 +86,8 @@ public class FragmentAddMarketItem extends Fragment {
                     tvItemPrice.setVisibility(View.VISIBLE);
                     etItemPrice.setVisibility(View.VISIBLE);
                 }else if (checkedId == R.id.category_trade){
-                    tvItemPrice.setVisibility(View.INVISIBLE);
-                    etItemPrice.setVisibility(View.INVISIBLE);
+                    tvItemPrice.setVisibility(View.GONE);
+                    etItemPrice.setVisibility(View.GONE);
                 }
             }
         });
