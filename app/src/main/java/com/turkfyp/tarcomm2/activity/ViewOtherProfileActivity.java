@@ -73,10 +73,12 @@ public class ViewOtherProfileActivity extends AppCompatActivity {
         finish();
     }
 
-    public void view_profile_onclick(View view){
-        Intent i = new Intent (this,ViewProfileActivity.class);
+    public void onViewOtherPostClicked(View view){
+        Intent i = new Intent (this,ViewOtherPostActivity.class);
+        i.putExtra("email",email);
         startActivity(i);
     }
+
 
     public void findUser(Context context, String url, final String userEmail) {
         //mPostCommentResponse.requestStarted();

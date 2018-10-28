@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/viewpost_layout"
+    android:id="@+id/viewotherpost_layout"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.turkfyp.tarcomm2.activity.ViewPostActivity">
+    tools:context="com.turkfyp.tarcomm2.activity.ViewOtherPostActivity">
 
     <View
         android:layout_gravity="top"
@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Your Posts"
+                android:text="Posts"
                 android:textSize="@dimen/guillotine_item_text_size" />
         </android.support.v7.widget.Toolbar>
 
@@ -46,12 +46,33 @@
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent" />-->
 
-        <FrameLayout
-            android:id="@+id/viewpost_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
 
-        </FrameLayout>
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:background="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefreshMarketplace"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ExpandableListView
+                    android:id="@+id/elvItemUpload"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:paddingBottom="10dp"
+                    android:scrollbars="vertical"/>
+
+            </android.support.v4.widget.SwipeRefreshLayout>
+
+
+
+
+        </RelativeLayout>
 
 
     </LinearLayout>

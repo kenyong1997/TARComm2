@@ -74,7 +74,8 @@
         <activity android:name=".activity.EditUploadItemActivity" />
         <activity android:name=".activity.EditLostItemActivity" />
         <activity android:name=".activity.ViewOtherProfileActivity" />
-        <activity android:name=".activity.ViewPostActivity"></activity>
+        <activity android:name=".activity.ViewPostActivity" />
+        <activity android:name=".activity.ViewOtherPostActivity"></activity>
     </application>
 
 </manifest>

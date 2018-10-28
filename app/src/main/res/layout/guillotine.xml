@@ -125,6 +125,7 @@
 
         <com.turkfyp.tarcomm2.widget.CanaroTextView
             style="@style/TextView.GuillotineItem"
+            android:textColor="@color/light_gray"
             android:text="Friends" />
     </LinearLayout>
     <LinearLayout
@@ -158,6 +159,7 @@
 
             <com.turkfyp.tarcomm2.widget.CanaroTextView
                 style="@style/TextView.GuillotineItem"
+                android:textColor="@color/light_gray"
                 android:text="Friends Nearby" />
     </LinearLayout>
     <LinearLayout
@@ -170,6 +172,7 @@
 
                 <com.turkfyp.tarcomm2.widget.CanaroTextView
                     style="@style/TextView.GuillotineItem"
+                    android:textColor="@color/light_gray"
                     android:text="Events Ongoing" />
     </LinearLayout>
     <LinearLayout
@@ -190,6 +193,7 @@
 
         <com.turkfyp.tarcomm2.widget.CanaroTextView
             style="@style/TextView.GuillotineItem"
+            android:textColor="@color/light_gray"
             android:text="Contact for Promotion" />
     </LinearLayout>
     <LinearLayout
@@ -202,6 +206,7 @@
 
         <com.turkfyp.tarcomm2.widget.CanaroTextView
             style="@style/TextView.GuillotineItem"
+            android:textColor="@color/light_gray"
             android:text="FAQ" />
     </LinearLayout>
     <LinearLayout
