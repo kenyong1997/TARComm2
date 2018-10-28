@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -27,6 +28,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.turkfyp.tarcomm2.DatabaseObjects.Item;
 import com.turkfyp.tarcomm2.DatabaseObjects.ItemAdapter;
+import com.turkfyp.tarcomm2.DatabaseObjects.ItemUploadAdapter;
+import com.turkfyp.tarcomm2.DatabaseObjects.LostFound;
+import com.turkfyp.tarcomm2.DatabaseObjects.LostFoundUploadAdapter;
 import com.turkfyp.tarcomm2.R;
 
 import org.json.JSONArray;
@@ -50,6 +54,12 @@ public class FragmentTradingTab4 extends Fragment {
     SwipeRefreshLayout swipeRefreshMarketplace;
     List<Item> itemList;
 
+
+    ExpandableListView elvItemUpload;
+    ItemUploadAdapter itemUploadAdapter;
+    List<String> listDataHeader;
+    HashMap<String, List<Item>> listDataChild;
+
     RequestQueue queue;
 
     public FragmentTradingTab4() {}
@@ -65,7 +75,8 @@ public class FragmentTradingTab4 extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_trading_tab4, container, false);
 
-        lvMarketplace = (ListView) v.findViewById(R.id.lvMarketplace);
+        //lvMarketplace = (ListView) v.findViewById(R.id.lvMarketplace);
+        elvItemUpload = (ExpandableListView) v.findViewById(R.id.elvItemUpload);
         swipeRefreshMarketplace = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefreshMarketplace);
         FloatingActionButton fabAddMarketItem = (FloatingActionButton)v.findViewById(R.id.addMarketItemFAB);
 
@@ -82,10 +93,35 @@ public class FragmentTradingTab4 extends Fragment {
         }
 
         //when a particular item was selected to view more details
-        lvMarketplace.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//        lvMarketplace.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Item selectedItem =(Item)parent.getItemAtPosition(position);
+//                Intent itemDetailIntent = new Intent(getActivity(),MarketplaceDetailActivity.class);
+//                itemDetailIntent.putExtra("itemCategory", selectedItem.getItemCategory());
+//                itemDetailIntent.putExtra("itemName",selectedItem.getItemName());
+//                itemDetailIntent.putExtra("itemPrice",selectedItem.getItemPrice());
+//                itemDetailIntent.putExtra("itemDesc",selectedItem.getItemDescription());
+//                itemDetailIntent.putExtra("itemSeller",selectedItem.getSellerName());
+//                itemDetailIntent.putExtra("sellerContact",selectedItem.getSellerContact());
+//                itemDetailIntent.putExtra("checkYourUpload",true);
+//
+//                ImageView ivImage = (ImageView) view.findViewById(R.id.ivItemImage);
+//                ivImage.buildDrawingCache();
+//                Bitmap image = ivImage.getDrawingCache();
+//                itemDetailIntent.putExtra("Image", image);
+//                itemDetailIntent.putExtra("ImageURL", selectedItem.getImageURL());
+//
+//                startActivity(itemDetailIntent);
+//            }
+//        });
+
+        elvItemUpload.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Item selectedItem =(Item)parent.getItemAtPosition(position);
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
+                Item selectedItem;
+                selectedItem = listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition);
+
                 Intent itemDetailIntent = new Intent(getActivity(),MarketplaceDetailActivity.class);
                 itemDetailIntent.putExtra("itemCategory", selectedItem.getItemCategory());
                 itemDetailIntent.putExtra("itemName",selectedItem.getItemName());
@@ -102,9 +138,9 @@ public class FragmentTradingTab4 extends Fragment {
                 itemDetailIntent.putExtra("ImageURL", selectedItem.getImageURL());
 
                 startActivity(itemDetailIntent);
+                return false;
             }
         });
-
         fabAddMarketItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,6 +156,13 @@ public class FragmentTradingTab4 extends Fragment {
         // Instantiate the RequestQueue
         queue = Volley.newRequestQueue(context);
 
+        listDataHeader = new ArrayList<String>();
+        listDataChild = new HashMap<String, List<Item>>();
+
+        listDataHeader.add("Want To Sell Item");
+        listDataHeader.add("Want To Buy Item");
+        listDataHeader.add("Want To Trade Item");
+
         try{
             StringRequest postRequest = new StringRequest(
                     Request.Method.POST,
@@ -131,6 +174,11 @@ public class FragmentTradingTab4 extends Fragment {
                                 JSONArray j = new JSONArray(response);
                                 try {
                                     itemList.clear();
+
+                                    List<Item> sellItemList = new ArrayList<>();
+                                    List<Item> buyItemList = new ArrayList<>();
+                                    List<Item> tradeItemList = new ArrayList<>();
+
                                     for (int i = 0; i < j.length(); i++) {
                                         JSONObject textbookResponse = (JSONObject) j.get(i);
 
@@ -144,10 +192,23 @@ public class FragmentTradingTab4 extends Fragment {
                                         String sellerContact = textbookResponse.getString("contactno");
 
                                         Item item = new Item(itemCategory, itemName, itemDescription, imageURL, itemPrice, email, sellerName, sellerContact);
-                                        itemList.add(item);
+
+                                        if(itemCategory.equals("WTS"))
+                                            sellItemList.add(item);
+                                        else if(itemCategory.equals("WTB"))
+                                            buyItemList.add(item);
+                                        else
+                                            tradeItemList.add(item);
                                     }
-                                    //load the item into adapter
-                                    loadItem();
+                                    listDataChild.put(listDataHeader.get(0), sellItemList);
+                                    listDataChild.put(listDataHeader.get(1), buyItemList);
+                                    listDataChild.put(listDataHeader.get(2), tradeItemList);
+
+                                    itemUploadAdapter = new ItemUploadAdapter(getActivity(),listDataHeader, listDataChild);
+                                    elvItemUpload.setAdapter(itemUploadAdapter);
+                                    elvItemUpload.expandGroup(0);
+                                    elvItemUpload.expandGroup(1);
+                                    elvItemUpload.expandGroup(2);
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
