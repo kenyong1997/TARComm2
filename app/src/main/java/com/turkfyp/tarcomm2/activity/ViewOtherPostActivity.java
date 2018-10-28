@@ -95,6 +95,23 @@ public class ViewOtherPostActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        swipeRefreshMarketplace.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                swipeRefreshMarketplace.setRefreshing(true);
+                try {
+                    downloadTradingRecords(getApplicationContext(), GET_URL);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+                swipeRefreshMarketplace.setRefreshing(false);
+            }
+        });
+
     }
     public void onBackClicked(View view){
         finish();
