@@ -3,11 +3,11 @@
     <item android:state_expanded="false">
         <layer-list>
             <item
-                android:width="30dp"
-                android:height="30dp"
-                android:left="5dp"
+                android:width="25dp"
+                android:height="25dp"
+                android:left="8dp"
                 android:right="10dp"
-                android:top="7dp"
+                android:top="8dp"
                 android:bottom="10dp"
                 android:drawable="@drawable/ic_add">
             </item>
@@ -17,11 +17,11 @@
     <item android:state_expanded="true">
         <layer-list>
             <item
-                android:width="30dp"
-                android:height="30dp"
-                android:left="5dp"
+                android:width="25dp"
+                android:height="25dp"
+                android:left="8dp"
                 android:right="10dp"
-                android:top="7dp"
+                android:top="8dp"
                 android:bottom="10dp"
                 android:drawable="@drawable/ic_minus"
                 >
