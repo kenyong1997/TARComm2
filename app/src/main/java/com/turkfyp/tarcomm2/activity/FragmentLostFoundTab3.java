@@ -76,6 +76,7 @@ public class FragmentLostFoundTab3 extends Fragment {
         swipeRefreshLostFound = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefreshLostFound);
         FloatingActionButton fabAddItem = (FloatingActionButton)v.findViewById(R.id.addItemFAB);
 
+
         try {
             //initialize lostFoundList
             lostFoundList = new ArrayList<>();
