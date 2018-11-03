@@ -1,7 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/ic_add"
-        android:state_empty="true" />
-    <item android:drawable="@drawable/ic_minus"
-        android:state_expanded="true" />
+    <item android:state_expanded="false">
+        <layer-list>
+            <item
+                android:width="30dp"
+                android:height="30dp"
+                android:left="5dp"
+                android:right="10dp"
+                android:top="7dp"
+                android:bottom="10dp"
+                android:drawable="@drawable/ic_add">
+            </item>
+        </layer-list>
+    </item>
+
+    <item android:state_expanded="true">
+        <layer-list>
+            <item
+                android:width="30dp"
+                android:height="30dp"
+                android:left="5dp"
+                android:right="10dp"
+                android:top="7dp"
+                android:bottom="10dp"
+                android:drawable="@drawable/ic_minus"
+                >
+            </item>
+        </layer-list>
+    </item>
 </selector>

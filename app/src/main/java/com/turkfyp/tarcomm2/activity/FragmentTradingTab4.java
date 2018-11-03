@@ -79,8 +79,14 @@ public class FragmentTradingTab4 extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_trading_tab4, container, false);
 
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int width = metrics.widthPixels;
+
         //lvMarketplace = (ListView) v.findViewById(R.id.lvMarketplace);
         elvItemUpload = (ExpandableListView) v.findViewById(R.id.elvItemUpload);
+
         swipeRefreshMarketplace = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefreshMarketplace);
         FloatingActionButton fabAddMarketItem = (FloatingActionButton)v.findViewById(R.id.addMarketItemFAB);
 
@@ -148,7 +154,12 @@ public class FragmentTradingTab4 extends Fragment {
 
         return v;
     }
-
+    public int GetPixelFromDips(float pixels) {
+        // Get the screen's density scale
+        final float scale = getResources().getDisplayMetrics().density;
+        // Convert the dps to pixels, based on density scale
+        return (int) (pixels * scale + 0.5f);
+    }
     //retrieve the records from database
     public void downloadTradingRecords(Context context, String url) {
         // Instantiate the RequestQueue
