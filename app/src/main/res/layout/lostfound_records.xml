@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:weightSum="1"
-    android:background="@drawable/card_purpleborder">
+    android:background="@drawable/card_purpleborder"
+    android:id="@+id/lostFound_container">
 
     <ImageView
         android:id="@+id/imageViewLostItemImage"

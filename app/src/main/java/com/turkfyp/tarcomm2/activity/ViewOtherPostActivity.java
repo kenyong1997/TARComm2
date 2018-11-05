@@ -21,7 +21,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.turkfyp.tarcomm2.DatabaseObjects.Item;
-import com.turkfyp.tarcomm2.DatabaseObjects.ItemAdapter;
 import com.turkfyp.tarcomm2.DatabaseObjects.ItemUploadAdapter;
 import com.turkfyp.tarcomm2.R;
 

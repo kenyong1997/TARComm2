@@ -18,12 +18,18 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.R;
 
 public class LostFoundUploadAdapter extends BaseExpandableListAdapter {
 
+    RequestOptions options;
     private Context _context;
-    private List<String> _listDataHeader; // header titles
+
+    // header titles
+    private List<String> _listDataHeader;
+
     // child data in format of header title, child title
     private HashMap<String, List<LostFound>> _listDataChild;
 
@@ -32,6 +38,12 @@ public class LostFoundUploadAdapter extends BaseExpandableListAdapter {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
+
+        //For Glide image
+        options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.background_white)
+                .error(R.drawable.background_white);
     }
 
     @Override
@@ -68,7 +80,11 @@ public class LostFoundUploadAdapter extends BaseExpandableListAdapter {
         tvLostItemName.setText(lostFound.getLostItemName());
         tvLostItemDate.setText(lostFound.getLostDate());
         tvLostItemOwner.setText(lostFound.getContactName());
-        getImage(lostFound.getLostItemURL(), ivLostItemImage);
+
+        //Load image into imageViewer with Glide
+        Glide.with(_context).load(lostFound.getLostItemURL()).apply(options).into(ivLostItemImage);
+
+        //getImage(lostFound.getLostItemURL(), ivLostItemImage);
 
         return convertView;
     }

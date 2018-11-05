@@ -12,6 +12,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.R;
 
 import java.io.IOException;
@@ -22,8 +24,11 @@ import java.util.List;
 
 public class ItemUploadAdapter extends BaseExpandableListAdapter {
 
+    RequestOptions options;
     private Context _context;
-    private List<String> _listDataHeader; // header titles
+
+    //header titles
+    private List<String> _listDataHeader;
     // child data in format of header title, child title
     private HashMap<String, List<Item>> _listDataChild;
 
@@ -32,6 +37,12 @@ public class ItemUploadAdapter extends BaseExpandableListAdapter {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
+
+        //For Glide image
+        options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.background_white)
+                .error(R.drawable.background_white);
     }
 
     @Override
@@ -76,7 +87,10 @@ public class ItemUploadAdapter extends BaseExpandableListAdapter {
             ivPrice.setVisibility(View.GONE);
         }
 
-        getImage(item.getImageURL(), ivTradingImage);
+        //Load image into imageViewer with Glide
+        Glide.with(_context).load(item.getImageURL()).apply(options).into(ivTradingImage);
+
+        //getImage(item.getImageURL(), ivTradingImage);
         return convertView;
     }
 

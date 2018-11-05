@@ -11,8 +11,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -23,12 +21,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.turkfyp.tarcomm2.DatabaseObjects.ItemAdapter;
 import com.turkfyp.tarcomm2.DatabaseObjects.LostFound;
-import com.turkfyp.tarcomm2.DatabaseObjects.LostFoundAdapter;
 import com.turkfyp.tarcomm2.DatabaseObjects.LostFoundUploadAdapter;
 import com.turkfyp.tarcomm2.R;
 
@@ -186,11 +181,7 @@ public class FragmentLostFoundTab3 extends Fragment {
                                             lostList.add(lostFound);
                                         else
                                             foundList.add(lostFound);
-
-//                                        lostFoundList.add(lostFound);
                                     }
-                                    //load the item into adapter
-//                                    loadItem();
 
                                     listDataChild.put(listDataHeader.get(0), lostList);
                                     listDataChild.put(listDataHeader.get(1), foundList);
@@ -236,15 +227,6 @@ public class FragmentLostFoundTab3 extends Fragment {
         }
     }
 
-
-    private void loadItem() {
-        final LostFoundAdapter adapter = new LostFoundAdapter(getActivity(), R.layout.fragment_lost_found_tab3, lostFoundList);
-        lvLostFound.setAdapter(adapter);
-
-    }
-
-
-
     @Override
     public void onResume() {
         super.onResume();
@@ -254,7 +236,8 @@ public class FragmentLostFoundTab3 extends Fragment {
                 lostFoundList = new ArrayList<>();
                 downloadLostFoundRecords(getActivity().getApplicationContext(), GET_URL);
             } else {
-                loadItem();
+                lostFoundUploadAdapter = new LostFoundUploadAdapter(getActivity(),listDataHeader, listDataChild);
+                elvLostFoundUpload.setAdapter(lostFoundUploadAdapter);
             }
             getFragmentManager().beginTransaction().detach(this).attach(this).commit();
         }

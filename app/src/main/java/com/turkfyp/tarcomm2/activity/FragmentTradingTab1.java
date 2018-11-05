@@ -1,8 +1,6 @@
 package com.turkfyp.tarcomm2.activity;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,9 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -22,8 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.turkfyp.tarcomm2.DatabaseObjects.Item;
-import com.turkfyp.tarcomm2.DatabaseObjects.ItemAdapter;
-import com.turkfyp.tarcomm2.DatabaseObjects.RvAdapter;
+import com.turkfyp.tarcomm2.DatabaseObjects.ItemRVAdapter;
 import com.turkfyp.tarcomm2.R;
 
 import org.json.JSONArray;
@@ -35,16 +29,13 @@ import java.util.List;
 public class FragmentTradingTab1 extends Fragment {
 
     public static boolean allowRefresh;
-
     private static final String TAG = "FragmentTradingTab1";
 
     private static String GET_URL = "https://tarcomm.000webhostapp.com/getItemWTS.php";
-    ListView lvMarketplace;
     SwipeRefreshLayout swipeRefreshMarketplace;
     List<Item> itemList;
 
     RequestQueue queue;
-
     RecyclerView rvMarketplace;
 
     public FragmentTradingTab1() {}
@@ -60,13 +51,11 @@ public class FragmentTradingTab1 extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_trading_tab1, container, false);
 
-        //lvMarketplace = (ListView) v.findViewById(R.id.lvMarketplace);
         swipeRefreshMarketplace = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefreshMarketplace);
-
         rvMarketplace = (RecyclerView) v.findViewById(R.id.rvMarketplace);
 
         try {
-            //initialize textBookList
+            //initialize itemList
             itemList = new ArrayList<>();
 
             downloadTradingRecords(getActivity().getApplicationContext(), GET_URL);
@@ -131,23 +120,20 @@ public class FragmentTradingTab1 extends Fragment {
                         try {
                             itemList.clear();
                             for (int i = 0; i < response.length(); i++) {
-                                JSONObject textbookResponse = (JSONObject) response.get(i);
-                                String itemCategory = textbookResponse.getString("itemCategory");
-                                String itemName = textbookResponse.getString("itemName");
-                                String itemDescription = textbookResponse.getString("itemDesc");
-                                String imageURL = textbookResponse.getString("url");
-                                String itemPrice = textbookResponse.getString("itemPrice");
-                                String email = textbookResponse.getString("email");
-                                String sellerName = textbookResponse.getString("fullname");
-                                String sellerContact = textbookResponse.getString("contactno");
+                                JSONObject itemResponse = (JSONObject) response.get(i);
+                                String itemCategory = itemResponse.getString("itemCategory");
+                                String itemName = itemResponse.getString("itemName");
+                                String itemDescription = itemResponse.getString("itemDesc");
+                                String imageURL = itemResponse.getString("url");
+                                String itemPrice = itemResponse.getString("itemPrice");
+                                String email = itemResponse.getString("email");
+                                String sellerName = itemResponse.getString("fullname");
+                                String sellerContact = itemResponse.getString("contactno");
 
                                 Item item = new Item(itemCategory, itemName, itemDescription, imageURL, itemPrice, email, sellerName, sellerContact);
                                 itemList.add(item);
                             }
-
-                            //load the item into adapter
-                            //loadItem();
-
+                            //Load item into RecyclerView Adapter
                             setRVAdapter(itemList);
 
                         } catch (Exception e) {
@@ -168,19 +154,10 @@ public class FragmentTradingTab1 extends Fragment {
 
         // Add the request to the RequestQueue.
         queue.add(jsonObjectRequest);
-
-
-    }
-
-
-    private void loadItem() {
-        final ItemAdapter adapter = new ItemAdapter(getActivity(), R.layout.fragment_trading_tab1, itemList);
-        lvMarketplace.setAdapter(adapter);
-
     }
 
     private void setRVAdapter(List<Item> itemList){
-        RvAdapter myAdapter = new RvAdapter(getActivity(),itemList) ;
+        ItemRVAdapter myAdapter = new ItemRVAdapter(getActivity(),itemList) ;
         rvMarketplace.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvMarketplace.setAdapter(myAdapter);
     }
@@ -194,7 +171,7 @@ public class FragmentTradingTab1 extends Fragment {
                 itemList = new ArrayList<>();
                 downloadTradingRecords(getActivity().getApplicationContext(), GET_URL);
             } else {
-                loadItem();
+                setRVAdapter(itemList);
             }
             getFragmentManager().beginTransaction().detach(this).attach(this).commit();
         }
