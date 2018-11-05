@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshMarketplace"
         android:layout_width="match_parent"
@@ -27,18 +26,15 @@
         <!--</ListView>-->
 
         <android.support.v7.widget.RecyclerView
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
             android:id="@+id/rvMarketplace"
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
         </android.support.v7.widget.RecyclerView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
-
-
-
 
 </RelativeLayout>

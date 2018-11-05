@@ -4,10 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,7 +12,6 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -26,14 +22,10 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.turkfyp.tarcomm2.DatabaseObjects.Item;
-import com.turkfyp.tarcomm2.DatabaseObjects.ItemAdapter;
 import com.turkfyp.tarcomm2.DatabaseObjects.ItemUploadAdapter;
-import com.turkfyp.tarcomm2.DatabaseObjects.LostFound;
-import com.turkfyp.tarcomm2.DatabaseObjects.LostFoundUploadAdapter;
 import com.turkfyp.tarcomm2.R;
 
 import org.json.JSONArray;
@@ -189,16 +181,16 @@ public class FragmentTradingTab4 extends Fragment {
                                     List<Item> tradeItemList = new ArrayList<>();
 
                                     for (int i = 0; i < j.length(); i++) {
-                                        JSONObject textbookResponse = (JSONObject) j.get(i);
+                                        JSONObject lostFoundResponse = (JSONObject) j.get(i);
 
-                                        String itemCategory = textbookResponse.getString("itemCategory");
-                                        String itemName = textbookResponse.getString("itemName");
-                                        String itemDescription = textbookResponse.getString("itemDesc");
-                                        String imageURL = textbookResponse.getString("url");
-                                        String itemPrice = textbookResponse.getString("itemPrice");
-                                        String email = textbookResponse.getString("email");
-                                        String sellerName = textbookResponse.getString("fullname");
-                                        String sellerContact = textbookResponse.getString("contactno");
+                                        String itemCategory = lostFoundResponse.getString("itemCategory");
+                                        String itemName = lostFoundResponse.getString("itemName");
+                                        String itemDescription = lostFoundResponse.getString("itemDesc");
+                                        String imageURL = lostFoundResponse.getString("url");
+                                        String itemPrice = lostFoundResponse.getString("itemPrice");
+                                        String email = lostFoundResponse.getString("email");
+                                        String sellerName = lostFoundResponse.getString("fullname");
+                                        String sellerContact = lostFoundResponse.getString("contactno");
 
                                         Item item = new Item(itemCategory, itemName, itemDescription, imageURL, itemPrice, email, sellerName, sellerContact);
 
@@ -254,13 +246,6 @@ public class FragmentTradingTab4 extends Fragment {
             e.printStackTrace();
         }
     }
-
-
-    private void loadItem() {
-        final ItemAdapter adapter = new ItemAdapter(getActivity(), R.layout.fragment_trading_tab4, itemList);
-        lvMarketplace.setAdapter(adapter);
-    }
-
     
     @Override
     public void onResume() {
@@ -271,7 +256,8 @@ public class FragmentTradingTab4 extends Fragment {
                 itemList = new ArrayList<>();
                 downloadTradingRecords(getActivity().getApplicationContext(), GET_URL);
             } else {
-                loadItem();
+                itemUploadAdapter = new ItemUploadAdapter(getActivity(),listDataHeader, listDataChild);
+                elvItemUpload.setAdapter(itemUploadAdapter);
             }
             getFragmentManager().beginTransaction().detach(this).attach(this).commit();
         }

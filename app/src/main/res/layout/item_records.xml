@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:weightSum="1"
-    android:background="@drawable/card_redborder">
+    android:background="@drawable/card_redborder"
+    android:id="@+id/item_container">
 
     <ImageView
         android:id="@+id/ivItemImage"
