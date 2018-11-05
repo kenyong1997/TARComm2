@@ -11,20 +11,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/lvMarketplace"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_weight="1"
-            android:paddingLeft="10dip"
-            android:paddingRight="10dip"
-            android:paddingTop="5dip"
-            android:scrollbars="vertical"
-            >
+        <!--<ListView-->
+            <!--android:id="@+id/lvMarketplace"-->
+            <!--android:divider="@android:color/transparent"-->
+            <!--android:dividerHeight="10dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="5dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:paddingLeft="10dip"-->
+            <!--android:paddingRight="10dip"-->
+            <!--android:paddingTop="5dip"-->
+            <!--android:scrollbars="vertical"-->
+            <!--&gt;-->
 
-        </ListView>
+        <!--</ListView>-->
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/rvMarketplace"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

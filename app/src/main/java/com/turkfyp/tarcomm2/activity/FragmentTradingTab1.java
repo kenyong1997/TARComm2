@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.turkfyp.tarcomm2.DatabaseObjects.Item;
 import com.turkfyp.tarcomm2.DatabaseObjects.ItemAdapter;
+import com.turkfyp.tarcomm2.DatabaseObjects.RvAdapter;
 import com.turkfyp.tarcomm2.R;
 
 import org.json.JSONArray;
@@ -42,6 +45,8 @@ public class FragmentTradingTab1 extends Fragment {
 
     RequestQueue queue;
 
+    RecyclerView rvMarketplace;
+
     public FragmentTradingTab1() {}
 
     @Override
@@ -55,8 +60,10 @@ public class FragmentTradingTab1 extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_trading_tab1, container, false);
 
-        lvMarketplace = (ListView) v.findViewById(R.id.lvMarketplace);
+        //lvMarketplace = (ListView) v.findViewById(R.id.lvMarketplace);
         swipeRefreshMarketplace = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefreshMarketplace);
+
+        rvMarketplace = (RecyclerView) v.findViewById(R.id.rvMarketplace);
 
         try {
             //initialize textBookList
@@ -70,28 +77,28 @@ public class FragmentTradingTab1 extends Fragment {
         }
 
         //when a particular item was selected to view more details
-        lvMarketplace.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Item selectedItem =(Item)parent.getItemAtPosition(position);
-                Intent itemDetailIntent = new Intent(getActivity(),MarketplaceDetailActivity.class);
-                itemDetailIntent.putExtra("itemName",selectedItem.getItemName());
-                itemDetailIntent.putExtra("itemPrice",selectedItem.getItemPrice());
-                itemDetailIntent.putExtra("itemDesc",selectedItem.getItemDescription());
-                itemDetailIntent.putExtra("itemSeller",selectedItem.getSellerName());
-                itemDetailIntent.putExtra("sellerContact",selectedItem.getSellerContact());
-                itemDetailIntent.putExtra("email",selectedItem.getEmail());
-                itemDetailIntent.putExtra("checkYourUpload",false);
-
-                ImageView ivImage = (ImageView) view.findViewById(R.id.ivItemImage);
-                ivImage.buildDrawingCache();
-                Bitmap image = ivImage.getDrawingCache();
-                itemDetailIntent.putExtra("Image", image);
-                itemDetailIntent.putExtra("ImageURL", selectedItem.getImageURL());
-
-                startActivity(itemDetailIntent);
-            }
-        });
+//        lvMarketplace.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Item selectedItem =(Item)parent.getItemAtPosition(position);
+//                Intent itemDetailIntent = new Intent(getActivity(),MarketplaceDetailActivity.class);
+//                itemDetailIntent.putExtra("itemName",selectedItem.getItemName());
+//                itemDetailIntent.putExtra("itemPrice",selectedItem.getItemPrice());
+//                itemDetailIntent.putExtra("itemDesc",selectedItem.getItemDescription());
+//                itemDetailIntent.putExtra("itemSeller",selectedItem.getSellerName());
+//                itemDetailIntent.putExtra("sellerContact",selectedItem.getSellerContact());
+//                itemDetailIntent.putExtra("email",selectedItem.getEmail());
+//                itemDetailIntent.putExtra("checkYourUpload",false);
+//
+//                ImageView ivImage = (ImageView) view.findViewById(R.id.ivItemImage);
+//                ivImage.buildDrawingCache();
+//                Bitmap image = ivImage.getDrawingCache();
+//                itemDetailIntent.putExtra("Image", image);
+//                itemDetailIntent.putExtra("ImageURL", selectedItem.getImageURL());
+//
+//                startActivity(itemDetailIntent);
+//            }
+//        });
 
         swipeRefreshMarketplace.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -139,7 +146,9 @@ public class FragmentTradingTab1 extends Fragment {
                             }
 
                             //load the item into adapter
-                            loadItem();
+                            //loadItem();
+
+                            setRVAdapter(itemList);
 
                         } catch (Exception e) {
                             Toast.makeText(getActivity(), "Error1: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -170,7 +179,11 @@ public class FragmentTradingTab1 extends Fragment {
 
     }
 
-
+    private void setRVAdapter(List<Item> itemList){
+        RvAdapter myAdapter = new RvAdapter(getActivity(),itemList) ;
+        rvMarketplace.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvMarketplace.setAdapter(myAdapter);
+    }
 
     @Override
     public void onResume() {
