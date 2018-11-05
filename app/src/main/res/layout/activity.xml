@@ -35,12 +35,26 @@
                 android:text="TARComm"
                 android:textSize="@dimen/guillotine_item_text_size" />
         </android.support.v7.widget.Toolbar>
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#f2f2f2">
        <android.support.v4.view.ViewPager
            android:layout_width="match_parent"
            android:layout_height="match_parent"
-           android:id="@+id/viewpager"></android.support.v4.view.ViewPager>
+           android:id="@+id/viewpager">
 
+
+
+       </android.support.v4.view.ViewPager>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recyclerView"
+        android:orientation="horizontal">
+
+    </android.support.v7.widget.RecyclerView>
+</ScrollView>
 
 
     </LinearLayout>
