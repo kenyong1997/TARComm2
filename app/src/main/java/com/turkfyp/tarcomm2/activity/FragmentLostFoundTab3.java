@@ -198,7 +198,6 @@ public class FragmentLostFoundTab3 extends Fragment {
                                     lostFoundUploadAdapter = new LostFoundUploadAdapter(getActivity(),listDataHeader, listDataChild);
                                     elvLostFoundUpload.setAdapter(lostFoundUploadAdapter);
                                     elvLostFoundUpload.expandGroup(0);
-                                    elvLostFoundUpload.expandGroup(1);
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
