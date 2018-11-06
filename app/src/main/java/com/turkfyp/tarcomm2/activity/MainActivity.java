@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +22,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.turkfyp.tarcomm2.DatabaseObjects.Event;
+import com.turkfyp.tarcomm2.DatabaseObjects.Item;
+import com.turkfyp.tarcomm2.DatabaseObjects.ItemRVAdapter;
+import com.turkfyp.tarcomm2.DatabaseObjects.MainItemRVAdapter;
 import com.turkfyp.tarcomm2.DatabaseObjects.ViewPagerAdapter;
 import com.turkfyp.tarcomm2.DatabaseObjects.ViewPagerModel;
 import com.turkfyp.tarcomm2.R;
@@ -52,10 +58,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "Main Activity";
     private static final long RIPPLE_DURATION = 250;
     private ViewPager mViewpager;
     private ViewPagerAdapter mAdapter;
     private ArrayList<ViewPagerModel> mContents;
+    private RecyclerView rvMainMarket;
+    public static boolean allowRefresh;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -65,14 +74,20 @@ public class MainActivity extends AppCompatActivity {
     View contentHamburger;
 
     private static String GET_URL = "https://tarcomm.000webhostapp.com/getHighlightedEvent.php";
+    private static String GET_URL_ITEM = "https://tarcomm.000webhostapp.com/getItemWTS.php";
     String currentDate;
     List<Event> eventList;
+    RequestQueue queue;
+    List<Item> itemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity);
         ButterKnife.bind(this);
+
+        rvMainMarket = (RecyclerView) findViewById(R.id.rvMainMarket);
+        List<Item> itemList;
 
         //Navigation Menu - START
         if (toolbar != null) {
@@ -116,8 +131,64 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
-    }
 
+        try {
+            //initialize itemList
+            itemList = new ArrayList<>();
+
+            downloadTradingRecords(getApplicationContext(), GET_URL_ITEM);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+    //retrieve the records from database
+    public void downloadTradingRecords(Context context, String url) {
+        // Instantiate the RequestQueue
+        queue = Volley.newRequestQueue(context);
+
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    itemList.clear();
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject itemResponse = (JSONObject) response.get(i);
+                        String itemCategory = itemResponse.getString("itemCategory");
+                        String itemName = itemResponse.getString("itemName");
+                        String itemDescription = itemResponse.getString("itemDesc");
+                        String imageURL = itemResponse.getString("url");
+                        String itemPrice = itemResponse.getString("itemPrice");
+                        String email = itemResponse.getString("email");
+                        String sellerName = itemResponse.getString("fullname");
+                        String sellerContact = itemResponse.getString("contactno");
+
+                        Item item = new Item(itemCategory, itemName, itemDescription, imageURL, itemPrice, email, sellerName, sellerContact);
+                        itemList.add(item);
+                    }
+                    //Load item into RecyclerView Adapter
+                    setRVAdapter(itemList);
+
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Error1: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Toast.makeText(getApplicationContext(), "Error2: " + volleyError.getMessage(), Toast.LENGTH_LONG).show();
+
+                    }
+                });
+
+        // Set the tag on the request.
+        jsonObjectRequest.setTag(TAG);
+
+        // Add the request to the RequestQueue.
+        queue.add(jsonObjectRequest);
+    }
     private class ViewPagerStack implements ViewPager.PageTransformer{
 
         @Override
@@ -131,7 +202,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
+    private void setRVAdapter(List<Item> itemList){
+        MainItemRVAdapter myAdapter = new MainItemRVAdapter(this,itemList) ;
+        rvMainMarket.setLayoutManager(new LinearLayoutManager(this));
+        rvMainMarket.setAdapter(myAdapter);
+    }
     //retrieve the records from database
     public void downloadHighlightEvent(Context context, String url) {
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -164,10 +239,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     mViewpager = (ViewPager) findViewById(R.id.viewpager);
                                     mContents = new ArrayList<>();
-//                                    int images[] =  {R.drawable.one,R.drawable.two,R.drawable.three,R.drawable.four,R.drawable.five,R.drawable.six};
-//                                    String names[] = {"One","Two","Three","Four","Five","Six"};
-//                                    String desc[] = {"Event","Event","Event","Event","Event","Event"};
-//                                    String location[] = {"Main Campus","Main Campus","Main Campus","Main Campus","Main Campus","Main Campus"};
+
 
                                     for(int i =0;i<eventList.size();i++)
                                     {
