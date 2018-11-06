@@ -4,7 +4,7 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/guillotine_background_dark"
+    android:background="@android:color/white"
     android:orientation="vertical">
     <View
         android:layout_gravity="top"
@@ -44,7 +44,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Featured Events In Campus"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:textColor="@android:color/black"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="25sp"/>
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/viewpager"
@@ -56,16 +64,18 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="hue"
-                    android:textColor="@color/light_grey"/>
+                    android:text="Selling Items"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:textColor="@android:color/black"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="25sp"/>
                 <android.support.v7.widget.RecyclerView
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp"
+
                     android:id="@+id/rvMainMarket"
                     android:orientation="horizontal"
-                    android:layout_width="300dp"
-                    android:layout_height="300dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
                 </android.support.v7.widget.RecyclerView>
             </LinearLayout>

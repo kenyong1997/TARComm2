@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="150dp"
-    android:background="@android:color/white"
     android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/card_no_border"
     android:id="@+id/main_item_container">
 
     <ImageView
@@ -15,17 +16,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="5dp"
         android:textColor="@color/light_grey"
         android:id="@+id/tvMainItemName"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="bold"
         android:maxLines="2"
+        android:lines="2"
         android:text="Item Title"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="5dp"
         android:id="@+id/tvMainItemPrice"
         android:textSize="15sp"
+        android:fontFamily="sans-serif-light"
         android:textColor="@color/light_grey"
         android:maxLines="1"
         android:text="Item Price"/>
