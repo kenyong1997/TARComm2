@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         rvMainMarket = (RecyclerView) findViewById(R.id.rvMainMarket);
-        List<Item> itemList;
 
         //Navigation Menu - START
         if (toolbar != null) {
@@ -148,47 +147,50 @@ public class MainActivity extends AppCompatActivity {
         // Instantiate the RequestQueue
         queue = Volley.newRequestQueue(context);
 
-        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONArray response) {
-                try {
-                    itemList.clear();
-                    for (int i = 0; i < response.length(); i++) {
-                        JSONObject itemResponse = (JSONObject) response.get(i);
-                        String itemCategory = itemResponse.getString("itemCategory");
-                        String itemName = itemResponse.getString("itemName");
-                        String itemDescription = itemResponse.getString("itemDesc");
-                        String imageURL = itemResponse.getString("url");
-                        String itemPrice = itemResponse.getString("itemPrice");
-                        String email = itemResponse.getString("email");
-                        String sellerName = itemResponse.getString("fullname");
-                        String sellerContact = itemResponse.getString("contactno");
+            public void onResponse(String response) {
+                try{
+                    JSONArray jsonArray = new JSONArray(response);
+                    try{
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject itemResponse = (JSONObject) jsonArray.get(i);
 
-                        Item item = new Item(itemCategory, itemName, itemDescription, imageURL, itemPrice, email, sellerName, sellerContact);
-                        itemList.add(item);
+                            String itemCategory = itemResponse.getString("itemCategory");
+                            String itemName = itemResponse.getString("itemName");
+                            String itemDescription = itemResponse.getString("itemDesc");
+                            String imageURL = itemResponse.getString("url");
+                            String itemPrice = itemResponse.getString("itemPrice");
+                            String email = itemResponse.getString("email");
+                            String sellerName = itemResponse.getString("fullname");
+                            String sellerContact = itemResponse.getString("contactno");
+
+                            Item item = new Item(itemCategory, itemName, itemDescription, imageURL, itemPrice, email, sellerName, sellerContact);
+                            itemList.add(item);
+                        }
+                        //Load item into RecyclerView Adapter
+                        setRVAdapter(itemList);
+
+                    }catch (JSONException e){
+                        e.printStackTrace();
                     }
-                    //Load item into RecyclerView Adapter
-                    setRVAdapter(itemList);
-
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Error1: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(), "Error1: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Toast.makeText(getApplicationContext(), "Error2: " + volleyError.getMessage(), Toast.LENGTH_LONG).show();
-
-                    }
-                });
-
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Error2: " + error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
         // Set the tag on the request.
-        jsonObjectRequest.setTag(TAG);
+        postRequest.setTag(TAG);
 
         // Add the request to the RequestQueue.
-        queue.add(jsonObjectRequest);
+        queue.add(postRequest);
     }
+
     private class ViewPagerStack implements ViewPager.PageTransformer{
 
         @Override
@@ -204,9 +206,15 @@ public class MainActivity extends AppCompatActivity {
     }
     private void setRVAdapter(List<Item> itemList){
         MainItemRVAdapter myAdapter = new MainItemRVAdapter(this,itemList) ;
-        rvMainMarket.setLayoutManager(new LinearLayoutManager(this));
+
+        //For horizontal layout
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        rvMainMarket.setLayoutManager(layoutManager);
         rvMainMarket.setAdapter(myAdapter);
     }
+
     //retrieve the records from database
     public void downloadHighlightEvent(Context context, String url) {
         RequestQueue queue = Volley.newRequestQueue(context);
