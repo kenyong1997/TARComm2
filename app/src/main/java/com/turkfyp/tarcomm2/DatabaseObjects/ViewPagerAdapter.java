@@ -1,8 +1,7 @@
-package com.turkfyp.tarcomm2.activity;
+package com.turkfyp.tarcomm2.DatabaseObjects;
 
 import android.content.Context;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -10,12 +9,12 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.turkfyp.tarcomm2.DatabaseObjects.Event;
+import com.turkfyp.tarcomm2.DatabaseObjects.ViewPagerModel;
 import com.turkfyp.tarcomm2.R;
 
 

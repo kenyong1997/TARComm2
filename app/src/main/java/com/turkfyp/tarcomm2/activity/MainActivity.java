@@ -23,6 +23,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.turkfyp.tarcomm2.DatabaseObjects.Event;
+import com.turkfyp.tarcomm2.DatabaseObjects.ViewPagerAdapter;
+import com.turkfyp.tarcomm2.DatabaseObjects.ViewPagerModel;
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.guillotine.animation.GuillotineAnimation;
 

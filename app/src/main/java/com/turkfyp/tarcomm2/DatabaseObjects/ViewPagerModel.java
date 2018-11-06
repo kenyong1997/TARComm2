@@ -1,4 +1,4 @@
-package com.turkfyp.tarcomm2.activity;
+package com.turkfyp.tarcomm2.DatabaseObjects;
 
 
 public class ViewPagerModel {

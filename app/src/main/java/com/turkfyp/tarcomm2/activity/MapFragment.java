@@ -71,6 +71,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 import com.turkfyp.tarcomm2.DatabaseObjects.Event;
 import com.turkfyp.tarcomm2.DatabaseObjects.Item;
+import com.turkfyp.tarcomm2.DatabaseObjects.PlacesAutoCompleteAdapter;
 import com.turkfyp.tarcomm2.DatabaseObjects.User;
 import com.turkfyp.tarcomm2.MapObjects.DirectionFinder;
 import com.turkfyp.tarcomm2.MapObjects.DirectionFinderListener;
