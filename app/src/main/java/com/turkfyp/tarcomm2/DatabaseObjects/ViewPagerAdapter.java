@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.DatabaseObjects.ViewPagerModel;
 import com.turkfyp.tarcomm2.R;
 
@@ -27,6 +29,7 @@ public class ViewPagerAdapter extends PagerAdapter{
 
     private List<ViewPagerModel> contents;
     private Context context;
+    RequestOptions options;
 
     @Override
     public int getCount() {
@@ -36,6 +39,13 @@ public class ViewPagerAdapter extends PagerAdapter{
     public ViewPagerAdapter(List<ViewPagerModel> contents, Context context) {
         this.contents = contents;
         this.context = context;
+
+        //For Glide image
+        options = new RequestOptions()
+                .override(2000,3000)
+                .fitCenter()
+                .placeholder(R.drawable.background_white)
+                .error(R.drawable.background_white);
     }
 
     @Override
@@ -51,8 +61,10 @@ public class ViewPagerAdapter extends PagerAdapter{
         container.addView(view);
 
         ImageView imageView = (ImageView) view.findViewById(R.id.highlight_event);
-//        imageView.setImageResource(contents.get(position).getImages());
-        getImage(contents.get(position).getImage(),imageView);
+//        getImage(contents.get(position).getImage(),imageView);
+
+        //Load image into imageViewer with Glide
+        Glide.with(context).load(contents.get(position).getImage()).apply(options).into(imageView);
 
         TextView name,desc,location;
 
