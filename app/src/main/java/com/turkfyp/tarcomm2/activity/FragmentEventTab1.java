@@ -122,6 +122,7 @@ public class FragmentEventTab1 extends android.support.v4.app.Fragment{
                 eventDetailIntent.putExtra("eventDateTime", selectedEvent.getEventDateTime());
                 eventDetailIntent.putExtra("eventDesc", selectedEvent.getEventDesc());
                 eventDetailIntent.putExtra("eventVenue", selectedEvent.getEventVenue());
+                eventDetailIntent.putExtra("eventEndDatetime",selectedEvent.getEventEndDateTime());
 
 
                 ImageView imageEvent = (ImageView) view.findViewById(R.id.ivImageEvent);

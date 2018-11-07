@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" >
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
         android:id="@+id/editprofile_layout"
-        tools:context=".activity.EditProfileActivity">
+        tools:context=".activity.EditProfileActivity"
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" >
 
         <View
             android:layout_gravity="top"
@@ -24,11 +22,9 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                style="@style/Toolbar"
-                app:contentInsetStart="0dp">
-
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
@@ -36,17 +32,32 @@
                     android:layout_alignParentLeft="true"
                     android:onClick="onBackClicked"
                     android:layout_marginLeft="15dp"/>
-
                 <com.turkfyp.tarcomm2.widget.CanaroTextView
-                    android:layout_width="wrap_content"
-                    android:textColor="@android:color/white"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Edit Your Profile"
+                    android:text="Edit Your Items"
+                    android:textColor="@android:color/white"
+                    android:textAlignment="center"
                     android:textSize="@dimen/guillotine_item_text_size" />
-            </android.support.v7.widget.Toolbar>
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/ivEditItem"
+                    android:layout_marginRight="15dp"
+                    android:onClick="onSaveEditProfileClicked"
+                    android:src="@drawable/ic_save" />
+            </RelativeLayout>
 
-
+            <ScrollView android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -54,6 +65,7 @@
                 android:gravity="center_horizontal"
                 android:background="@color/colorPrimary">
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_marginTop="20dp"
                     android:layout_width="170dp"
                     app:civ_border_width="4dp"
                     app:civ_border_color="#FFFFFF"
@@ -71,11 +83,6 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:orientation="vertical">
-
-
-
-
-
 
 
                 <TextView
@@ -231,57 +238,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btnCancelEditProfile"
-                        android:textColor="#FFF"
-                        android:background="@drawable/rec_gradient_fb"
-                        android:layout_marginTop="20dp"
-                        android:textAllCaps="false"
-                        android:text="Cancel"
-                        android:textSize="20sp"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="sans-serif-condensed"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:textStyle="bold"
-                        android:layout_weight="1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:onClick="onCancelEditProfileClicked"/>
-
-                    <Button
-                        android:id="@+id/btnEdit"
-                        android:textColor="#FFF"
-                        android:background="@drawable/rec_gradient"
-                        android:layout_marginTop="20dp"
-                        android:textSize="20sp"
-                        android:textAllCaps="false"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="sans-serif-condensed"
-                        android:text="Save"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:textStyle="bold"
-                        android:layout_weight="1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:onClick="onSaveEditProfileClicked"/>
-
-
-                </LinearLayout>
-
             </LinearLayout>
 
-
-
+                </LinearLayout>
+</ScrollView>
 
         </LinearLayout>
     </FrameLayout>
-</ScrollView>

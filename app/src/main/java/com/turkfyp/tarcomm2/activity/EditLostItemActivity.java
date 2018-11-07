@@ -74,7 +74,6 @@ public class EditLostItemActivity extends AppCompatActivity {
     protected EditText etEditLostFoundItemName,etEditLostFoundItemDesc;
     protected RadioGroup rgEditLostCategory;
     protected RadioButton category_lost,category_found, rbEditLostItemCategory;
-    protected Button btnCancelEditLostFound, btnEditLostFound;
     protected DatePicker dpEditLostFoundDate;
 
     protected String ownerContact,itemOwner,lostItemName,lostItemDesc,itemCategory,lostDate;
@@ -89,8 +88,6 @@ public class EditLostItemActivity extends AppCompatActivity {
         category_lost = (RadioButton) findViewById(R.id.category_lost);
         category_found = (RadioButton) findViewById(R.id.category_found);
         ivEditLostFoundItem = (ImageView) findViewById(R.id.ivEditLostFoundItem);
-        btnCancelEditLostFound = (Button) findViewById(R.id.btnCancelEditLostFound);
-        btnEditLostFound = (Button) findViewById(R.id.btnEditLostFound);
         dpEditLostFoundDate = (DatePicker) findViewById(R.id.dpEditLostFoundDate);
 
         //put on click
@@ -132,18 +129,10 @@ public class EditLostItemActivity extends AppCompatActivity {
         int day=Integer.parseInt(strday);
         dpEditLostFoundDate.updateDate(year,month-1,day);
 
-
-
         ivEditLostFoundItem.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 showFileChooser();
-            }
-        });
-        btnCancelEditLostFound.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
             }
         });
 

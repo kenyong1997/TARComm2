@@ -1,53 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" >
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
         android:id="@+id/EditMarketItemLayout"
-        tools:context=".activity.EditUploadItemActivity">
+        tools:context=".activity.EditUploadItemActivity"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
         <View
             android:layout_gravity="top"
             android:layout_width="match_parent"
             android:layout_height="@dimen/guillotine_actionbar_background_view_height"
             android:background="@color/guillotine_background" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/Toolbar"
+            app:contentInsetStart="0dp">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_back"
+                android:layout_alignParentLeft="true"
+                android:onClick="onBackClicked"
+                android:layout_marginLeft="15dp"/>
+            <com.turkfyp.tarcomm2.widget.CanaroTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Your Items"
+                android:textColor="@android:color/white"
+                android:textAlignment="center"
+                android:textSize="@dimen/guillotine_item_text_size" />
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:id="@+id/ivEditItem"
+                android:layout_marginRight="15dp"
+                android:onClick="onSaveEditUploadItemClicked"
+                android:src="@drawable/ic_save" />
+        </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                style="@style/Toolbar"
-                app:contentInsetStart="0dp">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_back"
-                    android:layout_alignParentLeft="true"
-                    android:onClick="onBackClicked"
-                    android:layout_marginLeft="15dp"/>
-
-                <com.turkfyp.tarcomm2.widget.CanaroTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="@android:color/white"
-                    android:text="Edit Your Upload"
-                    android:textSize="@dimen/guillotine_item_text_size" />
-            </android.support.v7.widget.Toolbar>
-
-
+    <ScrollView android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -159,53 +167,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:inputType="numberDecimal"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/btnCancelEditItem"
-                        android:textColor="#FFF"
-                        android:background="@drawable/rec_gradient_fb"
-                        android:layout_marginTop="20dp"
-                        android:textAllCaps="false"
-                        android:text="Cancel"
-                        android:fontFamily="sans-serif-condensed"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:layout_weight="1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <Button
-                        android:id="@+id/btnUploadEditItem"
-                        android:textColor="#FFF"
-                        android:background="@drawable/rec_gradient"
-                        android:layout_marginTop="20dp"
-                        android:textAllCaps="false"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="sans-serif-condensed"
-                        android:textSize="20sp"
-                        android:text="Save"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:textStyle="bold"
-                        android:layout_weight="1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:onClick="onSaveEditUploadItemClicked"/>
-
-
-                </LinearLayout>
 
             </LinearLayout>
 
+    </ScrollView>
+    </LinearLayout>
 
-
-        </LinearLayout>
     </FrameLayout>
-</ScrollView>

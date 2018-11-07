@@ -89,8 +89,7 @@ public class EditUploadItemActivity extends AppCompatActivity {
         category_trade = (RadioButton) findViewById(R.id.category_trade);
         imgViewEditMarketItem = (ImageView) findViewById(R.id.imgViewEditMarketItem);
         tvEditItemPrice = (TextView) findViewById(R.id.tvEditItemPrice);
-        btnCancelEditItem = (Button) findViewById(R.id.btnCancelEditItem);
-        btnUploadEditItem = (Button) findViewById(R.id.btnUploadEditItem);
+
 
         //put on click
         //rbEditItemCategory = (RadioButton) findViewById(rgItemCategory.getCheckedRadioButtonId());
@@ -149,12 +148,7 @@ public class EditUploadItemActivity extends AppCompatActivity {
                 showFileChooser();
             }
         });
-        btnCancelEditItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+
     }
 
     public void onSaveEditUploadItemClicked(View view){

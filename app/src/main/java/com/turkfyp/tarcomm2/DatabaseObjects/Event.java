@@ -39,7 +39,7 @@ public class Event {
         this.setEventVenue(eventVenue);
         this.setEventVenueName(eventVenueName);
         this.setEventHighlight(eventHighlight);
-        this.setEventEndDateTime("");
+        this.setEventEndDateTime(eventEndDateTime);
     }
 
 

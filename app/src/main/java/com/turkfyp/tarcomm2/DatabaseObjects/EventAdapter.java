@@ -46,7 +46,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
         ivImageEvent = (ImageView) rowView.findViewById(R.id.ivImageEvent);
 
         tvEventName.setText(event.getEventName());
-        tvEventDateTime.setText(event.getEventDateTime());
+        tvEventDateTime.setText(event.getEventEndDateTime());
         getImage(event.getEventImageURL(), ivImageEvent);
 
 
