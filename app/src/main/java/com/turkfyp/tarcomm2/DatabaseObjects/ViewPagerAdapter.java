@@ -42,7 +42,7 @@ public class ViewPagerAdapter extends PagerAdapter{
 
         //For Glide image
         options = new RequestOptions()
-                .override(2000,3000)
+                .override(1000,1500)
                 .fitCenter()
                 .placeholder(R.drawable.background_white)
                 .error(R.drawable.background_white);
@@ -82,37 +82,5 @@ public class ViewPagerAdapter extends PagerAdapter{
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View)object);
-    }
-
-    private void getImage(String urlToImage, final ImageView ivImage) {
-        class GetImage extends AsyncTask<String, Void, Bitmap> {
-
-            @Override
-            protected Bitmap doInBackground(String... params) {
-                URL url = null;
-                Bitmap image = null;
-
-                String urlToImage = params[0];
-                try {
-                    url = new URL(urlToImage);
-                    image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return image;
-            }
-
-            @Override
-            protected void onPostExecute(Bitmap bitmap) {
-                super.onPostExecute(bitmap);
-                Bitmap resized = Bitmap.createScaledBitmap(bitmap,1300,2000,true);
-
-                ivImage.setImageBitmap(resized);
-            }
-        }
-        GetImage gi = new GetImage();
-        gi.execute(urlToImage);
     }
 }
