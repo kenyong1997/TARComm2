@@ -1,10 +1,7 @@
 package com.turkfyp.tarcomm2.DatabaseObjects;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +13,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.R;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 
@@ -90,7 +84,6 @@ public class ItemUploadAdapter extends BaseExpandableListAdapter {
         //Load image into imageViewer with Glide
         Glide.with(_context).load(item.getImageURL()).apply(options).into(ivTradingImage);
 
-        //getImage(item.getImageURL(), ivTradingImage);
         return convertView;
     }
 
@@ -143,33 +136,4 @@ public class ItemUploadAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-    private void getImage(String urlToImage, final ImageView ivImage) {
-        class GetImage extends AsyncTask<String, Void, Bitmap> {
-
-            @Override
-            protected Bitmap doInBackground(String... params) {
-                URL url = null;
-                Bitmap image = null;
-
-                String urlToImage = params[0];
-                try {
-                    url = new URL(urlToImage);
-                    image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return image;
-            }
-
-            @Override
-            protected void onPostExecute(Bitmap bitmap) {
-                super.onPostExecute(bitmap);
-                ivImage.setImageBitmap(bitmap);
-            }
-        }
-        GetImage gi = new GetImage();
-        gi.execute(urlToImage);
-    }
 }

@@ -2,21 +2,16 @@ package com.turkfyp.tarcomm2.DatabaseObjects;
 
 import android.content.Context;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.turkfyp.tarcomm2.DatabaseObjects.ViewPagerModel;
 import com.turkfyp.tarcomm2.R;
 
 
@@ -61,7 +56,6 @@ public class ViewPagerAdapter extends PagerAdapter{
         container.addView(view);
 
         ImageView imageView = (ImageView) view.findViewById(R.id.highlight_event);
-//        getImage(contents.get(position).getImage(),imageView);
 
         //Load image into imageViewer with Glide
         Glide.with(context).load(contents.get(position).getImage()).apply(options).into(imageView);
@@ -72,7 +66,7 @@ public class ViewPagerAdapter extends PagerAdapter{
         name.setText(contents.get(position).getName());
 
         desc = (TextView) view.findViewById(R.id.desc);
-        desc.setText(contents.get(position).getName());
+        desc.setText(contents.get(position).getDesc());
 
         location = (TextView) view.findViewById(R.id.venue);
         location.setText(contents.get(position).getLocation());
