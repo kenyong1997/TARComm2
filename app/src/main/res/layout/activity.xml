@@ -50,12 +50,13 @@
                     android:text="Featured Events In Campus"
                     android:fontFamily="sans-serif-smallcaps"
                     android:textColor="@android:color/black"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:layout_marginLeft="10dp"
                     android:textSize="25sp"/>
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/viewpager"
+                    android:layout_marginTop="-40dp"
                     android:layout_width="match_parent"
                     android:layout_height="600dp">
 
@@ -64,7 +65,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-110dp"
+                    android:layout_marginTop="-100dp"
                     android:text="Selling Items"
                     android:fontFamily="sans-serif-smallcaps"
                     android:textColor="@android:color/black"

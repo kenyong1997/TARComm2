@@ -42,7 +42,7 @@ public class ViewPagerAdapter extends PagerAdapter{
 
         //For Glide image
         options = new RequestOptions()
-                .override(1000,1500)
+                .override(1500,2000)
                 .fitCenter()
                 .placeholder(R.drawable.background_white)
                 .error(R.drawable.background_white);
