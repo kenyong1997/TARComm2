@@ -8,6 +8,8 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -92,9 +94,14 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
         //set the text and image by using extras value
         tvDetailItemName.setText(itemName);
         tvDetailItemPrice.setText(String.format("RM %.2f", Double.parseDouble(itemPrice)));
-        tvDetailItemSeller.setText(itemSeller);
         tvDetailItemDesc.setText(itemDesc);
         tvDetailSellerContact.setText(sellerContact);
+
+
+        //set underline
+        SpannableString content = new SpannableString(itemSeller);
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        tvDetailItemSeller.setText(content);
 
         if(checkYourUpload){
             ivEditItem.setVisibility(View.VISIBLE);

@@ -11,6 +11,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -90,10 +92,14 @@ public class LostFoundDetailActivity extends AppCompatActivity {
 
         //set the text and image by using extras value
         tvDetailLostItemName.setText(lostItemName);
-        tvDetailLostItemOwner.setText(itemOwner);
         tvDetailLostItemDesc.setText(lostItemDesc);
         tvDetailOwnerContact.setText(ownerContact);
         tvDetailLostDate.setText(lostDate);
+
+        //set underline
+        SpannableString content = new SpannableString(itemOwner);
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        tvDetailLostItemOwner.setText(content);
 
         image = extras.getParcelable("LostImage");
         imageViewLostItem.setImageBitmap(image);

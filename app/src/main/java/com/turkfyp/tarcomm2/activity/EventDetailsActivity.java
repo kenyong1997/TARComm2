@@ -19,7 +19,7 @@ import com.turkfyp.tarcomm2.R;
 public class EventDetailsActivity extends AppCompatActivity {
     protected TextView tvDetailEventName, tvDetailEventDate, tvDetailEventDesc, tvDetailEventVenue;
     protected ImageView imageViewDetailEvent;
-    protected String eventName, eventDate, eventDesc, eventVenue;
+    protected String eventName, eventDate, eventDesc, eventVenue,eventEndDate;
     public static String EVENT_VENUE_LOCATION="" ;
     public static boolean DIRECT_TO_EVENT=false;
 
@@ -39,9 +39,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         //No Activity Title
         getSupportActionBar().setTitle(null);
 
-        //Back button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
 
         //Link code to UI
@@ -61,12 +59,13 @@ public class EventDetailsActivity extends AppCompatActivity {
         eventDate = extras.getString("eventDateTime");
         eventDesc = extras.getString("eventDesc");
         eventVenue = extras.getString("eventVenue");
+        eventEndDate = extras.getString("eventEndDatetime");
 
 
         //set the text and image by using extras value
         tvDetailEventName.setText(eventName);
-        tvDetailEventDate.setText("Event Date: " + eventDate);
-        tvDetailEventDesc.setText("Event Description: " + eventDesc);
+        tvDetailEventDate.setText(eventDate + "  to  "+ eventEndDate);
+        tvDetailEventDesc.setText(eventDesc);
 
 
         //tvDetailEventVenue.setText(eventVenue);
@@ -98,7 +97,9 @@ public class EventDetailsActivity extends AppCompatActivity {
 
 
     }
-
+    public void onBackClicked(View view){
+        finish();
+    }
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();

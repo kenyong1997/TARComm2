@@ -38,15 +38,17 @@ public class EventAdapter extends ArrayAdapter<Event> {
 
         View rowView = inflater.inflate(R.layout.event_records, parent, false);
 
-        TextView tvEventName, tvEventDateTime;
+        TextView tvEventName, tvEventDateTime, tvEventEndDateTime;
         ImageView ivImageEvent;
 
         tvEventName = (TextView) rowView.findViewById(R.id.tvEventName);
         tvEventDateTime = (TextView) rowView.findViewById(R.id.tvEventDateTime);
+        tvEventEndDateTime = (TextView) rowView.findViewById(R.id.tvEventEndDateTime);
         ivImageEvent = (ImageView) rowView.findViewById(R.id.ivImageEvent);
 
         tvEventName.setText(event.getEventName());
-        tvEventDateTime.setText(event.getEventEndDateTime());
+        tvEventDateTime.setText(event.getEventDateTime());
+        tvEventEndDateTime.setText(event.getEventEndDateTime());
         getImage(event.getEventImageURL(), ivImageEvent);
 
 
