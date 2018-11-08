@@ -48,7 +48,18 @@
 
 
     </LinearLayout>
-
+    <LinearLayout
+        android:id="@+id/feed_group"
+        style="@style/LinearLayout.GuillotineItem">
+        <ImageView
+            style="@style/ImageView.GuillotineItem"
+            android:src="@drawable/ic_home" />
+        <com.turkfyp.tarcomm2.widget.CanaroTextView
+            style="@style/TextView.GuillotineItem"
+            android:textSize="20dp"
+            android:text="TARComm HomePage"
+            android:onClick="highlight_event_onclick"/>
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/community_group"
         style="@style/LinearLayout.GuillotineItem">
@@ -59,19 +70,7 @@
             style="@style/TextView.GuillotineItem.Selected"
             android:text="COMMUNITY" />
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/feed_group"
-        style="@style/LinearLayout.GuillotineItem">
 
-        <ImageView
-            style="@style/ImageView.GuillotineItem"
-            android:src="@drawable/events_icon" />
-
-        <com.turkfyp.tarcomm2.widget.CanaroTextView
-            style="@style/TextView.GuillotineItem"
-            android:text="Highlight Events"
-            android:onClick="highlight_event_onclick"/>
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/events_group"

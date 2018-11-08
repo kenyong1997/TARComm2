@@ -66,7 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-100dp"
-                    android:text="Selling Items"
+                    android:text="Hot Selling Items"
                     android:fontFamily="sans-serif-smallcaps"
                     android:textColor="@android:color/black"
                     android:layout_marginLeft="10dp"
