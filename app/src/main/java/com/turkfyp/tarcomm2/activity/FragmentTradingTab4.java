@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.turkfyp.tarcomm2.DatabaseObjects.Item;
 import com.turkfyp.tarcomm2.DatabaseObjects.ItemUploadAdapter;
 import com.turkfyp.tarcomm2.R;
@@ -36,6 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 
 public class FragmentTradingTab4 extends Fragment {
@@ -45,7 +48,6 @@ public class FragmentTradingTab4 extends Fragment {
     private static final String TAG = "FragmentTradingTab4";
 
     private static String GET_URL = "https://tarcomm.000webhostapp.com/getItemUserPost.php";
-    ListView lvMarketplace;
     SwipeRefreshLayout swipeRefreshMarketplace;
     List<Item> itemList;
 
@@ -54,9 +56,9 @@ public class FragmentTradingTab4 extends Fragment {
     ItemUploadAdapter itemUploadAdapter;
     List<String> listDataHeader;
     HashMap<String, List<Item>> listDataChild;
-    ImageView ivAddMinus;
 
     RequestQueue queue;
+    Bitmap bitmap;
 
     public FragmentTradingTab4() {}
 
@@ -114,10 +116,8 @@ public class FragmentTradingTab4 extends Fragment {
                 itemDetailIntent.putExtra("email",selectedItem.getEmail());
                 itemDetailIntent.putExtra("checkYourUpload",true);
 
-                ImageView ivImage = (ImageView) view.findViewById(R.id.ivItemImage);
-                ivImage.buildDrawingCache();
-                Bitmap image = ivImage.getDrawingCache();
-                itemDetailIntent.putExtra("Image", image);
+                convertImage(selectedItem.getImageURL());
+                itemDetailIntent.putExtra("Image", bitmap);
                 itemDetailIntent.putExtra("ImageURL", selectedItem.getImageURL());
 
                 startActivity(itemDetailIntent);
@@ -269,5 +269,37 @@ public class FragmentTradingTab4 extends Fragment {
         if (queue != null) {
             queue.cancelAll(TAG);
         }
+    }
+
+    //Get Profile Image for Navigation Menu
+    private void convertImage(String imageURL){
+        class ConvertImage extends AsyncTask<String, Void, Bitmap> {
+
+            @Override
+            protected Bitmap doInBackground(String... strings) {
+                String imageURL = strings[0];
+
+                try {
+                    bitmap = Glide.with(getActivity())
+                            .asBitmap()
+                            .load(imageURL)
+                            .submit(150,150)
+                            .get();
+
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return bitmap;
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap bitmap) {
+                super.onPostExecute(bitmap);
+            }
+        }
+        ConvertImage convertImage = new ConvertImage();
+        convertImage.execute(imageURL);
     }
 }

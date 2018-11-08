@@ -3,6 +3,8 @@ package com.turkfyp.tarcomm2.DatabaseObjects;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
+import android.support.v4.content.MimeTypeFilter;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,17 +14,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.MediaStoreSignature;
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.activity.MarketplaceDetailActivity;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.MyViewHolder> {
 
     RequestOptions options;
     private Context mContext ;
     private List<Item> itemList;
+
+    Bitmap bitmap;
 
     public ItemRVAdapter(Context mContext, List lst) {
         this.mContext = mContext;
@@ -31,6 +38,7 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.MyViewHold
         //For Glide image
         options = new RequestOptions()
                 .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .placeholder(R.drawable.background_white)
                 .error(R.drawable.background_white);
     }
@@ -82,10 +90,11 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.MyViewHold
                 else
                     itemDetailIntent.putExtra("checkYourUpload",false);
 
-                ImageView ivImage = (ImageView) view.findViewById(R.id.ivItemImage);
-                ivImage.buildDrawingCache();
-                Bitmap image = ivImage.getDrawingCache();
-                itemDetailIntent.putExtra("Image", image);
+                convertImage(itemList.get(viewHolder.getAdapterPosition()).getImageURL());
+//                ImageView ivImage = (ImageView) view.findViewById(R.id.ivItemImage);
+//                ivImage.buildDrawingCache();
+//                Bitmap image = ivImage.getDrawingCache();
+                itemDetailIntent.putExtra("Image", bitmap);
                 itemDetailIntent.putExtra("ImageURL", itemList.get(viewHolder.getAdapterPosition()).getImageURL());
 
                 mContext.startActivity(itemDetailIntent);
@@ -110,5 +119,37 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.MyViewHold
             ivPrice = (ImageView) itemView.findViewById(R.id.ivPrice);
             item_container = (LinearLayout)itemView.findViewById(R.id.item_container);
         }
+    }
+
+    //Get Profile Image for Navigation Menu
+    private void convertImage(String imageURL){
+        class ConvertImage extends AsyncTask<String, Void, Bitmap> {
+
+            @Override
+            protected Bitmap doInBackground(String... strings) {
+                String imageURL = strings[0];
+
+                try {
+                    bitmap = Glide.with(mContext)
+                            .asBitmap()
+                            .load(imageURL)
+                            .submit(150,150)
+                            .get();
+
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return bitmap;
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap bitmap) {
+                super.onPostExecute(bitmap);
+            }
+        }
+        ConvertImage convertImage = new ConvertImage();
+        convertImage.execute(imageURL);
     }
 }
