@@ -21,6 +21,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.R;
 
 import org.json.JSONException;
@@ -40,6 +42,7 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
 
     int itemID;
     String confirmation;
+    RequestOptions options;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,12 +106,17 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
             llItemPrice.setVisibility(View.GONE);
         }
         image = extras.getParcelable("Image");
-        imageViewDetailItem.setImageBitmap(image);
 
         imageURL = extras.getString("ImageURL");
         itemID = Integer.parseInt(imageURL.split("=")[1]);
 
+        //For Glide image
+        options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.background_white)
+                .error(R.drawable.background_white);
 
+        Glide.with(getApplicationContext()).load(imageURL).apply(options).into(imageViewDetailItem);
     }
 
     public void onDeleteItemClicked(View view){

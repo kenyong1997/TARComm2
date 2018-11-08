@@ -25,6 +25,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.DatabaseObjects.Event;
 import com.turkfyp.tarcomm2.DatabaseObjects.Item;
 import com.turkfyp.tarcomm2.DatabaseObjects.ItemRVAdapter;
@@ -105,8 +107,15 @@ public class MainActivity extends AppCompatActivity {
 
         //Set Profile Picture on Navigation Bar
         String imageURL = preferences.getString("profilePicURL","");
-        convertImage(imageURL);
 
+        CircleImageView profile_image = (CircleImageView) findViewById(R.id.profile_image);
+
+        RequestOptions options = new RequestOptions()
+                .circleCrop()
+                .placeholder(R.drawable.background_white)
+                .error(R.drawable.background_white);
+
+        Glide.with(getApplicationContext()).load(imageURL).apply(options).into(profile_image);
 
         new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
                 .setStartDelay(RIPPLE_DURATION)
@@ -142,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
+
     //retrieve the records from database
     public void downloadTradingRecords(Context context, String url) {
         // Instantiate the RequestQueue
@@ -204,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
     private void setRVAdapter(List<Item> itemList){
         MainItemRVAdapter myAdapter = new MainItemRVAdapter(this,itemList) ;
 
@@ -309,6 +320,7 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent (this,LoginActivity.class);
         startActivity(i);
     }
+
     boolean doubleBackToExitPressedOnce = false;
 
     @Override
@@ -359,38 +371,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
     //End Side Menu Navigation
-
-
-    //Get Profile Image for Navigation Menu
-    private void convertImage(String imageURL){
-        class ConvertImage extends AsyncTask<String, Void, Bitmap> {
-
-            @Override
-            protected Bitmap doInBackground(String... strings) {
-                String imageURL = strings[0];
-
-                try {
-                    URL url = new URL(imageURL);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setDoInput(true);
-                    connection.connect();
-                    InputStream input = connection.getInputStream();
-                    Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                    return myBitmap;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-
-            @Override
-            protected void onPostExecute(Bitmap bitmap) {
-                super.onPostExecute(bitmap);
-                CircleImageView profile_image = (CircleImageView) findViewById(R.id.profile_image);
-                profile_image.setImageBitmap(bitmap);
-            }
-        }
-        ConvertImage convertImage = new ConvertImage();
-        convertImage.execute(imageURL);
-    }
 }

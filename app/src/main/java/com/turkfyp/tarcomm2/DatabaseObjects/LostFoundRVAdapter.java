@@ -48,26 +48,25 @@ public class LostFoundRVAdapter extends RecyclerView.Adapter<LostFoundRVAdapter.
 
                 Intent lostFoundDetailIntent = new Intent(mContext,LostFoundDetailActivity.class);
 
-                //Adapter position starts from -1
-                lostFoundDetailIntent.putExtra("lostItemName",lostFoundList.get(viewHolder.getAdapterPosition()+1).getLostItemName());
-                lostFoundDetailIntent.putExtra("email",lostFoundList.get(viewHolder.getAdapterPosition()+1).getEmail());
-                lostFoundDetailIntent.putExtra("lostItemDesc",lostFoundList.get(viewHolder.getAdapterPosition()+1).getLostItemDesc());
-                lostFoundDetailIntent.putExtra("lostDate", lostFoundList.get(viewHolder.getAdapterPosition()+1).getLostDate());
-                lostFoundDetailIntent.putExtra("lostItemContactName",lostFoundList.get(viewHolder.getAdapterPosition()+1).getContactName());
-                lostFoundDetailIntent.putExtra("lostItemContactNo",lostFoundList.get(viewHolder.getAdapterPosition()+1).getContactNo());
+                lostFoundDetailIntent.putExtra("lostItemName",lostFoundList.get(viewHolder.getAdapterPosition()).getLostItemName());
+                lostFoundDetailIntent.putExtra("email",lostFoundList.get(viewHolder.getAdapterPosition()).getEmail());
+                lostFoundDetailIntent.putExtra("lostItemDesc",lostFoundList.get(viewHolder.getAdapterPosition()).getLostItemDesc());
+                lostFoundDetailIntent.putExtra("lostDate", lostFoundList.get(viewHolder.getAdapterPosition()).getLostDate());
+                lostFoundDetailIntent.putExtra("lostItemContactName",lostFoundList.get(viewHolder.getAdapterPosition()).getContactName());
+                lostFoundDetailIntent.putExtra("lostItemContactNo",lostFoundList.get(viewHolder.getAdapterPosition()).getContactNo());
                 lostFoundDetailIntent.putExtra("checkYourUpload",false);
 
                 ImageView ivImage = (ImageView) view.findViewById(R.id.imageViewLostItemImage);
                 ivImage.buildDrawingCache();
                 Bitmap image = ivImage.getDrawingCache();
                 lostFoundDetailIntent.putExtra("Image", image);
-                lostFoundDetailIntent.putExtra("ImageURL", lostFoundList.get(viewHolder.getAdapterPosition()+1).getLostItemURL());
+                lostFoundDetailIntent.putExtra("ImageURL", lostFoundList.get(viewHolder.getAdapterPosition()).getLostItemURL());
 
                 mContext.startActivity(lostFoundDetailIntent);
             }
         });
 
-        return new LostFoundRVAdapter.MyViewHolder(view);
+        return viewHolder;
     }
 
     @Override

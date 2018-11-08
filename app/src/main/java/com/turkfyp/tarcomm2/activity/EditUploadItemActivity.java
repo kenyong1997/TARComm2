@@ -5,29 +5,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,31 +29,22 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.DatabaseObjects.Item;
-import com.turkfyp.tarcomm2.DatabaseObjects.User;
 import com.turkfyp.tarcomm2.R;
-import com.turkfyp.tarcomm2.guillotine.animation.GuillotineAnimation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import de.hdodenhof.circleimageview.CircleImageView;
+import java.util.concurrent.ExecutionException;
 
 public class EditUploadItemActivity extends AppCompatActivity {
     private int PICK_IMAGE_REQUEST = 1;
-    private Bitmap bitmap;
     private Uri filePath;
 
     ProgressDialog progressDialog;
@@ -74,7 +56,10 @@ public class EditUploadItemActivity extends AppCompatActivity {
     protected TextView tvEditItemPrice;
     protected RadioGroup rgItemCategory;
     protected RadioButton category_sell,category_buy,category_trade, rbEditItemCategory;
-    protected Button btnCancelEditItem,btnUploadEditItem;
+
+    private Bitmap bitmap;
+    protected String newImgURL;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,13 +89,18 @@ public class EditUploadItemActivity extends AppCompatActivity {
         itemCategory = extras.getString("itemCategory");
 
 
-        Bitmap image = extras.getParcelable("Image");
-        imgViewEditMarketItem.setImageBitmap(image);
-
-        bitmap = image;
-
         String imageURL = extras.getString("ImageURL");
         itemID = Integer.parseInt(imageURL.split("=")[1]);
+
+        //For Glide image
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.background_white)
+                .error(R.drawable.background_white);
+
+        Glide.with(getApplicationContext()).load(imageURL).apply(options).into(imgViewEditMarketItem);
+
+        bitmap = extras.getParcelable("Image");
 
         //set text on edittext
         etEditItemName.setText(itemName);
@@ -161,6 +151,7 @@ public class EditUploadItemActivity extends AppCompatActivity {
         String itemCategory = rbEditItemCategory.getText().toString();
         String itemPrice;
 
+        newImgURL = getStringImage(bitmap);
 
         if(itemCategory.equals("Want To Sell"))
             itemCategory = "WTS";
@@ -193,7 +184,8 @@ public class EditUploadItemActivity extends AppCompatActivity {
             item.setEmail(preferences.getString("email", ""));
             item.setSellerName(preferences.getString("loggedInUser", ""));
             item.setSellerContact(preferences.getString("contactNo", ""));
-            uploadImage(item);
+            item.setImageURL(newImgURL);
+
 
 
             progressDialog = new ProgressDialog(this);
@@ -227,7 +219,23 @@ public class EditUploadItemActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                imgViewEditMarketItem.setBackgroundColor(Color.WHITE);
+                imgViewEditMarketItem.setImageBitmap(bitmap);
+                newImgURL = getStringImage(bitmap);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
     public void makeServiceCall(Context context, String url, final Item item) {
@@ -305,28 +313,6 @@ public class EditUploadItemActivity extends AppCompatActivity {
         }
     }
 
-
-
-
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            filePath = data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                imgViewEditMarketItem.setBackgroundColor(Color.WHITE);
-                imgViewEditMarketItem.setImageBitmap(bitmap);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 10, baos);
@@ -335,26 +321,6 @@ public class EditUploadItemActivity extends AppCompatActivity {
         return encodedImage;
     }
 
-    private Item uploadImage(final Item item) {
-        class UploadImage extends AsyncTask<Bitmap, Void, String> {
-            String image;
-
-            @Override
-            protected String doInBackground(Bitmap... params) {
-                Bitmap bitmap = params[0];
-                String uploadImage = getStringImage(bitmap);
-
-                image = uploadImage;
-
-                item.setImageURL(image);
-                return uploadImage;
-            }
-        }
-        UploadImage ui = new UploadImage();
-        ui.execute(bitmap);
-
-        return item;
-    }
 }
 
 

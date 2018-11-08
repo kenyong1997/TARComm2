@@ -2,6 +2,7 @@ package com.turkfyp.tarcomm2.DatabaseObjects;
 
 import android.content.Context;
 
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.R;
+import com.turkfyp.tarcomm2.activity.EventActivity;
 
 
 import java.io.IOException;
@@ -70,6 +73,15 @@ public class ViewPagerAdapter extends PagerAdapter{
 
         location = (TextView) view.findViewById(R.id.venue);
         location.setText(contents.get(position).getLocation());
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context,EventActivity.class);
+
+                context.startActivity(i);
+            }
+        });
         return view;
     }
 

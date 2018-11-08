@@ -66,32 +66,28 @@ public class MainItemRVAdapter extends RecyclerView.Adapter<MainItemRVAdapter.My
         viewHolder.main_item_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent itemDetailIntent = new Intent(mContext,MarketplaceDetailActivity.class);
 
-                //Adapter position starts from -1
-                itemDetailIntent.putExtra("itemName", itemList.get(viewHolder.getAdapterPosition()+1).getItemName());
-                itemDetailIntent.putExtra("itemPrice",itemList.get(viewHolder.getAdapterPosition()+1).getItemPrice());
-                itemDetailIntent.putExtra("itemDesc",itemList.get(viewHolder.getAdapterPosition()+1).getItemDescription());
-                itemDetailIntent.putExtra("itemSeller",itemList.get(viewHolder.getAdapterPosition()+1).getSellerName());
-                itemDetailIntent.putExtra("sellerContact",itemList.get(viewHolder.getAdapterPosition()+1).getSellerContact());
-                itemDetailIntent.putExtra("email",itemList.get(viewHolder.getAdapterPosition()+1).getEmail());
+                itemDetailIntent.putExtra("itemName", itemList.get(viewHolder.getAdapterPosition()).getItemName());
+                itemDetailIntent.putExtra("itemPrice",itemList.get(viewHolder.getAdapterPosition()).getItemPrice());
+                itemDetailIntent.putExtra("itemDesc",itemList.get(viewHolder.getAdapterPosition()).getItemDescription());
+                itemDetailIntent.putExtra("itemSeller",itemList.get(viewHolder.getAdapterPosition()).getSellerName());
+                itemDetailIntent.putExtra("sellerContact",itemList.get(viewHolder.getAdapterPosition()).getSellerContact());
+                itemDetailIntent.putExtra("email",itemList.get(viewHolder.getAdapterPosition()).getEmail());
 
-                if(itemList.get(viewHolder.getAdapterPosition()+1).getItemCategory().equals("WTT"))
+                if(itemList.get(viewHolder.getAdapterPosition()).getItemCategory().equals("WTT"))
                     itemDetailIntent.putExtra("checkWTT",true);
                 else
                     itemDetailIntent.putExtra("checkYourUpload",false);
 
-                ImageView ivMarketItem = (ImageView) view.findViewById(R.id.ivMarketItem);
-                ivMarketItem.buildDrawingCache();
-                Bitmap image = ivMarketItem.getDrawingCache();
-                itemDetailIntent.putExtra("Image", image);
-                itemDetailIntent.putExtra("ImageURL", itemList.get(viewHolder.getAdapterPosition()+1).getImageURL());
+                itemDetailIntent.putExtra("ImageURL", itemList.get(viewHolder.getAdapterPosition()).getImageURL());
 
                 mContext.startActivity(itemDetailIntent);
             }
         });
 
-        return new MyViewHolder(view);
+        return viewHolder;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
