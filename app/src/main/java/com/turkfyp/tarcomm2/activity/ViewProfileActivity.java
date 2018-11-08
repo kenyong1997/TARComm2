@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.guillotine.animation.GuillotineAnimation;
 
@@ -21,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -30,6 +34,9 @@ public class ViewProfileActivity extends AppCompatActivity {
 
     TextView tvProfileName, tvProfileFaculty, tvProfileCourse, tvProfileEmail, tvProfilePhone,tvProfileBioData;
     Button btnEditProfile;
+
+    Bitmap bitmap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +64,28 @@ public class ViewProfileActivity extends AppCompatActivity {
 
         //Set Profile Picture on Navigation Bar
         String imageURL = preferences.getString("profilePicURL","");
+
+        //For Glide image
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .placeholder(R.drawable.background_white)
+                .error(R.drawable.background_white);
+
+        CircleImageView profile_image = (CircleImageView) findViewById(R.id.profile_image);
+        CircleImageView imgViewProfilePic = (CircleImageView) findViewById(R.id.imgViewProfilePic);
+
+        //Navigation Image
+        Glide.with(getApplicationContext()).load(imageURL).apply(options).into(profile_image);
+
+        //User Profile Image
+        Glide.with(getApplicationContext()).load(imageURL).apply(options).into(imgViewProfilePic);
+
         convertImage(imageURL);
+
+
+
 
         new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
                 .setStartDelay(RIPPLE_DURATION)
@@ -84,7 +112,9 @@ public class ViewProfileActivity extends AppCompatActivity {
     }
     public void onEditProfileClicked(View view){
         Intent i = new Intent (this,EditProfileActivity.class);
-        startActivity(i);
+
+        i.putExtra("image", bitmap);
+        this.startActivity(i);
         finish();
     }
     private Session session;
@@ -135,27 +165,23 @@ public class ViewProfileActivity extends AppCompatActivity {
                 String imageURL = strings[0];
 
                 try {
-                    URL url = new URL(imageURL);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setDoInput(true);
-                    connection.connect();
-                    InputStream input = connection.getInputStream();
-                    Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                    return myBitmap;
-                } catch (IOException e) {
+                    bitmap = Glide.with(getApplicationContext())
+                            .asBitmap()
+                            .load(imageURL)
+                            .submit(150,150)
+                            .get();
+
+                } catch (ExecutionException e) {
                     e.printStackTrace();
-                    return null;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
+                return bitmap;
             }
 
             @Override
             protected void onPostExecute(Bitmap bitmap) {
                 super.onPostExecute(bitmap);
-                CircleImageView profile_image = (CircleImageView) findViewById(R.id.profile_image);
-                profile_image.setImageBitmap(bitmap);
-
-                CircleImageView imgViewProfilePic = (CircleImageView) findViewById(R.id.imgViewProfilePic);
-                imgViewProfilePic.setImageBitmap(bitmap);
             }
         }
         ConvertImage convertImage = new ConvertImage();

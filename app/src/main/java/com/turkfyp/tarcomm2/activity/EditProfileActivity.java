@@ -35,6 +35,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.DatabaseObjects.User;
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.guillotine.animation.GuillotineAnimation;
@@ -63,7 +66,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     ProgressDialog progressDialog;
 
-    ImageView imgViewEditProfilePic;
+    CircleImageView imgViewEditProfilePic;
     EditText etEditName,etEditContactNo,etEditCourse,etEditBioData;
     Spinner edit_faculty_spinner;
     DatePicker dpEditDOB;
@@ -81,13 +84,28 @@ public class EditProfileActivity extends AppCompatActivity {
 
         //Set Profile Picture on Navigation Bar
         String imageURL = preferences.getString("profilePicURL","");
-        convertImage(imageURL);
+
+        //For Glide image
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .placeholder(R.drawable.background_white)
+                .error(R.drawable.background_white);
+
+        imgViewEditProfilePic = (CircleImageView) findViewById(R.id.imgViewEditProfilePic);
+        Glide.with(getApplicationContext()).load(imageURL).apply(options).into(imgViewEditProfilePic);
+
+
+        //Get bitmap from intent
+        bitmap = getIntent().getExtras().getParcelable("image");
+
+//        convertImage(imageURL);
 
 
 
         //------------------------Activity Codes
 
-        imgViewEditProfilePic = (ImageView)findViewById(R.id.imgViewEditProfilePic);
         etEditName = (EditText)findViewById(R.id.etEditName);
         etEditContactNo=(EditText)findViewById(R.id.etEditContactNo);
         etEditCourse=(EditText)findViewById(R.id.etEditCourse);
@@ -208,17 +226,28 @@ public class EditProfileActivity extends AppCompatActivity {
 
     }
 
-
-    public void onEditProfileClicked(View view){
-        Intent i = new Intent (this,EditProfileActivity.class);
-        startActivity(i);
-    }
     private void showFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                imgViewEditProfilePic.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void onBackClicked(View view){
         finish();
     }
@@ -404,20 +433,7 @@ public class EditProfileActivity extends AppCompatActivity {
         convertImage.execute(imageURL);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            filePath = data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                imgViewEditProfilePic.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
