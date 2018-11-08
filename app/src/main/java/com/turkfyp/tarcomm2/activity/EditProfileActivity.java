@@ -182,6 +182,7 @@ public class EditProfileActivity extends AppCompatActivity {
             etEditContactNo.setError("Invalid number, please enter valid contact number without hyphen(-)");
         }
 
+
         if(isValidContact(contactNo) && !TextUtils.isEmpty(fullName) && !TextUtils.isEmpty(contactNo) && !TextUtils.isEmpty(course) && !TextUtils.isEmpty(biodata)){
             User user = new User();
             user.setEmail(email);
