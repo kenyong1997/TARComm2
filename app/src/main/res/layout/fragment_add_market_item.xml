@@ -36,6 +36,7 @@
         <EditText
             android:id="@+id/etAddItemName"
             android:layout_width="match_parent"
+            android:maxLength="30"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp" />
 
