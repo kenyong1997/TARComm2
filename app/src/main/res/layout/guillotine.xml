@@ -35,13 +35,13 @@
             android:onClick="view_profile_onclick">
 
             <TextView
-            style="@style/TextView.GuillotineItem"
+            style="@style/TextView.GuillotineItem.Selected"
                 android:id="@+id/tvUserFullName"
             android:layout_marginLeft="7dp"
                 android:text="Name"
             android:textSize="25dp"/>
             <TextView
-                style="@style/TextView.GuillotineItem"
+                style="@style/TextView.GuillotineItem.Selected"
                 android:text="View Your Profile"
                 android:layout_marginLeft="10dp"
                 android:textSize="15dp"/>
