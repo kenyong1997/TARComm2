@@ -62,7 +62,7 @@
             style="@style/TextView.GuillotineItem"
             android:textSize="25sp"
             android:textStyle="bold"
-            android:text="Home Page"
+            android:text="HomePage"
             android:layout_marginLeft="20dp"
             android:onClick="highlight_event_onclick"/>
     </LinearLayout>

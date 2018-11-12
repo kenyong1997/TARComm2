@@ -25,6 +25,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.R;
 
 import org.json.JSONException;
@@ -44,7 +47,7 @@ public class LostFoundDetailActivity extends AppCompatActivity {
 
     int lostID;
     String confirmation;
-
+    RequestOptions options;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,10 +105,18 @@ public class LostFoundDetailActivity extends AppCompatActivity {
         tvDetailLostItemOwner.setText(content);
 
         image = extras.getParcelable("LostImage");
-        imageViewLostItem.setImageBitmap(image);
 
         imageURL = extras.getString("LostImageURL");
         lostID = Integer.parseInt(imageURL.split("=")[1]);
+        //For Glide image
+        options = new RequestOptions()
+                .centerCrop()
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .placeholder(R.drawable.background_white)
+                .error(R.drawable.background_white);
+
+        Glide.with(getApplicationContext()).load(imageURL).apply(options).into(imageViewLostItem);
     }
 
     public void onDeleteLostFoundItemClicked(View view){

@@ -30,7 +30,9 @@ import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.DatabaseObjects.Event;
 import com.turkfyp.tarcomm2.DatabaseObjects.Item;
 import com.turkfyp.tarcomm2.DatabaseObjects.ItemRVAdapter;
+import com.turkfyp.tarcomm2.DatabaseObjects.LostFound;
 import com.turkfyp.tarcomm2.DatabaseObjects.MainItemRVAdapter;
+import com.turkfyp.tarcomm2.DatabaseObjects.MainLostItemRVAdapter;
 import com.turkfyp.tarcomm2.DatabaseObjects.ViewPagerAdapter;
 import com.turkfyp.tarcomm2.DatabaseObjects.ViewPagerModel;
 import com.turkfyp.tarcomm2.R;
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewpager;
     private ViewPagerAdapter mAdapter;
     private ArrayList<ViewPagerModel> mContents;
-    private RecyclerView rvMainMarket;
+    private RecyclerView rvMainMarket, rvMainLost;
     public static boolean allowRefresh;
 
     @BindView(R.id.toolbar)
@@ -76,11 +78,13 @@ public class MainActivity extends AppCompatActivity {
     View contentHamburger;
 
     private static String GET_URL = "https://tarcomm.000webhostapp.com/getHighlightedEvent.php";
-    private static String GET_URL_ITEM = "https://tarcomm.000webhostapp.com/getItemWTS.php";
+    private static String GET_URL_ITEM = "https://tarcomm.000webhostapp.com/getRandWTS.php";
+    private static String GET_URL_LOST_ITEM = "https://tarcomm.000webhostapp.com/getRandLostFound.php";
     String currentDate;
     List<Event> eventList;
     RequestQueue queue;
     List<Item> itemList;
+    List<LostFound> lostFoundList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         rvMainMarket = (RecyclerView) findViewById(R.id.rvMainMarket);
+        rvMainLost = (RecyclerView) findViewById(R.id.rvMainLost);
 
         //Navigation Menu - START
         if (toolbar != null) {
@@ -130,28 +135,71 @@ public class MainActivity extends AppCompatActivity {
         currentDate = dateFormat.format(cal);
 
         try{
-            //Initialize Event List
+            //Initialize List
             eventList = new ArrayList<>();
+            lostFoundList = new ArrayList<>();
+            itemList = new ArrayList<>();
 
             downloadHighlightEvent(getApplicationContext(), GET_URL);
+            downloadTradingRecords(getApplicationContext(), GET_URL_ITEM);
+            downloadLostFoundRecords(getApplicationContext(),GET_URL_LOST_ITEM);
 
         }catch (Exception e){
             e.printStackTrace();
             Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
-        try {
-            //initialize itemList
-            itemList = new ArrayList<>();
-
-            downloadTradingRecords(getApplicationContext(), GET_URL_ITEM);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-        }
     }
+    //retrieve the records from database
+    public void downloadLostFoundRecords(Context context, String url) {
+        // Instantiate the RequestQueue
+        queue = Volley.newRequestQueue(context);
 
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(
+                url,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            lostFoundList.clear();
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject lostFoundResponse = (JSONObject) response.get(i);
+                                String category = lostFoundResponse.getString("category");
+                                String lostItemName = lostFoundResponse.getString("lostItemName");
+                                String lostItemDesc = lostFoundResponse.getString("lostItemDesc");
+                                String lostItemURL = lostFoundResponse.getString("url");
+                                String email = lostFoundResponse.getString("email");
+                                String contactName = lostFoundResponse.getString("fullname");
+                                String contactNo = lostFoundResponse.getString("contactno");
+                                String lostDate = lostFoundResponse.getString("lostDate");
+
+                                LostFound lostFound = new LostFound(category, lostItemName, lostItemDesc, lostItemURL, lostDate, email, contactName, contactNo);
+                                lostFoundList.add(lostFound);
+                            }
+                            //load the item into adapter
+                            setLostRVAdapter(lostFoundList);
+
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Toast.makeText(getApplicationContext(), "Error: " + volleyError.getMessage(), Toast.LENGTH_LONG).show();
+
+                    }
+                });
+
+        // Set the tag on the request.
+        jsonObjectRequest.setTag(TAG);
+
+        // Add the request to the RequestQueue.
+        queue.add(jsonObjectRequest);
+
+
+    }
     //retrieve the records from database
     public void downloadTradingRecords(Context context, String url) {
         // Instantiate the RequestQueue
@@ -224,6 +272,16 @@ public class MainActivity extends AppCompatActivity {
 
         rvMainMarket.setLayoutManager(layoutManager);
         rvMainMarket.setAdapter(myAdapter);
+    }
+    private void setLostRVAdapter(List<LostFound> lostFoundList){
+        MainLostItemRVAdapter myAdapter = new MainLostItemRVAdapter(this,lostFoundList) ;
+
+        //For horizontal layout
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        rvMainLost.setLayoutManager(layoutManager);
+        rvMainLost.setAdapter(myAdapter);
     }
 
     //retrieve the records from database

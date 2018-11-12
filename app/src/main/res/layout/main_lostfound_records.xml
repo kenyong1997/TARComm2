@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/card_no_border"
+    android:id="@+id/main_lostfound_container">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/light_grey"
+        android:id="@+id/tvLostCategory"
+        android:fontFamily="sans-serif-condensed"
+        android:textAllCaps="true"
+        android:text="Lost/Found"/>
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/ivLostFoundItem"
+        android:background="@color/darker_white"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginLeft="5dp"
+        android:textColor="@android:color/black"
+        android:id="@+id/tvMainLostItemName"
+        android:fontFamily="sans-serif-light"
+        android:textStyle="bold"
+        android:maxLines="2"
+        android:lines="2"
+        android:text="Item Title"/>
+
+</LinearLayout>
