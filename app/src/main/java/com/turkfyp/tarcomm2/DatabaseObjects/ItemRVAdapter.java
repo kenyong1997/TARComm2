@@ -77,13 +77,28 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.MyViewHold
         viewHolder.item_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent itemDetailIntent = new Intent(mContext,MarketplaceDetailActivity.class);
 
+                itemDetailIntent.putExtra("itemName", itemList.get(viewHolder.getAdapterPosition()).getItemName());
+                itemDetailIntent.putExtra("itemPrice",itemList.get(viewHolder.getAdapterPosition()).getItemPrice());
+                itemDetailIntent.putExtra("itemDesc",itemList.get(viewHolder.getAdapterPosition()).getItemDescription());
+                itemDetailIntent.putExtra("itemSeller",itemList.get(viewHolder.getAdapterPosition()).getSellerName());
+                itemDetailIntent.putExtra("sellerContact",itemList.get(viewHolder.getAdapterPosition()).getSellerContact());
+                itemDetailIntent.putExtra("email",itemList.get(viewHolder.getAdapterPosition()).getEmail());
 
-                convertImage(viewHolder.getAdapterPosition());
+                if(itemList.get(viewHolder.getAdapterPosition()).getItemCategory().equals("WTT"))
+                    itemDetailIntent.putExtra("checkWTT",true);
+                else
+                    itemDetailIntent.putExtra("checkYourUpload",false);
+
+                convertImage(itemList.get(viewHolder.getAdapterPosition()).getImageURL());
 //                ImageView ivImage = (ImageView) view.findViewById(R.id.ivItemImage);
 //                ivImage.buildDrawingCache();
 //                Bitmap image = ivImage.getDrawingCache();
+                itemDetailIntent.putExtra("Image", bitmap);
+                itemDetailIntent.putExtra("ImageURL", itemList.get(viewHolder.getAdapterPosition()).getImageURL());
 
+                mContext.startActivity(itemDetailIntent);
             }
         });
 
@@ -108,12 +123,12 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.MyViewHold
     }
 
     //Get Profile Image for Navigation Menu
-    private void convertImage(final int position){
+    private void convertImage(String imageURL){
         class ConvertImage extends AsyncTask<String, Void, Bitmap> {
 
             @Override
             protected Bitmap doInBackground(String... strings) {
-                String imageURL = itemList.get(position).getImageURL();
+                String imageURL = strings[0];
 
                 try {
                     bitmap = Glide.with(mContext)
@@ -134,27 +149,9 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.MyViewHold
             @Override
             protected void onPostExecute(Bitmap bitmap) {
                 super.onPostExecute(bitmap);
-                Intent itemDetailIntent = new Intent(mContext,MarketplaceDetailActivity.class);
-
-                itemDetailIntent.putExtra("itemName", itemList.get(position).getItemName());
-                itemDetailIntent.putExtra("itemPrice",itemList.get(position).getItemPrice());
-                itemDetailIntent.putExtra("itemDesc",itemList.get(position).getItemDescription());
-                itemDetailIntent.putExtra("itemSeller",itemList.get(position).getSellerName());
-                itemDetailIntent.putExtra("sellerContact",itemList.get(position).getSellerContact());
-                itemDetailIntent.putExtra("email",itemList.get(position).getEmail());
-
-                if(itemList.get(position).getItemCategory().equals("WTT"))
-                    itemDetailIntent.putExtra("checkWTT",true);
-                else
-                    itemDetailIntent.putExtra("checkYourUpload",false);
-
-                itemDetailIntent.putExtra("Image", bitmap);
-                itemDetailIntent.putExtra("ImageURL", itemList.get(position).getImageURL());
-
-                mContext.startActivity(itemDetailIntent);
             }
         }
         ConvertImage convertImage = new ConvertImage();
-        convertImage.execute();
+        convertImage.execute(imageURL);
     }
 }
