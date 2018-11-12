@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.MediaStoreSignature;
 import com.turkfyp.tarcomm2.R;
 
 import java.util.HashMap;
@@ -36,6 +37,8 @@ public class ItemUploadAdapter extends BaseExpandableListAdapter {
         //For Glide image
         options = new RequestOptions()
                 .centerCrop()
+//                .signature(new MediaStoreSignature("","",0))
+                .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .placeholder(R.drawable.background_white)
                 .error(R.drawable.background_white);
