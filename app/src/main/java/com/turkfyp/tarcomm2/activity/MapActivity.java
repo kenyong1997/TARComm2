@@ -121,7 +121,7 @@ public class MapActivity extends AppCompatActivity {
     }
 
 
-    //update the status of userFullName activity to OFF when leave application
+    //update the status of userFullName activity_main to OFF when leave application
     public void updateStatus(Context context, String url, final String status) {
         RequestQueue queue = Volley.newRequestQueue(context);
 

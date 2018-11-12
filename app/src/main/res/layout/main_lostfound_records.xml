@@ -15,7 +15,6 @@
         android:textColor="@color/light_grey"
         android:id="@+id/tvLostCategory"
         android:fontFamily="sans-serif-condensed"
-        android:textAllCaps="true"
         android:text="Lost/Found"/>
 
     <ImageView

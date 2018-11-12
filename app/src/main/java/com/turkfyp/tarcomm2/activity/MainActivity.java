@@ -3,9 +3,6 @@ package com.turkfyp.tarcomm2.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
@@ -29,7 +26,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.DatabaseObjects.Event;
 import com.turkfyp.tarcomm2.DatabaseObjects.Item;
-import com.turkfyp.tarcomm2.DatabaseObjects.ItemRVAdapter;
 import com.turkfyp.tarcomm2.DatabaseObjects.LostFound;
 import com.turkfyp.tarcomm2.DatabaseObjects.MainItemRVAdapter;
 import com.turkfyp.tarcomm2.DatabaseObjects.MainLostItemRVAdapter;
@@ -38,10 +34,6 @@ import com.turkfyp.tarcomm2.DatabaseObjects.ViewPagerModel;
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.guillotine.animation.GuillotineAnimation;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -89,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity);
+        setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
         rvMainMarket = (RecyclerView) findViewById(R.id.rvMainMarket);

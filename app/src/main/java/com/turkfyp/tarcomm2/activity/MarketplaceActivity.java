@@ -70,7 +70,7 @@ public class MarketplaceActivity extends AppCompatActivity  {
 
 
         // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
+        // primary sections of the activity_main.
 //        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 //
 //        // Set up the ViewPager with the sections adapter.

@@ -43,15 +43,22 @@ public class MainItemRVAdapter extends RecyclerView.Adapter<MainItemRVAdapter.My
         holder.tvMainItemName.setText(itemList.get(position).getItemName());
         holder.tvMainItemPrice.setText(itemList.get(position).getItemPrice());
 
+
         // load image using Glide
         Glide.with(mContext).load(itemList.get(position).getImageURL()).apply(options).into(holder.ivMarketItem);
 
         if(!itemList.get(position).getItemCategory().equals("WTT")){
             holder.tvMainItemPrice.setText(String.format("RM %.2f", Double.parseDouble(itemList.get(position).getItemPrice())));
-
+            if(itemList.get(position).getItemCategory().equals("WTS")){
+                holder.tvMainItemCategory.setText("Selling");
+            }else if(itemList.get(position).getItemCategory().equals("WTB")){
+                holder.tvMainItemCategory.setText("Buying");
+            }
         }else{
             holder.tvMainItemPrice.setText(null);
+            holder.tvMainItemCategory.setText("Trading");
         }
+
     }
 
     @Override
@@ -95,7 +102,7 @@ public class MainItemRVAdapter extends RecyclerView.Adapter<MainItemRVAdapter.My
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvMainItemName, tvMainItemPrice;
+        TextView tvMainItemName, tvMainItemPrice,tvMainItemCategory;
         ImageView ivMarketItem;
         LinearLayout main_item_container;
 
@@ -103,6 +110,7 @@ public class MainItemRVAdapter extends RecyclerView.Adapter<MainItemRVAdapter.My
             super(itemView);
             tvMainItemName = (TextView) itemView.findViewById(R.id.tvMainItemName);
             tvMainItemPrice = (TextView) itemView.findViewById(R.id.tvMainItemPrice);
+            tvMainItemCategory = (TextView) itemView.findViewById(R.id.tvMainItemCategory);
             ivMarketItem = (ImageView) itemView.findViewById(R.id.ivMarketItem);
             main_item_container = (LinearLayout)itemView.findViewById(R.id.main_item_container);
         }

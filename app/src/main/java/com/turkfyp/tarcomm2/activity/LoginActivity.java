@@ -143,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                         editor.commit();
 
-                                        //go to main activity
+                                        //go to main activity_main
                                         goToMain();
                                     } else {
                                         err += "Password is incorrect.";
