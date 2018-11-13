@@ -151,6 +151,10 @@ public class ViewProfileActivity extends AppCompatActivity {
         Intent i = new Intent (this,ViewProfileActivity.class);
         startActivity(i);
     }
+    public void map_event_onclick(View view){
+        Intent i = new Intent(this,MapEventActivity.class);
+        startActivity(i);
+    }
     //End Side Menu Navigation
     public void onViewPostClicked(View view){
         Intent i = new Intent (this,ViewPostActivity.class);

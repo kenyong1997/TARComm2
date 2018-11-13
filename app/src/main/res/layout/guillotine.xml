@@ -177,8 +177,8 @@
 
                 <com.turkfyp.tarcomm2.widget.CanaroTextView
                     style="@style/TextView.GuillotineItem"
-                    android:textColor="@color/light_gray"
-                    android:text="Events Ongoing" />
+                    android:text="Events Ongoing"
+                    android:onClick="map_event_onclick"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/support_group"

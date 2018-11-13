@@ -210,6 +210,10 @@ public class MarketplaceActivity extends AppCompatActivity  {
         Intent i = new Intent (this,ViewProfileActivity.class);
         startActivity(i);
     }
+    public void map_event_onclick(View view){
+        Intent i = new Intent(this,MapEventActivity.class);
+        startActivity(i);
+    }
     //Side Menu Navigation - END
 
     //Get Profile Image for Navigation Menu

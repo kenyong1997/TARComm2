@@ -23,6 +23,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.DatabaseObjects.Event;
 import com.turkfyp.tarcomm2.DatabaseObjects.Item;
@@ -109,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
 
         RequestOptions options = new RequestOptions()
                 .circleCrop()
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .placeholder(R.drawable.background_white)
                 .error(R.drawable.background_white);
 
@@ -418,6 +421,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void view_profile_onclick(View view){
         Intent i = new Intent (this,ViewProfileActivity.class);
+        startActivity(i);
+    }
+    public void map_event_onclick(View view){
+        Intent i = new Intent(this,MapEventActivity.class);
         startActivity(i);
     }
     //End Side Menu Navigation

@@ -147,6 +147,10 @@ public class EventActivity extends AppCompatActivity {
         Intent i = new Intent (this,ViewProfileActivity.class);
         startActivity(i);
     }
+    public void map_event_onclick(View view){
+        Intent i = new Intent(this,MapEventActivity.class);
+        startActivity(i);
+    }
     //End Side Menu Navigation
 
     //Get Profile Image for Navigation Menu

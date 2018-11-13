@@ -3,10 +3,6 @@ package com.turkfyp.tarcomm2.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -32,28 +28,25 @@ import com.turkfyp.tarcomm2.guillotine.animation.GuillotineAnimation;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MapActivity extends AppCompatActivity {
+public class MapEventActivity extends AppCompatActivity {
 
     private static final long RIPPLE_DURATION = 250;
 
+    String URL_UPDATE_STATUS = "https://tarcomm.000webhostapp.com/updateStatus.php";
     String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map_container);
+        setContentView(R.layout.activity_map_event);
 
         Toolbar toolbar=(Toolbar) findViewById(R.id.toolbar);
-        FrameLayout activity_map2 = (FrameLayout) findViewById(R.id.activity_map2);
+        FrameLayout mapEventContainer = (FrameLayout) findViewById(R.id.mapEventContainer);
         View contentHamburger = (View) findViewById(R.id.content_hamburger);
 
         if (toolbar != null) {
@@ -62,7 +55,7 @@ public class MapActivity extends AppCompatActivity {
         }
 
         View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
-        activity_map2.addView(guillotineMenu);
+        mapEventContainer.addView(guillotineMenu);
 
         TextView tvUserFullName = (TextView) findViewById(R.id.tvUserFullName);
 
@@ -93,12 +86,8 @@ public class MapActivity extends AppCompatActivity {
                 .build();
 
         //Set up the main page
-        MapFragment m = new MapFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame, m).commit();
-
-        //Define action bar
-        final ActionBar actionBar = getSupportActionBar();
-
+        MapEventFragment m = new MapEventFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.mapEventFrame, m).commit();
     }
 
     @Override
@@ -106,7 +95,7 @@ public class MapActivity extends AppCompatActivity {
         super.onStop();
 
         //make user inactive
-        updateStatus(this, "https://tarcomm.000webhostapp.com/updateStatus.php", "OFF");
+        updateStatus(this, URL_UPDATE_STATUS, "OFF");
     }
 
     @Override
@@ -114,9 +103,8 @@ public class MapActivity extends AppCompatActivity {
         super.onDestroy();
 
         //make user inactive
-        updateStatus(this, "https://tarcomm.000webhostapp.com/updateStatus.php", "OFF");
+        updateStatus(this, URL_UPDATE_STATUS, "OFF");
     }
-
 
     //update the status of user to OFF when leave application
     public void updateStatus(Context context, String url, final String status) {
@@ -124,7 +112,6 @@ public class MapActivity extends AppCompatActivity {
 
         //Send data
         try {
-
             StringRequest postRequest = new StringRequest(
                     Request.Method.POST,
                     url,
@@ -218,6 +205,10 @@ public class MapActivity extends AppCompatActivity {
     }
     public void view_profile_onclick(View view){
         Intent i = new Intent (this,ViewProfileActivity.class);
+        startActivity(i);
+    }
+    public void map_event_onclick(View view){
+        Intent i = new Intent(this,MapEventActivity.class);
         startActivity(i);
     }
     //Side Menu Navigation - END
