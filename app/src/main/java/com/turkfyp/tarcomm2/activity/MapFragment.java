@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -85,6 +86,7 @@ import static android.content.Context.LOCATION_SERVICE;
 
 public class MapFragment extends android.support.v4.app.Fragment implements OnMapReadyCallback, DirectionFinderListener {
 
+    private String GOOGLE_MAP_API = "AIzaSyDRSuYdn9yoCACUGxd4qGkgl59276mWvcs";
 
     //DECLARE THE VARIABLES
     protected GoogleMap mMap;
@@ -130,6 +132,8 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
     private List<MarkerOptions> userMarkers = new ArrayList<>();
 
     Handler handler = new Handler();
+
+    String email;
 
     @Nullable
     @Override
@@ -182,6 +186,9 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
         java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd");
         currentDate = df.format(cal);
 
+        //Get Email from SharedPreferences
+        SharedPreferences preferences = getActivity().getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
+        email = preferences.getString("email","");
 
         //if the DIRECT button is clicked
         btnDirect.setOnClickListener(new View.OnClickListener() {
@@ -247,6 +254,9 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
 
         LatLng tarc = new LatLng(3.215049, 101.726534);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(tarc, 19));
+
+        downloadCurrentEventDetails();
+        downloadUpcomingEventDetails();
 
        /* mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         originMarkers.add(mMap.addMarker(new MarkerOptions()
@@ -476,11 +486,15 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                for (int i = 0; i < userList.size(); i++) {
-                    if (marker.getTitle().toUpperCase().equals(userList.get(i).getEmail().toUpperCase())) {
-                        contactUserByWhatsapp(userList.get(i).getContactno());
-                    }
-                }
+//                for (int i = 0; i < userList.size(); i++) {
+//                    if (marker.getTitle().toUpperCase().equals(userList.get(i).getEmail().toUpperCase())) {
+//                        contactUserByWhatsapp(userList.get(i).getContactno());
+//                    }
+//                }
+
+                Intent i = new Intent(getActivity(),EventActivity.class);
+                getActivity().finish();
+                getActivity().startActivity(i);
             }
         });
     }
@@ -718,7 +732,7 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
                                         Event event = new Event(eventName, eventDateTime, eventDesc, eventImageURL, eventVenue, eventVenueName, eventHighlight,eventEndDateTime);
                                         eventList.add(event);
                                     }
-                                    //addEventMarkers(eventList);
+                                    addEventMarkers(eventList);
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -864,12 +878,11 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
         // Add the request to the RequestQueue.
         queue.add(jsonObjectRequest);
     }
-/*
+
     //add the event markers
     public void addEventMarkers(List<Event> events) {
         pDialog.dismiss();
         eventMarkers = new ArrayList<>();
-
 
         for (Event event : events) {
             Geocoding geocoding = new Geocoding();
@@ -877,7 +890,7 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
         }
 
     }
-   */
+
 /*
     //add the item markers
     public void addItemMarkers(List<Item> items) {
@@ -987,7 +1000,7 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
             }
             String response;
             try {
-                response = getLatLongByURL("https://maps.google.com/maps/api/geocode/json?address=" + encodedAddress);
+                response = getLatLongByURL("https://maps.google.com/maps/api/geocode/json?address=" + encodedAddress + "&key="+ GOOGLE_MAP_API);
                 Log.d("response", "" + response);
                 return new String[]{response};
             } catch (Exception e) {
@@ -1008,11 +1021,11 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
                         .getJSONObject("geometry").getJSONObject("location")
                         .getDouble("lat");
 
-                // Toast.makeText(getContext(), "coordinates:" + lat + "," + lng, Toast.LENGTH_SHORT).show();
+                 //Toast.makeText(getContext(), "coordinates:" + lat + "," + lng, Toast.LENGTH_SHORT).show();
 
                 LatLng coordinate = new LatLng(lat, lng);
 
-/*
+
                 if (taskType == "eventGeocoding") {
 
                     if (coordinate != null) {
@@ -1043,7 +1056,7 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
                             eventMarkersList.add(mMap.addMarker(eventMarkers.get(j)));
                         }
                     }
-                } else if (taskType == "itemGeocoding") {
+                } /*else if (taskType == "itemGeocoding") {
 
                     if (coordinate != null) {
                         itemMarkers.add(new MarkerOptions()
@@ -1186,7 +1199,7 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     params.put("status", status);
-                    //params.put("userName", MainActivity.LOGGED_IN_USER);
+                    params.put("email", email);
                     return params;
                 }
 
@@ -1249,7 +1262,7 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     params.put("latitude", Double.toString(latitude));
-                    //params.put("userName", MainActivity.LOGGED_IN_USER);
+                    params.put("email", email);
                     return params;
                 }
 
@@ -1312,7 +1325,7 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     params.put("longitude", Double.toString(longitude));
-                    //params.put("userName", MainActivity.LOGGED_IN_USER);
+                    params.put("email", email);
                     return params;
                 }
 
@@ -1368,10 +1381,10 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
         super.onDestroy();
 
         //stop refreshing the friend markers
-        handler.removeCallbacks(tryDownloadUser);
+        //handler.removeCallbacks(tryDownloadUser);
 
-        //make userFullName status become inactive
-        //updateStatus(getContext(), "https://taroute.000webhostapp.com/updateStatus.php","OFF");
+        //make user status become inactive
+        updateStatus(getContext(), "https://tarcomm.000webhostapp.com/updateStatus.php","OFF");
     }
 }
 
