@@ -25,6 +25,7 @@ public class ItemUploadAdapter extends BaseExpandableListAdapter {
 
     //header titles
     private List<String> _listDataHeader;
+
     // child data in format of header title, child title
     private HashMap<String, List<Item>> _listDataChild;
 

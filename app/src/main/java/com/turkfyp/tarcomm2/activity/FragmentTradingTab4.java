@@ -51,7 +51,6 @@ public class FragmentTradingTab4 extends Fragment {
     SwipeRefreshLayout swipeRefreshMarketplace;
     List<Item> itemList;
 
-
     ExpandableListView elvItemUpload;
     ItemUploadAdapter itemUploadAdapter;
     List<String> listDataHeader;
@@ -73,14 +72,12 @@ public class FragmentTradingTab4 extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_trading_tab4, container, false);
 
-
         DisplayMetrics metrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int width = metrics.widthPixels;
 
 
 
-        //lvMarketplace = (ListView) v.findViewById(R.id.lvMarketplace);
         elvItemUpload = (ExpandableListView) v.findViewById(R.id.elvItemUpload);
 
         //collapse group on default not working due to null pointer exception
@@ -90,7 +87,6 @@ public class FragmentTradingTab4 extends Fragment {
         FloatingActionButton fabAddMarketItem = (FloatingActionButton)v.findViewById(R.id.addMarketItemFAB);
 
         try {
-            //initialize textBookList
             itemList = new ArrayList<>();
 
             downloadTradingRecords(getActivity().getApplicationContext(), GET_URL);
@@ -271,7 +267,7 @@ public class FragmentTradingTab4 extends Fragment {
         }
     }
 
-    //Get Profile Image for Navigation Menu
+    //Convert Glide Image to bitmap
     private void convertImage(String imageURL){
         class ConvertImage extends AsyncTask<String, Void, Bitmap> {
 
@@ -283,7 +279,7 @@ public class FragmentTradingTab4 extends Fragment {
                     bitmap = Glide.with(getActivity())
                             .asBitmap()
                             .load(imageURL)
-                            .submit(150,150)
+                            .submit(200,200)
                             .get();
 
                 } catch (ExecutionException e) {

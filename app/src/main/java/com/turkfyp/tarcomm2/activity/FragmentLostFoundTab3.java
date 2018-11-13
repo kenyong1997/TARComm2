@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.turkfyp.tarcomm2.DatabaseObjects.LostFound;
 import com.turkfyp.tarcomm2.DatabaseObjects.LostFoundUploadAdapter;
 import com.turkfyp.tarcomm2.R;
@@ -35,6 +37,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class FragmentLostFoundTab3 extends Fragment {
 
@@ -43,7 +46,6 @@ public class FragmentLostFoundTab3 extends Fragment {
     private static final String TAG = "FragmentLostFoundTab3";
 
     private static String GET_URL = "https://tarcomm.000webhostapp.com/getLostFoundUserPost.php";
-    ListView lvLostFound;
     SwipeRefreshLayout swipeRefreshLostFound;
     List<LostFound> lostFoundList;
 
@@ -53,6 +55,7 @@ public class FragmentLostFoundTab3 extends Fragment {
     HashMap<String, List<LostFound>> listDataChild;
 
     RequestQueue queue;
+    Bitmap bitmap;
 
     public FragmentLostFoundTab3() {}
 
@@ -99,10 +102,8 @@ public class FragmentLostFoundTab3 extends Fragment {
                 lostFoundDetail.putExtra("lostItemContactNo",selectedItem.getContactNo());
                 lostFoundDetail.putExtra("checkYourUpload",true);
 
-                ImageView ivImage = (ImageView) view.findViewById(R.id.imageViewLostItemImage);
-                ivImage.buildDrawingCache();
-                Bitmap image = ivImage.getDrawingCache();
-                lostFoundDetail.putExtra("LostImage", image);
+                convertImage(selectedItem.getLostItemURL());
+                lostFoundDetail.putExtra("LostImage", bitmap);
                 lostFoundDetail.putExtra("LostImageURL", selectedItem.getLostItemURL());
 
                 startActivity(lostFoundDetail);
@@ -251,5 +252,36 @@ public class FragmentLostFoundTab3 extends Fragment {
         }
     }
 
+    //Convert Glide Image to bitmap
+    private void convertImage(String imageURL){
+        class ConvertImage extends AsyncTask<String, Void, Bitmap> {
+
+            @Override
+            protected Bitmap doInBackground(String... strings) {
+                String imageURL = strings[0];
+
+                try {
+                    bitmap = Glide.with(getActivity())
+                            .asBitmap()
+                            .load(imageURL)
+                            .submit(200,200)
+                            .get();
+
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return bitmap;
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap bitmap) {
+                super.onPostExecute(bitmap);
+            }
+        }
+        ConvertImage convertImage = new ConvertImage();
+        convertImage.execute(imageURL);
+    }
 
 }

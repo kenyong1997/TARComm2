@@ -14,6 +14,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.R;
 
 public class EventDetailsActivity extends AppCompatActivity {
@@ -25,6 +28,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
 
     int eventID;
+    RequestOptions options;
 
     private ProgressDialog pDialog;
 
@@ -73,12 +77,18 @@ public class EventDetailsActivity extends AppCompatActivity {
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         tvDetailEventVenue.setText(content);
 
-
-        Bitmap image = extras.getParcelable("Image");
-        imageViewDetailEvent.setImageBitmap(image);
-
         String imageURL = extras.getString("ImageURL");
         eventID = Integer.parseInt(imageURL.split("=")[1]);
+
+        //For Glide image
+        options = new RequestOptions()
+                .fitCenter()
+//                .skipMemoryCache(true)
+//                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .placeholder(R.drawable.background_white)
+                .error(R.drawable.background_white);
+
+        Glide.with(getApplicationContext()).load(imageURL).apply(options).into(imageViewDetailEvent);
 
         tvDetailEventVenue.setOnClickListener(new View.OnClickListener() {
             @Override

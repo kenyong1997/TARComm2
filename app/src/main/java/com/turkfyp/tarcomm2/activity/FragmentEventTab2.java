@@ -1,18 +1,13 @@
 package com.turkfyp.tarcomm2.activity;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -22,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.turkfyp.tarcomm2.DatabaseObjects.EventRVAdapter;
 import com.turkfyp.tarcomm2.R;
 
 import org.json.JSONArray;
@@ -36,7 +32,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.turkfyp.tarcomm2.DatabaseObjects.Event;
-import com.turkfyp.tarcomm2.DatabaseObjects.EventAdapter;
 public class FragmentEventTab2 extends android.support.v4.app.Fragment{
 
     public static boolean allowRefresh;
@@ -44,95 +39,49 @@ public class FragmentEventTab2 extends android.support.v4.app.Fragment{
     private static final String TAG = "FragmentEventTab2";
 
     private static String GET_URL = "https://tarcomm.000webhostapp.com/getUpcomingEvent.php";
-    ListView lvEvents;
     SwipeRefreshLayout swipeRefreshEvents;
     List<Event> eventList;
     protected String currentDate;
 
     RequestQueue queue;
+    RecyclerView rvEvent;
 
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_event_tab2, container, false);
-
-        //hide action bar
-        //((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        View v = inflater.inflate(R.layout.fragment_event_tab1, container, false);
 
         //get current Date
         Date cal = Calendar.getInstance().getTime();
-
-
         java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd");
         currentDate = df.format(cal);
 
-
-        //link with Floating button
-
-
-
-
-        lvEvents = (ListView) v.findViewById(R.id.lvEvents);
         swipeRefreshEvents = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefreshEvents);
+        rvEvent = (RecyclerView) v.findViewById(R.id.rvEvent);
 
         try {
-
-            //initialize textBookList
+            //initialize eventList
             eventList = new ArrayList<>();
 
             downloadEventRecords(getActivity().getApplicationContext(), GET_URL);
-
-            //Log.d("HIIIIIIIIIIII","lullllllllllllllllllllllllllllllllllllllllllll");
-            //Log.d("context", String.valueOf(getActivity().getApplicationContext()));
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
-
-        //When userFullName swipe to refresh
         swipeRefreshEvents.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
 
                 swipeRefreshEvents.setRefreshing(true);
                 try {
-
                     downloadEventRecords(getActivity().getApplicationContext(), GET_URL);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
-
                 swipeRefreshEvents.setRefreshing(false);
-
-
-            }
-        });
-
-
-        //when a particular event was selected to view more details
-        lvEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Event selectedEvent = (Event) parent.getItemAtPosition(position);
-                Intent eventDetailIntent = new Intent(getActivity(), EventDetailsActivity.class);
-                eventDetailIntent.putExtra("eventName", selectedEvent.getEventName());
-                eventDetailIntent.putExtra("eventDateTime", selectedEvent.getEventDateTime());
-                eventDetailIntent.putExtra("eventDesc", selectedEvent.getEventDesc());
-                eventDetailIntent.putExtra("eventVenue", selectedEvent.getEventVenue());
-                eventDetailIntent.putExtra("eventEndDateTime", selectedEvent.getEventEndDateTime());
-
-
-                ImageView imageEvent = (ImageView) view.findViewById(R.id.ivImageEvent);
-                imageEvent.buildDrawingCache();
-                Bitmap image = imageEvent.getDrawingCache();
-                eventDetailIntent.putExtra("Image", image);
-                eventDetailIntent.putExtra("ImageURL", selectedEvent.getEventImageURL());
-
-                startActivity(eventDetailIntent);
             }
         });
 
@@ -171,7 +120,8 @@ public class FragmentEventTab2 extends android.support.v4.app.Fragment{
                                         Event event = new Event(eventName, eventDateTime, eventDesc, eventImageURL, eventVenue, eventVenueName, eventHighlight,eventEndDateTime);
                                         eventList.add(event);
                                     }
-                                    loadEvents();
+                                    //Load eventList into RecyclerView Adapter
+                                    setRVAdapter(eventList);
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -209,10 +159,10 @@ public class FragmentEventTab2 extends android.support.v4.app.Fragment{
 
     }
 
-    private void loadEvents() {
-        final EventAdapter adapter = new EventAdapter(getActivity(), R.layout.fragment_event_tab2, eventList);
-        lvEvents.setAdapter(adapter);
-
+    private void setRVAdapter(List<Event> eventList){
+        EventRVAdapter myAdapter = new EventRVAdapter(getActivity(),eventList) ;
+        rvEvent.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvEvent.setAdapter(myAdapter);
     }
 
 
@@ -225,7 +175,7 @@ public class FragmentEventTab2 extends android.support.v4.app.Fragment{
                 eventList = new ArrayList<>();
                 downloadEventRecords(getActivity().getApplicationContext(), GET_URL);
             } else {
-                loadEvents();
+                setRVAdapter(eventList);
             }
             getFragmentManager().beginTransaction().detach(this).attach(this).commit();
         }

@@ -92,9 +92,6 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.MyViewHold
                     itemDetailIntent.putExtra("checkYourUpload",false);
 
                 convertImage(itemList.get(viewHolder.getAdapterPosition()).getImageURL());
-//                ImageView ivImage = (ImageView) view.findViewById(R.id.ivItemImage);
-//                ivImage.buildDrawingCache();
-//                Bitmap image = ivImage.getDrawingCache();
                 itemDetailIntent.putExtra("Image", bitmap);
                 itemDetailIntent.putExtra("ImageURL", itemList.get(viewHolder.getAdapterPosition()).getImageURL());
 
@@ -122,7 +119,7 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.MyViewHold
         }
     }
 
-    //Get Profile Image for Navigation Menu
+    //Convert Glide Image to bitmap
     private void convertImage(String imageURL){
         class ConvertImage extends AsyncTask<String, Void, Bitmap> {
 
