@@ -110,7 +110,7 @@ public class LostFoundDetailActivity extends AppCompatActivity {
         lostID = Integer.parseInt(imageURL.split("=")[1]);
         //For Glide image
         options = new RequestOptions()
-                .centerCrop()
+                .fitCenter()
                 .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .placeholder(R.drawable.background_white)

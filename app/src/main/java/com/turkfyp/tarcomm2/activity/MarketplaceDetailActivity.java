@@ -120,7 +120,7 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
 
         //For Glide image
         options = new RequestOptions()
-                .centerCrop()
+                .fitCenter()
                 .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .placeholder(R.drawable.background_white)
