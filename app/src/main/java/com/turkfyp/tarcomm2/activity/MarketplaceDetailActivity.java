@@ -33,6 +33,7 @@ import com.turkfyp.tarcomm2.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -161,33 +162,51 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
     }
     public void onClickSellerContact(View view) {
 
-        PackageManager pm = getPackageManager();
+//        PackageManager pm = getPackageManager();
+//
+//        try {
+//            pm.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES);
+//
+//            if (pm.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES) != null) {
+//                Uri uri = Uri.parse("smsto:" + "+6" + sellerContact);
+//                Intent sendIntent = new Intent(Intent.ACTION_SENDTO, uri);
+//                //sendIntent.putExtra(Intent.EXTRA_TEXT, "Hi,I'm interested in the item you posted on TARoute [ " + itemName +" ]" );
+//                sendIntent.setPackage("com.whatsapp");
+//                startActivity(Intent.createChooser(sendIntent, ""));
+//            }
+//
+//        } catch (PackageManager.NameNotFoundException e) {
+//
+//            Toast.makeText(this, "WhatsApp not found", Toast.LENGTH_SHORT)
+//                    .show();
+//
+//            /*
+//             //DIRECT USER TO MARKET AND DOWNLOAD WHATSAPPP (FUTURE USE IF NEEDED)
+//
+//             Uri uri = Uri.parse("market://details?id=com.whatsapp");
+//            Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+//            startActivity(goToMarket);
+//            */
+//
+//        }
+
+        PackageManager packageManager = getPackageManager();
+        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
 
         try {
-            pm.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES);
+            //If want include message to whatsapp
+            //String url = "https://api.whatsapp.com/send?phone=+6"+ sellerContact +"&text=" + URLEncoder.encode(message, "UTF-8");
 
-            if (pm.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES) != null) {
-                Uri uri = Uri.parse("smsto:" + "+6" + sellerContact);
-                Intent sendIntent = new Intent(Intent.ACTION_SENDTO, uri);
-                //sendIntent.putExtra(Intent.EXTRA_TEXT, "Hi,I'm interested in the item you posted on TARoute [ " + itemName +" ]" );
-                sendIntent.setPackage("com.whatsapp");
-                startActivity(Intent.createChooser(sendIntent, ""));
+            String url = "https://api.whatsapp.com/send?phone=+6"+ sellerContact;
+            sendIntent.setPackage("com.whatsapp");
+            sendIntent.setData(Uri.parse(url));
+            if (sendIntent.resolveActivity(packageManager) != null) {
+                startActivity(sendIntent);
             }
-
-        } catch (PackageManager.NameNotFoundException e) {
-
-            Toast.makeText(this, "WhatsApp not found", Toast.LENGTH_SHORT)
-                    .show();
-
-            /*
-             //DIRECT USER TO MARKET AND DOWNLOAD WHATSAPPP (FUTURE USE IF NEEDED)
-
-             Uri uri = Uri.parse("market://details?id=com.whatsapp");
-            Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(goToMarket);
-            */
-
+        } catch (Exception e){
+            e.printStackTrace();
         }
+
     }
     public void onEditItemClicked(View view){
 
