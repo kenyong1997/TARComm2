@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="@color/guillotine_background"
     android:orientation="vertical">
-
     <android.support.v7.widget.Toolbar
         style="@style/Toolbar"
         app:contentInsetStart="0dp">
@@ -35,11 +34,11 @@
             android:onClick="view_profile_onclick">
 
             <TextView
-            style="@style/TextView.GuillotineItem.Selected"
+                style="@style/TextView.GuillotineItem.Selected"
                 android:id="@+id/tvUserFullName"
-            android:layout_marginLeft="7dp"
+                android:layout_marginLeft="7dp"
                 android:text="Name"
-            android:textSize="25dp"/>
+                android:textSize="25dp"/>
             <TextView
                 style="@style/TextView.GuillotineItem.Selected"
                 android:text="View Your Profile"
@@ -49,112 +48,121 @@
 
 
     </LinearLayout>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <LinearLayout
-        android:id="@+id/feed_group"
-        style="@style/LinearLayout.GuillotineItem">
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_home"
-            android:layout_marginLeft="30dp"/>
-
-        <com.turkfyp.tarcomm2.widget.CanaroTextView
-            style="@style/TextView.GuillotineItem"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:text="TARComm"
-            android:layout_marginLeft="20dp"
-            android:onClick="highlight_event_onclick"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/community_group"
-        style="@style/LinearLayout.GuillotineItem">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
 
+        <LinearLayout
+            android:id="@+id/feed_group"
+            style="@style/LinearLayout.GuillotineItem">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_home"
+                android:layout_marginLeft="30dp"/>
 
-        <com.turkfyp.tarcomm2.widget.CanaroTextView
-            style="@style/TextView.GuillotineItem.Selected"
-            android:text="COMMUNITY" />
-    </LinearLayout>
+            <com.turkfyp.tarcomm2.widget.CanaroTextView
+                style="@style/TextView.GuillotineItem"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:text="TARComm"
+                android:layout_marginLeft="20dp"
+                android:onClick="highlight_event_onclick"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/community_group"
+            style="@style/LinearLayout.GuillotineItem">
 
 
-    <LinearLayout
-        android:id="@+id/events_group"
-        style="@style/LinearLayout.GuillotineItem">
 
-        <ImageView
-            style="@style/ImageView.GuillotineItem"
-            android:src="@drawable/events_icon" />
+            <com.turkfyp.tarcomm2.widget.CanaroTextView
+                style="@style/TextView.GuillotineItem.Selected"
+                android:text="COMMUNITY" />
+        </LinearLayout>
 
-        <com.turkfyp.tarcomm2.widget.CanaroTextView
-            style="@style/TextView.GuillotineItem"
-            android:text="Events"
-            android:onClick="event_onclick"/>
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/market_group"
-        style="@style/LinearLayout.GuillotineItem">
+        <LinearLayout
+            android:id="@+id/events_group"
+            style="@style/LinearLayout.GuillotineItem">
 
-        <ImageView
-            style="@style/ImageView.GuillotineItem"
-            android:src="@drawable/trading_icon" />
+            <ImageView
+                style="@style/ImageView.GuillotineItem"
+                android:src="@drawable/events_icon" />
 
-        <com.turkfyp.tarcomm2.widget.CanaroTextView
-            android:id="@+id/tv_Marketplace"
-            style="@style/TextView.GuillotineItem"
-            android:text="Marketplace"
-            android:onClick="market_onclick"/>
-    </LinearLayout>
+            <com.turkfyp.tarcomm2.widget.CanaroTextView
+                style="@style/TextView.GuillotineItem"
+                android:text="Events"
+                android:onClick="event_onclick"/>
+        </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/Lost_group"
-        style="@style/LinearLayout.GuillotineItem">
+        <LinearLayout
+            android:id="@+id/market_group"
+            style="@style/LinearLayout.GuillotineItem">
 
-        <ImageView
-            style="@style/ImageView.GuillotineItem"
-            android:src="@drawable/lost_icon" />
+            <ImageView
+                style="@style/ImageView.GuillotineItem"
+                android:src="@drawable/trading_icon" />
 
-        <com.turkfyp.tarcomm2.widget.CanaroTextView
-            style="@style/TextView.GuillotineItem"
-            android:text="Lost and Found"
-            android:onClick="lost_and_found_onclick"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/friends_group"
-        style="@style/LinearLayout.GuillotineItem">
+            <com.turkfyp.tarcomm2.widget.CanaroTextView
+                android:id="@+id/tv_Marketplace"
+                style="@style/TextView.GuillotineItem"
+                android:text="Marketplace"
+                android:onClick="market_onclick"/>
+        </LinearLayout>
 
-        <ImageView
-            style="@style/ImageView.GuillotineItem"
-            android:src="@drawable/friends_icon" />
+        <LinearLayout
+            android:id="@+id/Lost_group"
+            style="@style/LinearLayout.GuillotineItem">
 
-        <com.turkfyp.tarcomm2.widget.CanaroTextView
-            style="@style/TextView.GuillotineItem"
-            android:textColor="@color/light_gray"
-            android:text="Friends" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/map_group"
-        style="@style/LinearLayout.GuillotineItem">
+            <ImageView
+                style="@style/ImageView.GuillotineItem"
+                android:src="@drawable/lost_icon" />
 
-        <com.turkfyp.tarcomm2.widget.CanaroTextView
-            style="@style/TextView.GuillotineItem.Selected"
-            android:text="MAP" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/navigation_group"
-        style="@style/LinearLayout.GuillotineItem">
+            <com.turkfyp.tarcomm2.widget.CanaroTextView
+                style="@style/TextView.GuillotineItem"
+                android:text="Lost and Found"
+                android:onClick="lost_and_found_onclick"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/friends_group"
+            style="@style/LinearLayout.GuillotineItem">
 
-        <ImageView
-            style="@style/ImageView.GuillotineItem"
-            android:src="@drawable/map_icon" />
+            <ImageView
+                style="@style/ImageView.GuillotineItem"
+                android:src="@drawable/friends_icon" />
 
-        <com.turkfyp.tarcomm2.widget.CanaroTextView
-            style="@style/TextView.GuillotineItem"
-            android:text="Navigation"
-            android:onClick="map_onclick"/>
-    </LinearLayout>
-    <LinearLayout
+            <com.turkfyp.tarcomm2.widget.CanaroTextView
+                style="@style/TextView.GuillotineItem"
+                android:textColor="@color/light_gray"
+                android:text="Friends" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/map_group"
+            style="@style/LinearLayout.GuillotineItem">
+
+            <com.turkfyp.tarcomm2.widget.CanaroTextView
+                style="@style/TextView.GuillotineItem.Selected"
+                android:text="MAP" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/navigation_group"
+            style="@style/LinearLayout.GuillotineItem">
+
+            <ImageView
+                style="@style/ImageView.GuillotineItem"
+                android:src="@drawable/map_icon" />
+
+            <com.turkfyp.tarcomm2.widget.CanaroTextView
+                style="@style/TextView.GuillotineItem"
+                android:text="Navigation"
+                android:onClick="map_onclick"/>
+        </LinearLayout>
+        <LinearLayout
             android:id="@+id/Friends_nearby_group"
             style="@style/LinearLayout.GuillotineItem">
 
@@ -166,66 +174,70 @@
                 style="@style/TextView.GuillotineItem"
                 android:textColor="@color/light_gray"
                 android:text="Friends Nearby" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/event_ongoing_group"
+            style="@style/LinearLayout.GuillotineItem">
+
+            <ImageView
+                style="@style/ImageView.GuillotineItem"
+                android:src="@drawable/events_nearby" />
+
+            <com.turkfyp.tarcomm2.widget.CanaroTextView
+                style="@style/TextView.GuillotineItem"
+                android:text="Events Ongoing"
+                android:onClick="map_event_onclick"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/support_group"
+            style="@style/LinearLayout.GuillotineItem">
+
+            <com.turkfyp.tarcomm2.widget.CanaroTextView
+                style="@style/TextView.GuillotineItem.Selected"
+                android:text="SUPPORT" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/contact_group"
+            style="@style/LinearLayout.GuillotineItem">
+
+            <ImageView
+                style="@style/ImageView.GuillotineItem"
+                android:src="@drawable/contact_icon" />
+
+            <com.turkfyp.tarcomm2.widget.CanaroTextView
+                style="@style/TextView.GuillotineItem"
+                android:textColor="@color/light_gray"
+                android:text="Contact for Promotion" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/faq_group"
+            style="@style/LinearLayout.GuillotineItem">
+
+            <ImageView
+                style="@style/ImageView.GuillotineItem"
+                android:src="@drawable/faq_icon" />
+
+            <com.turkfyp.tarcomm2.widget.CanaroTextView
+                style="@style/TextView.GuillotineItem"
+                android:textColor="@color/light_gray"
+                android:text="FAQ" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/logout_group"
+            android:layout_marginBottom="10dp"
+            style="@style/LinearLayout.GuillotineItem">
+
+            <ImageView
+                style="@style/ImageView.GuillotineItem"
+                android:src="@drawable/logout_icon" />
+
+            <com.turkfyp.tarcomm2.widget.CanaroTextView
+                style="@style/TextView.GuillotineItem.Selected"
+
+                android:text="LOG OUT"
+                android:onClick="logout_onclick"/>
+        </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-                android:id="@+id/event_ongoing_group"
-                style="@style/LinearLayout.GuillotineItem">
+</ScrollView>
 
-                <ImageView
-                    style="@style/ImageView.GuillotineItem"
-                    android:src="@drawable/events_nearby" />
-
-                <com.turkfyp.tarcomm2.widget.CanaroTextView
-                    style="@style/TextView.GuillotineItem"
-                    android:text="Events Ongoing"
-                    android:onClick="map_event_onclick"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/support_group"
-        style="@style/LinearLayout.GuillotineItem">
-
-        <com.turkfyp.tarcomm2.widget.CanaroTextView
-            style="@style/TextView.GuillotineItem.Selected"
-            android:text="SUPPORT" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/contact_group"
-        style="@style/LinearLayout.GuillotineItem">
-
-        <ImageView
-            style="@style/ImageView.GuillotineItem"
-            android:src="@drawable/contact_icon" />
-
-        <com.turkfyp.tarcomm2.widget.CanaroTextView
-            style="@style/TextView.GuillotineItem"
-            android:textColor="@color/light_gray"
-            android:text="Contact for Promotion" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/faq_group"
-        style="@style/LinearLayout.GuillotineItem">
-
-        <ImageView
-            style="@style/ImageView.GuillotineItem"
-            android:src="@drawable/faq_icon" />
-
-        <com.turkfyp.tarcomm2.widget.CanaroTextView
-            style="@style/TextView.GuillotineItem"
-            android:textColor="@color/light_gray"
-            android:text="FAQ" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/logout_group"
-        style="@style/LinearLayout.GuillotineItem">
-
-        <ImageView
-            style="@style/ImageView.GuillotineItem"
-            android:src="@drawable/logout_icon" />
-
-        <com.turkfyp.tarcomm2.widget.CanaroTextView
-            style="@style/TextView.GuillotineItem.Selected"
-
-            android:text="LOG OUT"
-            android:onClick="logout_onclick"/>
-    </LinearLayout>
 </LinearLayout>

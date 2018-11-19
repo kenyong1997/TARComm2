@@ -5,7 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -96,13 +98,15 @@ public class LostFoundDetailActivity extends AppCompatActivity {
         //set the text and image by using extras value
         tvDetailLostItemName.setText(lostItemName);
         tvDetailLostItemDesc.setText(lostItemDesc);
-        tvDetailOwnerContact.setText(ownerContact);
         tvDetailLostDate.setText(lostDate);
 
         //set underline
         SpannableString content = new SpannableString(itemOwner);
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         tvDetailLostItemOwner.setText(content);
+        SpannableString content2 = new SpannableString(ownerContact);
+        content2.setSpan(new UnderlineSpan(), 0, content2.length(), 0);
+        tvDetailOwnerContact.setText(content2);
 
         image = extras.getParcelable("LostImage");
 
@@ -118,6 +122,7 @@ public class LostFoundDetailActivity extends AppCompatActivity {
 
         Glide.with(getApplicationContext()).load(imageURL).apply(options).into(imageViewLostItem);
     }
+
 
     public void onDeleteLostFoundItemClicked(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -145,7 +150,36 @@ public class LostFoundDetailActivity extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+    public void onClickContactOwner(View view) {
 
+        PackageManager pm = getPackageManager();
+
+        try {
+            pm.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES);
+
+            if (pm.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES) != null) {
+                Uri uri = Uri.parse("smsto:" + "+6" + ownerContact);
+                Intent sendIntent = new Intent(Intent.ACTION_SENDTO, uri);
+                //sendIntent.putExtra(Intent.EXTRA_TEXT, "Hi,I'm interested in the item you posted on TARoute [ " + itemName +" ]" );
+                sendIntent.setPackage("com.whatsapp");
+                startActivity(Intent.createChooser(sendIntent, ""));
+            }
+
+        } catch (PackageManager.NameNotFoundException e) {
+
+            Toast.makeText(this, "WhatsApp not found", Toast.LENGTH_SHORT)
+                    .show();
+
+            /*
+             //DIRECT USER TO MARKET AND DOWNLOAD WHATSAPPP (FUTURE USE IF NEEDED)
+
+             Uri uri = Uri.parse("market://details?id=com.whatsapp");
+            Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(goToMarket);
+            */
+
+        }
+    }
     public void onBackClicked(View view){
         finish();
     }

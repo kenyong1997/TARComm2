@@ -3,12 +3,16 @@ package com.turkfyp.tarcomm2.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -59,8 +63,11 @@ public class ViewOtherProfileActivity extends AppCompatActivity {
         tvProfileBioData = (TextView) findViewById(R.id.tvProfileBioData);
         btnEditProfile = (Button) findViewById(R.id.btnEditProfile);
 
+
+
         Bundle extras = getIntent().getExtras();
         email = extras.getString("email");
+
 
         findUser(this,"https://tarcomm.000webhostapp.com/select_user.php",email);
 
@@ -112,9 +119,12 @@ public class ViewOtherProfileActivity extends AppCompatActivity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                            //underline contact
+                            SpannableString content = new SpannableString(contactNo);
+                            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+                            tvProfilePhone.setText(content);
                             tvProfileName.setText(name);
                             tvProfileEmail.setText(email);
-                            tvProfilePhone.setText(contactNo);
                             tvProfileFaculty.setText(faculty);
                             tvProfileCourse.setText(course);
                             tvProfileBioData.setText(biodata);
@@ -144,6 +154,36 @@ public class ViewOtherProfileActivity extends AppCompatActivity {
             queue.add(postRequest);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    public void onClickContact(View view) {
+
+        PackageManager pm = getPackageManager();
+
+        try {
+            pm.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES);
+
+            if (pm.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES) != null) {
+                Uri uri = Uri.parse("smsto:" + "+6" + contactNo);
+                Intent sendIntent = new Intent(Intent.ACTION_SENDTO, uri);
+                //sendIntent.putExtra(Intent.EXTRA_TEXT, "Hi,I'm interested in the item you posted on TARoute [ " + itemName +" ]" );
+                sendIntent.setPackage("com.whatsapp");
+                startActivity(Intent.createChooser(sendIntent, ""));
+            }
+
+        } catch (PackageManager.NameNotFoundException e) {
+
+            Toast.makeText(this, "WhatsApp not found", Toast.LENGTH_SHORT)
+                    .show();
+
+            /*
+             //DIRECT USER TO MARKET AND DOWNLOAD WHATSAPPP (FUTURE USE IF NEEDED)
+
+             Uri uri = Uri.parse("market://details?id=com.whatsapp");
+            Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(goToMarket);
+            */
+
         }
     }
     //Get Profile Image for Navigation Menu

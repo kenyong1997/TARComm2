@@ -252,15 +252,9 @@ public class EditLostItemActivity extends AppCompatActivity {
     public void onImgEditProfileClicked(View view){
         showFileChooser();
     }
-
-    public  void onCancelEditProfileClicked(View view){
-        onBackPressed();
-    }
     public void onBackClicked(View view){
         finish();
     }
-
-
 
     private void showFileChooser() {
         Intent intent = new Intent();
