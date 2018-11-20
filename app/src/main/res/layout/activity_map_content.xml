@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
     android:weightSum="10"
     tools:context="com.turkfyp.tarcomm2.activity.MapActivity"
    >
