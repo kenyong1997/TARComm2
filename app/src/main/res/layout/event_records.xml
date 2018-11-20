@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:weightSum="2"
+    android:layout_marginTop="3dp"
     android:background="@drawable/card_navyborder"
     android:id="@+id/eventRecords_container">
 

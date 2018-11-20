@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:layout_marginTop="3dp"
     android:weightSum="1"
     android:background="@drawable/card_redborder"
     android:id="@+id/item_container">

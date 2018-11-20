@@ -19,6 +19,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,6 +69,8 @@ import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
 
 import com.turkfyp.tarcomm2.DatabaseObjects.Event;
+import com.turkfyp.tarcomm2.DatabaseObjects.LostFound;
+import com.turkfyp.tarcomm2.DatabaseObjects.MapEventRVAdapter;
 import com.turkfyp.tarcomm2.DatabaseObjects.PlacesAutoCompleteAdapter;
 import com.turkfyp.tarcomm2.MapObjects.DirectionFinder;
 import com.turkfyp.tarcomm2.MapObjects.DirectionFinderListener;
@@ -107,13 +111,15 @@ public class MapEventFragment extends Fragment implements OnMapReadyCallback {
 
     String email;
 
+    RecyclerView rvMapEvent;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_map_event, container, false);
 
-
+        rvMapEvent = (RecyclerView) v.findViewById(R.id.rvMapEvent);
         //LINK CODES WITH UI
 
         pDialog = new ProgressDialog(v.getContext());
@@ -135,7 +141,11 @@ public class MapEventFragment extends Fragment implements OnMapReadyCallback {
 
         return v;
     }
-
+    private void setRVAdapter(List<Event> eventList){
+        MapEventRVAdapter myAdapter = new MapEventRVAdapter(getActivity(),eventList) ;
+        rvMapEvent.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvMapEvent.setAdapter(myAdapter);
+    }
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -156,7 +166,7 @@ public class MapEventFragment extends Fragment implements OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(tarc, 19));
 
         downloadCurrentEventDetails();
-        downloadUpcomingEventDetails();
+        //downloadUpcomingEventDetails();
 
         //check if someone select a event venue in event details
         /*
@@ -377,6 +387,7 @@ public class MapEventFragment extends Fragment implements OnMapReadyCallback {
                                         eventList.add(event);
                                     }
                                     addEventMarkers(eventList);
+                                    setRVAdapter(eventList);
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
