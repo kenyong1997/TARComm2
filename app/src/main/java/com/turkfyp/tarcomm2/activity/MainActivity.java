@@ -185,7 +185,24 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Error: " + volleyError.getMessage(), Toast.LENGTH_LONG).show();
 
                     }
-                });
+                }){
+            @Override
+            protected Map<String, String> getParams() {
+
+                SharedPreferences preferences = getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
+
+                Map<String, String> params = new HashMap<>();
+                params.put("email", preferences.getString("email",""));
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
 
         // Set the tag on the request.
         jsonObjectRequest.setTag(TAG);
@@ -236,7 +253,24 @@ public class MainActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(), "Error2: " + error.getMessage(), Toast.LENGTH_LONG).show();
             }
-        });
+        }){
+            @Override
+            protected Map<String, String> getParams() {
+
+                SharedPreferences preferences = getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
+
+                Map<String, String> params = new HashMap<>();
+                params.put("email", preferences.getString("email",""));
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
         // Set the tag on the request.
         postRequest.setTag(TAG);
 

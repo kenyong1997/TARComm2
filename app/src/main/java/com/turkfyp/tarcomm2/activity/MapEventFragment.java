@@ -142,7 +142,7 @@ public class MapEventFragment extends Fragment implements OnMapReadyCallback {
         return v;
     }
     private void setRVAdapter(List<Event> eventList){
-        MapEventRVAdapter myAdapter = new MapEventRVAdapter(getActivity(),eventList) ;
+        MapEventRVAdapter myAdapter = new MapEventRVAdapter(getActivity(),eventList,mMap) ;
         rvMapEvent.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvMapEvent.setAdapter(myAdapter);
     }
@@ -246,7 +246,7 @@ public class MapEventFragment extends Fragment implements OnMapReadyCallback {
                                             }
                                         });
 
-                        Dialog dialog = alertBuilder.create();
+                        AlertDialog dialog = alertBuilder.create();
                         dialog.show();
 
 
