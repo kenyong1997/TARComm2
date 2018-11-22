@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
         Glide.with(getApplicationContext()).load(imageURL).apply(options).into(profile_image);
 
-        new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
+        GuillotineAnimation animation = new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
                 .setStartDelay(RIPPLE_DURATION)
                 .setActionBarViewForAnimation(toolbar)
                 .setClosedOnStart(true)
@@ -150,49 +150,50 @@ public class MainActivity extends AppCompatActivity {
         // Instantiate the RequestQueue
         queue = Volley.newRequestQueue(context);
 
-        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(
-                url,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        try {
-                            lostFoundList.clear();
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject lostFoundResponse = (JSONObject) response.get(i);
-                                String category = lostFoundResponse.getString("category");
-                                String lostItemName = lostFoundResponse.getString("lostItemName");
-                                String lostItemDesc = lostFoundResponse.getString("lostItemDesc");
-                                String lostItemURL = lostFoundResponse.getString("url");
-                                String email = lostFoundResponse.getString("email");
-                                String contactName = lostFoundResponse.getString("fullname");
-                                String contactNo = lostFoundResponse.getString("contactno");
-                                String lostDate = lostFoundResponse.getString("lostDate");
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    try {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject lostFoundResponse = (JSONObject) jsonArray.get(i);
 
-                                LostFound lostFound = new LostFound(category, lostItemName, lostItemDesc, lostItemURL, lostDate, email, contactName, contactNo);
-                                lostFoundList.add(lostFound);
-                            }
-                            //load the item into adapter
-                            setLostRVAdapter(lostFoundList);
+                            String category = lostFoundResponse.getString("category");
+                            String lostItemName = lostFoundResponse.getString("lostItemName");
+                            String lostItemDesc = lostFoundResponse.getString("lostItemDesc");
+                            String lostItemURL = lostFoundResponse.getString("url");
+                            String email = lostFoundResponse.getString("email");
+                            String contactName = lostFoundResponse.getString("fullname");
+                            String contactNo = lostFoundResponse.getString("contactno");
+                            String lostDate = lostFoundResponse.getString("lostDate");
 
-                        } catch (Exception e) {
-                            Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            LostFound lostFound = new LostFound(category, lostItemName, lostItemDesc, lostItemURL, lostDate, email, contactName, contactNo);
+                            lostFoundList.add(lostFound);
                         }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Toast.makeText(getApplicationContext(), "Error: " + volleyError.getMessage(), Toast.LENGTH_LONG).show();
+                        //Load item into RecyclerView Adapter
+                        setLostRVAdapter(lostFoundList);
 
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                }){
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Error1: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
             @Override
             protected Map<String, String> getParams() {
 
                 SharedPreferences preferences = getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
 
                 Map<String, String> params = new HashMap<>();
-                params.put("email", preferences.getString("email",""));
+                params.put("email", preferences.getString("email", ""));
                 return params;
             }
 
@@ -203,15 +204,13 @@ public class MainActivity extends AppCompatActivity {
                 return params;
             }
         };
-
         // Set the tag on the request.
-        jsonObjectRequest.setTag(TAG);
+        postRequest.setTag(TAG);
 
         // Add the request to the RequestQueue.
-        queue.add(jsonObjectRequest);
-
-
+        queue.add(postRequest);
     }
+
     //retrieve the records from database
     public void downloadTradingRecords(Context context, String url) {
         // Instantiate the RequestQueue
@@ -462,4 +461,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
     //End Side Menu Navigation
+
 }
