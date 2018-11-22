@@ -39,34 +39,34 @@ public class MarketplaceActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marketplace);
 
-        // For side menu
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        FrameLayout trading_layout = (FrameLayout) findViewById(R.id.trading_layout);
-        View contentHamburger = (View) findViewById(R.id.content_hamburger);
-
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle(null);
-        }
-
-        View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
-        trading_layout.addView(guillotineMenu);
-
-        TextView tvUserFullName = (TextView) findViewById(R.id.tvUserFullName);
-
-        SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
-        //Set User Name on Navigation Bar
-        tvUserFullName.setText(preferences.getString("loggedInUser",""));
-
-        //Set Profile Picture on Navigation Bar
-        String imageURL = preferences.getString("profilePicURL","");
-        convertImage(imageURL);
-
-        new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
-                .setStartDelay(RIPPLE_DURATION)
-                .setActionBarViewForAnimation(toolbar)
-                .setClosedOnStart(true)
-                .build();
+//        // For side menu
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        FrameLayout trading_layout = (FrameLayout) findViewById(R.id.trading_layout);
+//        View contentHamburger = (View) findViewById(R.id.content_hamburger);
+//
+//        if (toolbar != null) {
+//            setSupportActionBar(toolbar);
+//            getSupportActionBar().setTitle(null);
+//        }
+//
+//        View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
+//        trading_layout.addView(guillotineMenu);
+//
+//        TextView tvUserFullName = (TextView) findViewById(R.id.tvUserFullName);
+//
+//        SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
+//        //Set User Name on Navigation Bar
+//        tvUserFullName.setText(preferences.getString("loggedInUser",""));
+//
+//        //Set Profile Picture on Navigation Bar
+//        String imageURL = preferences.getString("profilePicURL","");
+//        convertImage(imageURL);
+//
+//        new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
+//                .setStartDelay(RIPPLE_DURATION)
+//                .setActionBarViewForAnimation(toolbar)
+//                .setClosedOnStart(true)
+//                .build();
 
 
         // Create the adapter that will return a fragment for each of the three
@@ -125,7 +125,9 @@ public class MarketplaceActivity extends AppCompatActivity  {
         });
 
     }
-
+    public void onBackClicked(View view){
+        finish();
+    }
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();

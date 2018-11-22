@@ -37,35 +37,7 @@ public class EventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
-        // For side menu
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        FrameLayout event_layout = (FrameLayout) findViewById(R.id.event_layout);
-        View contentHamburger = (View) findViewById(R.id.content_hamburger);
 
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle(null);
-        }
-
-        View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
-        event_layout.addView(guillotineMenu);
-
-        TextView tvUserFullName = (TextView) findViewById(R.id.tvUserFullName);
-
-        SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
-        //Set User Name on Navigation Bar
-        tvUserFullName.setText(preferences.getString("loggedInUser",""));
-
-        //Set Profile Picture on Navigation Bar
-        String imageURL = preferences.getString("profilePicURL","");
-        convertImage(imageURL);
-
-        new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
-                .setStartDelay(RIPPLE_DURATION)
-                .setActionBarViewForAnimation(toolbar)
-                .setClosedOnStart(true)
-                .build();
-        //Side menu ends
 
         //Tab Fragment
         tabLayout = (TabLayout) findViewById(R.id.tab_event);
@@ -102,7 +74,9 @@ public class EventActivity extends AppCompatActivity {
 
 
     }
-
+    public void onBackClicked(View view){
+        finish();
+    }
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();

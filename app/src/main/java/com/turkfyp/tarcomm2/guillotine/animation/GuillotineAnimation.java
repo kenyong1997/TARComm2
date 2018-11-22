@@ -3,6 +3,7 @@ package com.turkfyp.tarcomm2.guillotine.animation;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -31,6 +32,7 @@ public class GuillotineAnimation {
     private final TimeInterpolator mInterpolator;
     private final View mActionBarView;
     private final long mDelay;
+    public boolean opened= false;
 
     private boolean isOpening;
     private boolean isClosing;
@@ -87,9 +89,12 @@ public class GuillotineAnimation {
             @Override
             public void onClick(View v) {
                 open();
+                opened = true;
+
             }
         });
     }
+
 
     private void setUpClosingView(final View closingView) {
         mGuillotineView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -109,6 +114,7 @@ public class GuillotineAnimation {
             @Override
             public void onClick(View v) {
                 close();
+                opened = false;
             }
         });
     }

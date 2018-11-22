@@ -39,37 +39,6 @@ public class LostAndFoundActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lost_and_found);
 
-        // For side menu
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        FrameLayout lostandfound_layout = (FrameLayout) findViewById(R.id.lostandfound_layout);
-        View contentHamburger = (View) findViewById(R.id.content_hamburger);
-
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle(null);
-        }
-
-        View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
-        lostandfound_layout.addView(guillotineMenu);
-
-        TextView tvUserFullName = (TextView) findViewById(R.id.tvUserFullName);
-
-        SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
-        //Set User Name on Navigation Bar
-        tvUserFullName.setText(preferences.getString("loggedInUser",""));
-
-        //Set Profile Picture on Navigation Bar
-        String imageURL = preferences.getString("profilePicURL","");
-        convertImage(imageURL);
-
-        new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
-                .setStartDelay(RIPPLE_DURATION)
-                .setActionBarViewForAnimation(toolbar)
-                .setClosedOnStart(true)
-                .build();
-
-        //Side menu ends
-
         //Tab Fragment
         tabLayout = (TabLayout) findViewById(R.id.tab_lostandfound);
 
@@ -108,7 +77,9 @@ public class LostAndFoundActivity extends AppCompatActivity {
 
 
     }
-
+    public void onBackClicked(View view){
+        finish();
+    }
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();

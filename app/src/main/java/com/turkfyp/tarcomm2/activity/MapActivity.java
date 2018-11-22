@@ -52,52 +52,16 @@ public class MapActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_container);
 
-        Toolbar toolbar=(Toolbar) findViewById(R.id.toolbar);
-        FrameLayout activity_map2 = (FrameLayout) findViewById(R.id.activity_map2);
-        View contentHamburger = (View) findViewById(R.id.content_hamburger);
-
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle(null);
-        }
-
-        View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
-        activity_map2.addView(guillotineMenu);
-
-        TextView tvUserFullName = (TextView) findViewById(R.id.tvUserFullName);
-
         SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
         email = preferences.getString("email","");
 
-        //Set User Name on Navigation Bar
-        tvUserFullName.setText(preferences.getString("loggedInUser",""));
 
-        //Set Profile Picture on Navigation Bar
-        String imageURL = preferences.getString("profilePicURL","");
-
-        CircleImageView profile_image = (CircleImageView) findViewById(R.id.profile_image);
-
-        RequestOptions options = new RequestOptions()
-                .circleCrop()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .placeholder(R.drawable.background_white)
-                .error(R.drawable.background_white);
-
-        Glide.with(getApplicationContext()).load(imageURL).apply(options).into(profile_image);
-
-        new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
-                .setStartDelay(RIPPLE_DURATION)
-                .setActionBarViewForAnimation(toolbar)
-                .setClosedOnStart(true)
-                .build();
 
         //Set up the main page
         MapFragment m = new MapFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.frame, m).commit();
 
-        //Define action bar
-        final ActionBar actionBar = getSupportActionBar();
+
 
     }
 
@@ -183,7 +147,9 @@ public class MapActivity extends AppCompatActivity {
         }
 
     }
-
+    public void onBackClicked(View view){
+        finish();
+    }
     private Session session;
     public void logout_onclick(View view){
         session = new Session(view.getContext());

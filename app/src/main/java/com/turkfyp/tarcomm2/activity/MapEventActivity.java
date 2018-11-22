@@ -35,7 +35,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MapEventActivity extends AppCompatActivity {
 
-    private static final long RIPPLE_DURATION = 250;
 
     String URL_UPDATE_STATUS = "https://tarcomm.000webhostapp.com/updateStatus.php";
     String email;
@@ -45,51 +44,17 @@ public class MapEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_event);
 
-        Toolbar toolbar=(Toolbar) findViewById(R.id.toolbar);
-        FrameLayout mapEventContainer = (FrameLayout) findViewById(R.id.mapEventContainer);
-        View contentHamburger = (View) findViewById(R.id.content_hamburger);
-
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle(null);
-        }
-
-        View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
-        mapEventContainer.addView(guillotineMenu);
-
-        TextView tvUserFullName = (TextView) findViewById(R.id.tvUserFullName);
-
         SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
         email = preferences.getString("email","");
 
-        //Set User Name on Navigation Bar
-        tvUserFullName.setText(preferences.getString("loggedInUser",""));
-
-        //Set Profile Picture on Navigation Bar
-        String imageURL = preferences.getString("profilePicURL","");
-
-        CircleImageView profile_image = (CircleImageView) findViewById(R.id.profile_image);
-
-        RequestOptions options = new RequestOptions()
-                .circleCrop()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .placeholder(R.drawable.background_white)
-                .error(R.drawable.background_white);
-
-        Glide.with(getApplicationContext()).load(imageURL).apply(options).into(profile_image);
-
-        new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
-                .setStartDelay(RIPPLE_DURATION)
-                .setActionBarViewForAnimation(toolbar)
-                .setClosedOnStart(true)
-                .build();
 
         //Set up the main page
         MapEventFragment m = new MapEventFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.mapEventFrame, m).commit();
     }
-
+    public void onBackClicked(View view){
+        finish();
+    }
     @Override
     protected void onStop() {
         super.onStop();

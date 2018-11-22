@@ -13,7 +13,13 @@
             android:id="@+id/toolbar"
             style="@style/ToolbarRegister">
 
-
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_back"
+                android:layout_alignParentLeft="true"
+                android:onClick="onBackClicked"
+                android:layout_marginLeft="15dp"/>
             <com.turkfyp.tarcomm2.widget.CanaroTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

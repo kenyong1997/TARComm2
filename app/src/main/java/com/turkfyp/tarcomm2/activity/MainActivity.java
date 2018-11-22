@@ -34,6 +34,7 @@ import com.turkfyp.tarcomm2.DatabaseObjects.ViewPagerAdapter;
 import com.turkfyp.tarcomm2.DatabaseObjects.ViewPagerModel;
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.guillotine.animation.GuillotineAnimation;
+import com.turkfyp.tarcomm2.guillotine.interfaces.GuillotineListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ import butterknife.ButterKnife;
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
     private ViewPagerAdapter mAdapter;
     private ArrayList<ViewPagerModel> mContents;
     private RecyclerView rvMainMarket, rvMainLost;
-    public static boolean allowRefresh;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -78,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
     RequestQueue queue;
     List<Item> itemList;
     List<LostFound> lostFoundList;
+    GuillotineAnimation animation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +88,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        ImageView hamburger = (ImageView) findViewById(R.id.guillotine_hamburger);
         rvMainMarket = (RecyclerView) findViewById(R.id.rvMainMarket);
         rvMainLost = (RecyclerView) findViewById(R.id.rvMainLost);
+
+
 
         //Navigation Menu - START
         if (toolbar != null) {
@@ -117,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
         Glide.with(getApplicationContext()).load(imageURL).apply(options).into(profile_image);
 
-        GuillotineAnimation animation = new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
+        animation = new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
                 .setStartDelay(RIPPLE_DURATION)
                 .setActionBarViewForAnimation(toolbar)
                 .setClosedOnStart(true)
@@ -412,6 +418,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+        if(animation.opened == true){
+            animation.close();
+            animation.opened = false;
+        }
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
             return;
@@ -433,32 +443,38 @@ public class MainActivity extends AppCompatActivity {
 
     //Side Menu Navigation
     public void highlight_event_onclick(View view){
-        Intent i = new Intent (this,MainActivity.class);
-        startActivity(i);
+        animation.opened=false;
+        animation.close();
     }
     public void event_onclick(View view){
         Intent i = new Intent (this,EventActivity.class);
         startActivity(i);
+        animation.close();
     }
     public void market_onclick(View view){
         Intent i = new Intent (this,MarketplaceActivity.class);
         startActivity(i);
+        animation.close();
     }
     public void lost_and_found_onclick(View view){
         Intent i = new Intent (this,LostAndFoundActivity.class);
         startActivity(i);
+        animation.close();
     }
     public void map_onclick(View view){
         Intent i = new Intent (this,MapActivity.class);
         startActivity(i);
+        animation.close();
     }
     public void view_profile_onclick(View view){
         Intent i = new Intent (this,ViewProfileActivity.class);
         startActivity(i);
+        animation.close();
     }
     public void map_event_onclick(View view){
         Intent i = new Intent(this,MapEventActivity.class);
         startActivity(i);
+        animation.close();
     }
     //End Side Menu Navigation
 

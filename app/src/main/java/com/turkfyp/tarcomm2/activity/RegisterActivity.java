@@ -96,6 +96,9 @@ public class RegisterActivity extends AppCompatActivity {
                 showFileChooser();
 
     }
+    public void onBackClicked(View view){
+        finish();
+    }
     public void onRegisterClicked(View view){
 
         rbGender = (RadioButton) findViewById(rgGender.getCheckedRadioButtonId());

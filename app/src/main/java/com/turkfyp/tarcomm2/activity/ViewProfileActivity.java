@@ -42,56 +42,56 @@ public class ViewProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
 
-        // For side menu
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        FrameLayout viewprofile_layout = (FrameLayout) findViewById(R.id.viewprofile_layout);
-        View contentHamburger = (View) findViewById(R.id.content_hamburger);
-
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle(null);
-        }
-
-        View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
-        viewprofile_layout.addView(guillotineMenu);
-
-        TextView tvUserFullName = (TextView) findViewById(R.id.tvUserFullName);
-
-        SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
-
-        //Set User Name on Navigation Bar
-        tvUserFullName.setText(preferences.getString("loggedInUser",""));
-
-        //Set Profile Picture on Navigation Bar
-        String imageURL = preferences.getString("profilePicURL","");
-
-        //For Glide image
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .placeholder(R.drawable.background_white)
-                .error(R.drawable.background_white);
-
-        CircleImageView profile_image = (CircleImageView) findViewById(R.id.profile_image);
-        CircleImageView imgViewProfilePic = (CircleImageView) findViewById(R.id.imgViewProfilePic);
-
-        //Navigation Image
-        Glide.with(getApplicationContext()).load(imageURL).apply(options).into(profile_image);
-
-        //User Profile Image
-        Glide.with(getApplicationContext()).load(imageURL).apply(options).into(imgViewProfilePic);
-
-        convertImage(imageURL);
-
-
-
-
-        new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
-                .setStartDelay(RIPPLE_DURATION)
-                .setActionBarViewForAnimation(toolbar)
-                .setClosedOnStart(true)
-                .build();
+//        // For side menu
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        FrameLayout viewprofile_layout = (FrameLayout) findViewById(R.id.viewprofile_layout);
+//        View contentHamburger = (View) findViewById(R.id.content_hamburger);
+//
+//        if (toolbar != null) {
+//            setSupportActionBar(toolbar);
+//            getSupportActionBar().setTitle(null);
+//        }
+//
+//        View guillotineMenu = LayoutInflater.from(this).inflate(R.layout.guillotine, null);
+//        viewprofile_layout.addView(guillotineMenu);
+//
+//        TextView tvUserFullName = (TextView) findViewById(R.id.tvUserFullName);
+//
+          SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
+//
+//        //Set User Name on Navigation Bar
+//        tvUserFullName.setText(preferences.getString("loggedInUser",""));
+//
+//        //Set Profile Picture on Navigation Bar
+//        String imageURL = preferences.getString("profilePicURL","");
+//
+//        //For Glide image
+//        RequestOptions options = new RequestOptions()
+//                .centerCrop()
+//                .skipMemoryCache(true)
+//                .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                .placeholder(R.drawable.background_white)
+//                .error(R.drawable.background_white);
+//
+//        CircleImageView profile_image = (CircleImageView) findViewById(R.id.profile_image);
+//        CircleImageView imgViewProfilePic = (CircleImageView) findViewById(R.id.imgViewProfilePic);
+//
+//        //Navigation Image
+//        Glide.with(getApplicationContext()).load(imageURL).apply(options).into(profile_image);
+//
+//        //User Profile Image
+//        Glide.with(getApplicationContext()).load(imageURL).apply(options).into(imgViewProfilePic);
+//
+//        convertImage(imageURL);
+//
+//
+//
+//
+//        new GuillotineAnimation.GuillotineBuilder(guillotineMenu, guillotineMenu.findViewById(R.id.guillotine_hamburger), contentHamburger)
+//                .setStartDelay(RIPPLE_DURATION)
+//                .setActionBarViewForAnimation(toolbar)
+//                .setClosedOnStart(true)
+//                .build();
 
         //------------------------Activity Codes
         tvProfileName = (TextView) findViewById(R.id.tvProfileName);
@@ -109,6 +109,9 @@ public class ViewProfileActivity extends AppCompatActivity {
         tvProfileCourse.setText(preferences.getString("course",""));
         tvProfileBioData.setText(preferences.getString("biodata",""));
 
+    }
+    public void onBackClicked(View view){
+        finish();
     }
     public void onEditProfileClicked(View view){
         Intent i = new Intent (this,EditProfileActivity.class);
