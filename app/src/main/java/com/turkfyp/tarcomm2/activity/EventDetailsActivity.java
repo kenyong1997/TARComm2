@@ -96,10 +96,10 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                 EVENT_VENUE_LOCATION = tvDetailEventVenue.getText().toString();
 
-                Intent mainActivity = new Intent(EventDetailsActivity.this, MainActivity.class);
+                Intent i = new Intent(EventDetailsActivity.this, MapEventActivity.class);
 
                 DIRECT_TO_EVENT = true;
-                startActivity(mainActivity);
+                startActivity(i);
 
 
             }

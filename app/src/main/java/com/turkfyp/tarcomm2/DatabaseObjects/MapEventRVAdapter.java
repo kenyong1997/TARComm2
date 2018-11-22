@@ -83,19 +83,28 @@ public class MapEventRVAdapter extends RecyclerView.Adapter<MapEventRVAdapter.My
             @Override
             public void onClick(View view) {
 
-//                Intent eventDetailIntent = new Intent(mContext, EventDetailsActivity.class);
-//
-//                eventDetailIntent.putExtra("eventName", eventList.get(viewHolder.getAdapterPosition()).getEventName());
-//                eventDetailIntent.putExtra("eventDateTime", eventList.get(viewHolder.getAdapterPosition()).getEventDateTime());
-//                eventDetailIntent.putExtra("eventDesc", eventList.get(viewHolder.getAdapterPosition()).getEventDesc());
-//                eventDetailIntent.putExtra("eventVenue", eventList.get(viewHolder.getAdapterPosition()).getEventVenue());
-//                eventDetailIntent.putExtra("eventEndDatetime",eventList.get(viewHolder.getAdapterPosition()).getEventEndDateTime());
-//
-//                //convertImage(eventList.get(viewHolder.getAdapterPosition()).getEventImageURL());
-//                //eventDetailIntent.putExtra("Image", bitmap);
-//                eventDetailIntent.putExtra("ImageURL", eventList.get(viewHolder.getAdapterPosition()).getEventImageURL());
-//
-//                mContext.startActivity(eventDetailIntent);
+                Intent eventDetailIntent = new Intent(mContext, EventDetailsActivity.class);
+
+                eventDetailIntent.putExtra("eventName", eventList.get(viewHolder.getAdapterPosition()).getEventName());
+                eventDetailIntent.putExtra("eventDateTime", eventList.get(viewHolder.getAdapterPosition()).getEventDateTime());
+                eventDetailIntent.putExtra("eventDesc", eventList.get(viewHolder.getAdapterPosition()).getEventDesc());
+                eventDetailIntent.putExtra("eventVenue", eventList.get(viewHolder.getAdapterPosition()).getEventVenue());
+                eventDetailIntent.putExtra("eventEndDatetime",eventList.get(viewHolder.getAdapterPosition()).getEventEndDateTime());
+
+                //convertImage(eventList.get(viewHolder.getAdapterPosition()).getEventImageURL());
+                //eventDetailIntent.putExtra("Image", bitmap);
+                eventDetailIntent.putExtra("ImageURL", eventList.get(viewHolder.getAdapterPosition()).getEventImageURL());
+
+                mContext.startActivity(eventDetailIntent);
+
+//                Geocoding geocoding = new Geocoding();
+//                geocoding.execute(eventList.get(viewHolder.getAdapterPosition()).getEventVenue());
+            }
+        });
+
+        viewHolder.ivLocate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
                 Geocoding geocoding = new Geocoding();
                 geocoding.execute(eventList.get(viewHolder.getAdapterPosition()).getEventVenue());
@@ -114,12 +123,14 @@ public class MapEventRVAdapter extends RecyclerView.Adapter<MapEventRVAdapter.My
 
         TextView tvMapEventName, tvMapEventDate, tvMapEventVenue;
         LinearLayout mapEventRecords_container;
+        ImageView ivLocate;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             tvMapEventName = (TextView) itemView.findViewById(R.id.tvMapEventName);
             tvMapEventDate = (TextView) itemView.findViewById(R.id.tvMapEventDate);
             tvMapEventVenue = (TextView) itemView.findViewById(R.id.tvMapEventVenue);
+            ivLocate = (ImageView) itemView.findViewById(R.id.ivLocate);
             mapEventRecords_container = (LinearLayout)itemView.findViewById(R.id.mapEventRecords_container);
         }
     }

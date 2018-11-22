@@ -220,22 +220,22 @@ public class FragmentTradingTab4 extends Fragment {
                         }
                     }) {
                 @Override
-                protected Map<String, String> getParams() {
+            protected Map<String, String> getParams() {
 
-                    SharedPreferences preferences = getActivity().getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
+                SharedPreferences preferences = getActivity().getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
 
-                    Map<String, String> params = new HashMap<>();
-                    params.put("email", preferences.getString("email",""));
-                    return params;
-                }
+                Map<String, String> params = new HashMap<>();
+                params.put("email", preferences.getString("email",""));
+                return params;
+            }
 
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<>();
-                    params.put("Content-Type", "application/x-www-form-urlencoded");
-                    return params;
-                }
-            };
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
         queue.add(postRequest);
 
         } catch (Exception e) {
