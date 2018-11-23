@@ -114,6 +114,7 @@ public class MapEventRVAdapter extends RecyclerView.Adapter<MapEventRVAdapter.My
         return viewHolder;
     }
 
+
     @Override
     public int getItemCount() {
         return eventList.size();
