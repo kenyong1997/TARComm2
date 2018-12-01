@@ -29,7 +29,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EventActivity extends AppCompatActivity {
 
-    private static final long RIPPLE_DURATION = 250;
     private TabLayout tabLayout;
 
     @Override
@@ -94,69 +93,4 @@ public class EventActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-
-
-    //Side Menu Navigation
-    public void highlight_event_onclick(View view){
-        Intent i = new Intent (this,MainActivity.class);
-        startActivity(i);
-    }
-    public void event_onclick(View view){
-        Intent i = new Intent (this,EventActivity.class);
-        startActivity(i);
-    }
-    public void market_onclick(View view){
-        Intent i = new Intent (this,MarketplaceActivity.class);
-        startActivity(i);
-    }
-    public void lost_and_found_onclick(View view){
-        Intent i = new Intent (this,LostAndFoundActivity.class);
-        startActivity(i);
-    }
-    public void map_onclick(View view){
-        Intent i = new Intent (this,MapActivity.class);
-        startActivity(i);
-    }
-    public void view_profile_onclick(View view){
-        Intent i = new Intent (this,ViewProfileActivity.class);
-        startActivity(i);
-    }
-    public void map_event_onclick(View view){
-        Intent i = new Intent(this,MapEventActivity.class);
-        startActivity(i);
-    }
-    //End Side Menu Navigation
-
-    //Get Profile Image for Navigation Menu
-    private void convertImage(String imageURL){
-        class ConvertImage extends AsyncTask<String, Void, Bitmap> {
-
-            @Override
-            protected Bitmap doInBackground(String... strings) {
-                String imageURL = strings[0];
-
-                try {
-                    URL url = new URL(imageURL);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setDoInput(true);
-                    connection.connect();
-                    InputStream input = connection.getInputStream();
-                    Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                    return myBitmap;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-
-            @Override
-            protected void onPostExecute(Bitmap bitmap) {
-                super.onPostExecute(bitmap);
-                CircleImageView profile_image = (CircleImageView) findViewById(R.id.profile_image);
-                profile_image.setImageBitmap(bitmap);
-            }
-        }
-        ConvertImage convertImage = new ConvertImage();
-        convertImage.execute(imageURL);
-    }
 }

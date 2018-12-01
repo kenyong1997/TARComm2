@@ -206,9 +206,6 @@ public class EditUploadItemActivity extends AppCompatActivity {
         showFileChooser();
     }
 
-    public  void onCancelEditProfileClicked(View view){
-        onBackPressed();
-    }
     public void onBackClicked(View view){
         finish();
     }

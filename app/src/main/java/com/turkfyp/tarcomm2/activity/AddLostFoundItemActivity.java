@@ -32,12 +32,6 @@ public class AddLostFoundItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_lost_found_item);
 
-
-
-        // For side menu
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        FrameLayout trading_layout = (FrameLayout) findViewById(R.id.AddLostFoundLayout);
-
         FragmentAddLostFound f = new FragmentAddLostFound();
         getSupportFragmentManager().beginTransaction().replace(R.id.addLostItem_frame, f).commit();
 

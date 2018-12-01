@@ -159,10 +159,6 @@ public class EditProfileActivity extends AppCompatActivity {
         showFileChooser();
     }
 
-    public  void onCancelEditProfileClicked(View view){
-        onBackPressed();
-    }
-
     public  void onSaveEditProfileClicked(View view){
 
         SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);

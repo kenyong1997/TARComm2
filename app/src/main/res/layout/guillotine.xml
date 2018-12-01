@@ -128,19 +128,20 @@
                 android:text="Lost and Found"
                 android:onClick="lost_and_found_onclick"/>
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/friends_group"
-            style="@style/LinearLayout.GuillotineItem">
+        <!-- future work, add friend database-->
+        <!--<LinearLayout-->
+            <!--android:id="@+id/friends_group"-->
+            <!--style="@style/LinearLayout.GuillotineItem">-->
 
-            <ImageView
-                style="@style/ImageView.GuillotineItem"
-                android:src="@drawable/friends_icon" />
+            <!--<ImageView-->
+                <!--style="@style/ImageView.GuillotineItem"-->
+                <!--android:src="@drawable/friends_icon" />-->
 
-            <com.turkfyp.tarcomm2.widget.CanaroTextView
-                style="@style/TextView.GuillotineItem"
-                android:textColor="@color/light_gray"
-                android:text="Friends" />
-        </LinearLayout>
+            <!--<com.turkfyp.tarcomm2.widget.CanaroTextView-->
+                <!--style="@style/TextView.GuillotineItem"-->
+                <!--android:textColor="@color/light_gray"-->
+                <!--android:text="Friends" />-->
+        <!--</LinearLayout>-->
         <LinearLayout
             android:id="@+id/map_group"
             style="@style/LinearLayout.GuillotineItem">
@@ -162,19 +163,20 @@
                 android:text="Navigation"
                 android:onClick="map_onclick"/>
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/Friends_nearby_group"
-            style="@style/LinearLayout.GuillotineItem">
+        <!-- future work, add friend database-->
+        <!--<LinearLayout-->
+            <!--android:id="@+id/Friends_nearby_group"-->
+            <!--style="@style/LinearLayout.GuillotineItem">-->
 
-            <ImageView
-                style="@style/ImageView.GuillotineItem"
-                android:src="@drawable/friends_nearby_icon" />
+            <!--<ImageView-->
+                <!--style="@style/ImageView.GuillotineItem"-->
+                <!--android:src="@drawable/friends_nearby_icon" />-->
 
-            <com.turkfyp.tarcomm2.widget.CanaroTextView
-                style="@style/TextView.GuillotineItem"
-                android:textColor="@color/light_gray"
-                android:text="Friends Nearby" />
-        </LinearLayout>
+            <!--<com.turkfyp.tarcomm2.widget.CanaroTextView-->
+                <!--style="@style/TextView.GuillotineItem"-->
+                <!--android:textColor="@color/light_gray"-->
+                <!--android:text="Friends Nearby" />-->
+        <!--</LinearLayout>-->
         <LinearLayout
             android:id="@+id/event_ongoing_group"
             style="@style/LinearLayout.GuillotineItem">
@@ -209,19 +211,7 @@
                 android:textColor="@color/light_gray"
                 android:text="Contact for Promotion" />
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/faq_group"
-            style="@style/LinearLayout.GuillotineItem">
 
-            <ImageView
-                style="@style/ImageView.GuillotineItem"
-                android:src="@drawable/faq_icon" />
-
-            <com.turkfyp.tarcomm2.widget.CanaroTextView
-                style="@style/TextView.GuillotineItem"
-                android:textColor="@color/light_gray"
-                android:text="FAQ" />
-        </LinearLayout>
         <LinearLayout
             android:id="@+id/logout_group"
             android:layout_marginBottom="10dp"

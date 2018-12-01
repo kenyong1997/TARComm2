@@ -147,34 +147,4 @@ public class MapEventActivity extends AppCompatActivity {
     }
 
 
-    //Side Menu Navigation - START
-    public void highlight_event_onclick(View view){
-        Intent i = new Intent (this,MainActivity.class);
-        startActivity(i);
-    }
-    public void event_onclick(View view){
-        Intent i = new Intent (this,EventActivity.class);
-        startActivity(i);
-    }
-    public void market_onclick(View view){
-        Intent i = new Intent (this,MarketplaceActivity.class);
-        startActivity(i);
-    }
-    public void lost_and_found_onclick(View view){
-        Intent i = new Intent (this,LostAndFoundActivity.class);
-        startActivity(i);
-    }
-    public void map_onclick(View view){
-        Intent i = new Intent (this,MapActivity.class);
-        startActivity(i);
-    }
-    public void view_profile_onclick(View view){
-        Intent i = new Intent (this,ViewProfileActivity.class);
-        startActivity(i);
-    }
-    public void map_event_onclick(View view){
-        Intent i = new Intent(this,MapEventActivity.class);
-        startActivity(i);
-    }
-    //Side Menu Navigation - END
 }

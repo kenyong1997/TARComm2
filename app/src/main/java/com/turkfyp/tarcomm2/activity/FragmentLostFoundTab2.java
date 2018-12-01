@@ -65,31 +65,6 @@ public class FragmentLostFoundTab2 extends Fragment {
             Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
-        //when a particular item was selected to view more details
-//        lvLostFound.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                LostFound selectedItem =(LostFound) parent.getItemAtPosition(position);
-//                Intent lostFoundDetailIntent = new Intent(getActivity(),LostFoundDetailActivity.class);
-//                lostFoundDetailIntent.putExtra("lostItemName",selectedItem.getLostItemName());
-//                lostFoundDetailIntent.putExtra("lostItemDesc",selectedItem.getLostItemDesc());
-//                lostFoundDetailIntent.putExtra("email",selectedItem.getEmail());
-//                lostFoundDetailIntent.putExtra("lostDate", selectedItem.getLostDate());
-//                lostFoundDetailIntent.putExtra("lostItemContactName",selectedItem.getContactName());
-//                lostFoundDetailIntent.putExtra("lostItemContactNo",selectedItem.getContactNo());
-//                lostFoundDetailIntent.putExtra("checkYourUpload",false);
-//
-//                ImageView ivImage = (ImageView) view.findViewById(R.id.imageViewLostItemImage);
-//                ivImage.buildDrawingCache();
-//                Bitmap image = ivImage.getDrawingCache();
-//                lostFoundDetailIntent.putExtra("LostImage", image);
-//                lostFoundDetailIntent.putExtra("LostImageURL", selectedItem.getLostItemURL());
-//
-//                startActivity(lostFoundDetailIntent);
-//            }
-//        });
-
         swipeRefreshLostFound.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

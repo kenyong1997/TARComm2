@@ -447,31 +447,37 @@ public class MainActivity extends AppCompatActivity {
         animation.close();
     }
     public void event_onclick(View view){
+        animation.opened=false;
         Intent i = new Intent (this,EventActivity.class);
         startActivity(i);
         animation.close();
     }
     public void market_onclick(View view){
+        animation.opened=false;
         Intent i = new Intent (this,MarketplaceActivity.class);
         startActivity(i);
         animation.close();
     }
     public void lost_and_found_onclick(View view){
+        animation.opened=false;
         Intent i = new Intent (this,LostAndFoundActivity.class);
         startActivity(i);
         animation.close();
     }
     public void map_onclick(View view){
+        animation.opened=false;
         Intent i = new Intent (this,MapActivity.class);
         startActivity(i);
         animation.close();
     }
     public void view_profile_onclick(View view){
+        animation.opened=false;
         Intent i = new Intent (this,ViewProfileActivity.class);
         startActivity(i);
         animation.close();
     }
     public void map_event_onclick(View view){
+        animation.opened=false;
         Intent i = new Intent(this,MapEventActivity.class);
         startActivity(i);
         animation.close();
