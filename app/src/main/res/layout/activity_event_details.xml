@@ -29,17 +29,23 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_back"
-                    android:layout_alignParentLeft="true"
-                    android:onClick="onBackClicked"
-                    android:layout_marginLeft="15dp"/>
+                <LinearLayout
+                    android:layout_width="55dp"
+                    android:layout_height="50dp"
+                    android:onClick="onBackClicked">
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_back"
+                        android:layout_gravity="center"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="15dp"/>
+                </LinearLayout>
                 <com.turkfyp.tarcomm2.widget.CanaroTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Event Details"
+                    android:layout_centerVertical="true"
                     android:textAlignment="center"
                     android:textSize="@dimen/guillotine_item_text_size" />
             </RelativeLayout>

@@ -24,30 +24,47 @@
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_back"
-                    android:layout_alignParentLeft="true"
-                    android:onClick="onBackClicked"
-                    android:layout_marginLeft="15dp"/>
+                android:layout_height="wrap_content"
+                android:background="@color/guillotine_background"
+                >
+                <LinearLayout
+                    android:layout_width="55dp"
+                    android:layout_height="50dp"
+                    android:onClick="onBackClicked">
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_back"
+                        android:layout_gravity="center"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="15dp"/>
+                </LinearLayout>
+
+
                 <com.turkfyp.tarcomm2.widget.CanaroTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Edit Your Items"
-                    android:textColor="@android:color/white"
+                    android:layout_centerVertical="true"
+                    android:text="Edit Your Profile"
                     android:textAlignment="center"
+                    android:textColor="@android:color/white"
                     android:textSize="@dimen/guillotine_item_text_size" />
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+
+                <LinearLayout
+                    android:layout_width="55dp"
+                    android:layout_height="50dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:onClick="onSaveEditProfileClicked">
+                <ImageView
                     android:id="@+id/ivEditItem"
-                    android:layout_marginRight="15dp"
-                    android:onClick="onSaveEditProfileClicked"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
                     android:src="@drawable/ic_save" />
+                </LinearLayout>
             </RelativeLayout>
 
             <ScrollView android:layout_width="match_parent"

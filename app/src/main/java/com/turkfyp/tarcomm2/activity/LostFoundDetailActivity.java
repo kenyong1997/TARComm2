@@ -41,7 +41,7 @@ import java.util.Map;
 public class LostFoundDetailActivity extends AppCompatActivity {
 
     protected TextView tvDetailLostItemName, tvDetailLostItemDesc, tvDetailLostItemOwner,tvDetailOwnerContact,tvDetailLostDate;
-    protected ImageView imageViewLostItem,ivEditItem,ivDeleteItem;
+    protected ImageView imageViewLostItem,ivEditLostItem,ivDeleteLostItem;
     protected String ownerContact, itemOwner, lostItemName, lostItemDesc, lostDate,email;
     protected Boolean checkYourUpload;
     protected Bitmap image;
@@ -70,8 +70,8 @@ public class LostFoundDetailActivity extends AppCompatActivity {
         tvDetailOwnerContact = (TextView)findViewById(R.id.tvDetailOwnerContact);
         tvDetailLostDate = (TextView)findViewById(R.id.tvDetailLostDate);
         imageViewLostItem= (ImageView) findViewById(R.id.ivLostItemImage);
-        ivDeleteItem = (ImageView) findViewById(R.id.ivDeleteItem);
-        ivEditItem = (ImageView) findViewById(R.id.ivEditItem);
+        ivDeleteLostItem = (ImageView) findViewById(R.id.ivDeleteLostItem);
+        ivEditLostItem = (ImageView) findViewById(R.id.ivEditLostItem);
 
 
         //get the extras and values
@@ -86,8 +86,8 @@ public class LostFoundDetailActivity extends AppCompatActivity {
         email =extras.getString("email");
 
         if(checkYourUpload){
-            ivEditItem.setVisibility(View.VISIBLE);
-            ivDeleteItem.setVisibility(View.VISIBLE);
+            ivEditLostItem.setVisibility(View.VISIBLE);
+            ivDeleteLostItem.setVisibility(View.VISIBLE);
         }
 
         //(WILL BE ADDED IF NEEDED)
