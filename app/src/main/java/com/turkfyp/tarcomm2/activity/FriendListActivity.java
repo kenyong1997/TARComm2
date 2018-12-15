@@ -1,33 +1,16 @@
 package com.turkfyp.tarcomm2.activity;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.turkfyp.tarcomm2.R;
-import com.turkfyp.tarcomm2.guillotine.animation.GuillotineAnimation;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FriendListActivity extends AppCompatActivity {
 
@@ -47,7 +30,7 @@ public class FriendListActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Search"));
 
         //replace default fragment
-        replaceFragment(new FragmentLostFoundTab1());
+        replaceFragment(new FragmentFriendTab1());
 
 
         //handling tab click event
@@ -55,11 +38,11 @@ public class FriendListActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
-                    replaceFragment(new FragmentLostFoundTab1());
+                    replaceFragment(new FragmentFriendTab1());
                 } else if(tab.getPosition()==1){
-                    replaceFragment(new FragmentLostFoundTab2());
+                    replaceFragment(new FragmentFriendTab1());
                 }else{
-                    replaceFragment(new FragmentLostFoundTab3());
+                    replaceFragment(new FragmentFriendTab1());
                 }
             }
 

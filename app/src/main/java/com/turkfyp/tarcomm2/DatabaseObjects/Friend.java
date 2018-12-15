@@ -2,33 +2,38 @@ package com.turkfyp.tarcomm2.DatabaseObjects;
 
 public class Friend {
 
-    private String email1,email2,type;
+    private String userEmail, friendEmail, type, friendName, profilePicURL;
 
     public Friend() {
-        this.email1 = "";
-        this.email2 = "";
+        this.userEmail = "";
+        this.friendEmail = "";
         this.type = "";
+        this.friendName = "";
+        this.profilePicURL = "";
     }
-    public Friend(String email1, String email2, String type) {
-        this.email1 = email1;
-        this.email2 = email2;
+
+    public Friend(String userEmail, String friendEmail, String type, String friendName, String profilePicURL) {
+        this.userEmail = userEmail;
+        this.friendEmail = friendEmail;
         this.type = type;
+        this.friendName = friendName;
+        this.profilePicURL = profilePicURL;
     }
 
-    public String getEmail1() {
-        return email1;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setEmail1(String email1) {
-        this.email1 = email1;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
-    public String getEmail2() {
-        return email2;
+    public String getFriendEmail() {
+        return friendEmail;
     }
 
-    public void setEmail2(String email2) {
-        this.email2 = email2;
+    public void setFriendEmail(String friendEmail) {
+        this.friendEmail = friendEmail;
     }
 
     public String getType() {
@@ -37,5 +42,21 @@ public class Friend {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getFriendName() {
+        return friendName;
+    }
+
+    public void setFriendName(String friendName) {
+        this.friendName = friendName;
+    }
+
+    public String getProfilePicURL() {
+        return profilePicURL;
+    }
+
+    public void setProfilePicURL(String profilePicURL) {
+        this.profilePicURL = profilePicURL;
     }
 }
