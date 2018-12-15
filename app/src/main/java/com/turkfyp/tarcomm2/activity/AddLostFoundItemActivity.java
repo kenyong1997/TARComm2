@@ -39,36 +39,5 @@ public class AddLostFoundItemActivity extends AppCompatActivity {
     public void onBackClicked(View view){
         finish();
     }
-    //Get Profile Image for Navigation Menu
-    private void convertImage(String imageURL){
-        class ConvertImage extends AsyncTask<String, Void, Bitmap> {
 
-            @Override
-            protected Bitmap doInBackground(String... strings) {
-                String imageURL = strings[0];
-
-                try {
-                    URL url = new URL(imageURL);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setDoInput(true);
-                    connection.connect();
-                    InputStream input = connection.getInputStream();
-                    Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                    return myBitmap;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-
-            @Override
-            protected void onPostExecute(Bitmap bitmap) {
-                super.onPostExecute(bitmap);
-                CircleImageView profile_image = (CircleImageView) findViewById(R.id.profile_image);
-                profile_image.setImageBitmap(bitmap);
-            }
-        }
-        ConvertImage convertImage = new ConvertImage();
-        convertImage.execute(imageURL);
-    }
 }
