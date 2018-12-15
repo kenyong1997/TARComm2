@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/friendlist_layout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+    android:layout_height="match_parent"
+    tools:context=".activity.FriendListActivity">
+
+    <View
+        android:layout_gravity="top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/guillotine_actionbar_background_view_height"
+        android:background="@color/guillotine_background" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/Toolbar"
+            app:contentInsetStart="0dp">
+
+            <LinearLayout
+                android:layout_width="55dp"
+                android:layout_height="50dp"
+                android:onClick="onBackClicked">
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_back"
+                    android:layout_gravity="center"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="15dp"/>
+            </LinearLayout>
+
+            <com.turkfyp.tarcomm2.widget.CanaroTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_centerVertical="true"
+                android:textColor="@android:color/white"
+                android:text="Friends"
+                android:textSize="@dimen/guillotine_item_text_size" />
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_friendlist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/guillotine_background"
+            app:tabTextColor="@color/guillotine_background_dark"
+            app:tabSelectedTextColor="@color/selected_tabs"
+            app:tabMode="fixed"
+            app:tabGravity="fill"
+            />
+
+        <FrameLayout
+            android:id="@+id/friendlist_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+        </FrameLayout>
+    </LinearLayout>
+</FrameLayout>

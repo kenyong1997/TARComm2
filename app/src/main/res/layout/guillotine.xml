@@ -128,20 +128,20 @@
                 android:text="Lost and Found"
                 android:onClick="lost_and_found_onclick"/>
         </LinearLayout>
-        <!-- future work, add friend database-->
-        <!--<LinearLayout-->
-            <!--android:id="@+id/friends_group"-->
-            <!--style="@style/LinearLayout.GuillotineItem">-->
 
-            <!--<ImageView-->
-                <!--style="@style/ImageView.GuillotineItem"-->
-                <!--android:src="@drawable/friends_icon" />-->
+        <LinearLayout
+            android:id="@+id/friends_group"
+            style="@style/LinearLayout.GuillotineItem">
 
-            <!--<com.turkfyp.tarcomm2.widget.CanaroTextView-->
-                <!--style="@style/TextView.GuillotineItem"-->
-                <!--android:textColor="@color/light_gray"-->
-                <!--android:text="Friends" />-->
-        <!--</LinearLayout>-->
+            <ImageView
+                style="@style/ImageView.GuillotineItem"
+                android:src="@drawable/friends_icon" />
+
+            <com.turkfyp.tarcomm2.widget.CanaroTextView
+                style="@style/TextView.GuillotineItem"
+                android:text="Friends"
+                android:onClick="friend_list_onclick"/>
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/map_group"
             style="@style/LinearLayout.GuillotineItem">

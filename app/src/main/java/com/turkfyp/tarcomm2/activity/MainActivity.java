@@ -470,6 +470,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
         animation.close();
     }
+    public void friend_list_onclick(View view){
+        animation.opened=false;
+        Intent i = new Intent (this,FriendListActivity.class);
+        startActivity(i);
+        animation.close();
+    }
     public void view_profile_onclick(View view){
         animation.opened=false;
         Intent i = new Intent (this,ViewProfileActivity.class);

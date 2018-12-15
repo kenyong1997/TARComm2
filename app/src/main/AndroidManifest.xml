@@ -76,7 +76,8 @@
         <activity android:name=".activity.ViewOtherProfileActivity" />
         <activity android:name=".activity.ViewPostActivity" />
         <activity android:name=".activity.ViewOtherPostActivity" />
-        <activity android:name=".activity.MapEventActivity"></activity>
+        <activity android:name=".activity.MapEventActivity" />
+        <activity android:name=".activity.FriendListActivity"></activity>
     </application>
 
 </manifest>

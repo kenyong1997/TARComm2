@@ -29,22 +29,22 @@ import java.net.URL;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class LostAndFoundActivity extends AppCompatActivity {
+public class FriendListActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lost_and_found);
+        setContentView(R.layout.activity_friend_list);
 
         //Tab Fragment
-        tabLayout = (TabLayout) findViewById(R.id.tab_lostandfound);
+        tabLayout = (TabLayout) findViewById(R.id.tab_friendlist);
 
         //create tabs title
-        tabLayout.addTab(tabLayout.newTab().setText("Lost"));
-        tabLayout.addTab(tabLayout.newTab().setText("Found"));
-        tabLayout.addTab(tabLayout.newTab().setText("Your Uploads"));
+        tabLayout.addTab(tabLayout.newTab().setText("Friends"));
+        tabLayout.addTab(tabLayout.newTab().setText("Request"));
+        tabLayout.addTab(tabLayout.newTab().setText("Search"));
 
         //replace default fragment
         replaceFragment(new FragmentLostFoundTab1());
@@ -82,9 +82,11 @@ public class LostAndFoundActivity extends AppCompatActivity {
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.lostandfound_container, fragment);
+        transaction.replace(R.id.friendlist_container, fragment);
 
         transaction.commit();
     }
+
+
 
 }
