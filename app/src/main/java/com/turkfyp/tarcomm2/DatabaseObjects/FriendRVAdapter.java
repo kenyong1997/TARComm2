@@ -23,11 +23,10 @@ import com.turkfyp.tarcomm2.R;
 
 
 
-public class FriendAdapter extends ArrayAdapter<Event> {
+public class FriendRVAdapter extends ArrayAdapter<Event> {
 
-    public FriendAdapter(Activity context, int resource, List<Event> list) {
+    public FriendRVAdapter(Activity context, int resource, List<Event> list) {
         super(context, resource, list);
     }
-
 
 }
