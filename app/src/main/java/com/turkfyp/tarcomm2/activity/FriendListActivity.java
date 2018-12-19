@@ -40,7 +40,7 @@ public class FriendListActivity extends AppCompatActivity {
                 if (tab.getPosition() == 0) {
                     replaceFragment(new FragmentFriendTab1());
                 } else if(tab.getPosition()==1){
-                    replaceFragment(new FragmentFriendTab1());
+                    replaceFragment(new FragmentFriendTab2());
                 }else{
                     replaceFragment(new FragmentFriendTab1());
                 }
