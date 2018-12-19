@@ -40,7 +40,7 @@ public class FragmentFriendTab2 extends Fragment {
 
     private static final String TAG = "FragmentFriendTab2";
 
-    private static String GET_URL = "https://tarcomm.000webhostapp.com/getFriendList.php";
+    private static String GET_URL = "https://tarcomm.000webhostapp.com/getFriendPending.php";
 
     SwipeRefreshLayout swipeRefreshFriends;
     List<Friend> friendList;
@@ -93,7 +93,7 @@ public class FragmentFriendTab2 extends Fragment {
 
     public void downloadFriendRecords(Context context, String url){
         SharedPreferences preferences = getActivity().getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
-        final String userEmail = preferences.getString("email", "");
+        final String email = preferences.getString("email", "");
 
         RequestQueue queue = Volley.newRequestQueue(context);
 
@@ -111,6 +111,7 @@ public class FragmentFriendTab2 extends Fragment {
                                     friendList.clear();
                                     for (int i = 0; i < j.length(); i++) {
                                         JSONObject eventResponse = (JSONObject) j.get(i);
+                                        String userEmail = eventResponse.getString("userEmail");
                                         String friendEmail = eventResponse.getString("friendEmail");
                                         String friendType = eventResponse.getString("type");
                                         String friendName = eventResponse.getString("friendName");
@@ -141,7 +142,7 @@ public class FragmentFriendTab2 extends Fragment {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
-                    params.put("email", userEmail);
+                    params.put("email", email);
                     return params;
                 }
 
