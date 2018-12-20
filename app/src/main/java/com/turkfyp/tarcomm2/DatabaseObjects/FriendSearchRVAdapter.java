@@ -31,6 +31,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.activity.EditLostItemActivity;
 import com.turkfyp.tarcomm2.activity.LostAndFoundActivity;
+import com.turkfyp.tarcomm2.activity.ViewOtherProfileActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,25 +67,16 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
 
         //OnClick Listener for RecyclerView
         final FriendSearchRVAdapter.MyViewHolder viewHolder = new FriendSearchRVAdapter.MyViewHolder(view);
-//        viewHolder.friendListRecords_container.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                Intent eventDetailIntent = new Intent(mContext, EventDetailsActivity.class);
-//
-//                eventDetailIntent.putExtra("eventName", eventList.get(viewHolder.getAdapterPosition()).getEventName());
-//                eventDetailIntent.putExtra("eventDateTime", eventList.get(viewHolder.getAdapterPosition()).getEventDateTime());
-//                eventDetailIntent.putExtra("eventDesc", eventList.get(viewHolder.getAdapterPosition()).getEventDesc());
-//                eventDetailIntent.putExtra("eventVenue", eventList.get(viewHolder.getAdapterPosition()).getEventVenue());
-//                eventDetailIntent.putExtra("eventEndDatetime",eventList.get(viewHolder.getAdapterPosition()).getEventEndDateTime());
-//
-//                //convertImage(eventList.get(viewHolder.getAdapterPosition()).getEventImageURL());
-//                //eventDetailIntent.putExtra("Image", bitmap);
-//                eventDetailIntent.putExtra("ImageURL", eventList.get(viewHolder.getAdapterPosition()).getEventImageURL());
-//
-//                mContext.startActivity(eventDetailIntent);
-//            }
-//        });
+        viewHolder.friendSearchRecords_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Intent i = new Intent(mContext,ViewOtherProfileActivity.class);
+                i.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getFriendEmail());
+                mContext.startActivity(i);
+            }
+        });
 
         progressDialog = new ProgressDialog(mContext);
         return viewHolder;

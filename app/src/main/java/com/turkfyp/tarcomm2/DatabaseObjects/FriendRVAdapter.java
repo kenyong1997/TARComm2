@@ -1,6 +1,7 @@
 package com.turkfyp.tarcomm2.DatabaseObjects;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.R;
+import com.turkfyp.tarcomm2.activity.ViewOtherProfileActivity;
 
 public class FriendRVAdapter extends RecyclerView.Adapter<FriendRVAdapter.MyViewHolder> {
 
@@ -47,25 +49,16 @@ public class FriendRVAdapter extends RecyclerView.Adapter<FriendRVAdapter.MyView
 
         //OnClick Listener for RecyclerView
         final FriendRVAdapter.MyViewHolder viewHolder = new FriendRVAdapter.MyViewHolder(view);
-//        viewHolder.friendListRecords_container.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                Intent eventDetailIntent = new Intent(mContext, EventDetailsActivity.class);
-//
-//                eventDetailIntent.putExtra("eventName", eventList.get(viewHolder.getAdapterPosition()).getEventName());
-//                eventDetailIntent.putExtra("eventDateTime", eventList.get(viewHolder.getAdapterPosition()).getEventDateTime());
-//                eventDetailIntent.putExtra("eventDesc", eventList.get(viewHolder.getAdapterPosition()).getEventDesc());
-//                eventDetailIntent.putExtra("eventVenue", eventList.get(viewHolder.getAdapterPosition()).getEventVenue());
-//                eventDetailIntent.putExtra("eventEndDatetime",eventList.get(viewHolder.getAdapterPosition()).getEventEndDateTime());
-//
-//                //convertImage(eventList.get(viewHolder.getAdapterPosition()).getEventImageURL());
-//                //eventDetailIntent.putExtra("Image", bitmap);
-//                eventDetailIntent.putExtra("ImageURL", eventList.get(viewHolder.getAdapterPosition()).getEventImageURL());
-//
-//                mContext.startActivity(eventDetailIntent);
-//            }
-//        });
+        viewHolder.friendListRecords_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                    Intent i = new Intent(mContext,ViewOtherProfileActivity.class);
+                    i.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getFriendEmail());
+                    mContext.startActivity(i);
+
+            }
+        });
 
         return viewHolder;
     }
