@@ -85,7 +85,12 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.tvFriendSearchName.setText(friendList.get(position).getFriendName());
-// if friend, then set tv to visible
+        // if friend, then set tv to visible
+
+        if (friendList.get(position).getType().equals("friend")) {
+            holder.tvFriend.setVisibility(View.VISIBLE);
+            holder.btnAddFriend.setVisibility(View.INVISIBLE);
+        }
         // load image using Glide
         Glide.with(mContext).load(friendList.get(position).getProfilePicURL()).apply(options).into(holder.imageViewFriendSearch);
     }
@@ -100,12 +105,13 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
 
         LinearLayout friendSearchRecords_container;
         ImageView imageViewFriendSearch;
-        TextView tvFriendSearchName;
+        TextView tvFriendSearchName, tvFriend;
         Button btnAddFriend;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             tvFriendSearchName = (TextView) itemView.findViewById(R.id.tvFriendSearchName);
+            tvFriend = (TextView) itemView.findViewById(R.id.tvFriend);
             imageViewFriendSearch = (ImageView) itemView.findViewById(R.id.imageViewFriendSearch);
             friendSearchRecords_container = (LinearLayout)itemView.findViewById(R.id.friendSearchRecords_container);
             btnAddFriend = (Button) itemView.findViewById(R.id.btnAddFriend);

@@ -20,8 +20,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.turkfyp.tarcomm2.DatabaseObjects.Friend;
-import com.turkfyp.tarcomm2.DatabaseObjects.FriendRVAdapter;
-import com.turkfyp.tarcomm2.DatabaseObjects.FriendRequestRVAdapter;
 import com.turkfyp.tarcomm2.DatabaseObjects.FriendSearchRVAdapter;
 import com.turkfyp.tarcomm2.R;
 
@@ -41,7 +39,7 @@ public class FragmentFriendTab3 extends Fragment {
 
     private static final String TAG = "FragmentFriendTab3";
 
-    private static String GET_URL = "https://tarcomm.000webhostapp.com/getFriendList.php";
+    private static String GET_URL = "https://tarcomm.000webhostapp.com/getAllUser.php";
 
     SwipeRefreshLayout swipeRefreshFriends;
     List<Friend> friendList;
@@ -186,6 +184,54 @@ public class FragmentFriendTab3 extends Fragment {
         super.onDestroyView();
         if (queue != null) {
             queue.cancelAll(TAG);
+        }
+    }
+
+    public void findUser(final Context context, String url, final String userEmail, final int position) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        //Send data
+        try {
+            StringRequest postRequest = new StringRequest(
+                    Request.Method.POST,
+                    url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            JSONObject jsonObject;
+                            try {
+                                jsonObject = new JSONObject(response);
+                                String name = jsonObject.getString("fullname");
+
+                                friendList.get(position).setFriendName(name);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(context, "Error. " + error.toString(), Toast.LENGTH_LONG).show();
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("email", userEmail);
+                    return params;
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("Content-Type", "application/x-www-form-urlencoded");
+                    return params;
+                }
+            };
+            queue.add(postRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
