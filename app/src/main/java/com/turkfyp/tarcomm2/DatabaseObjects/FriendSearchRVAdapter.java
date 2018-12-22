@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,10 +87,26 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.tvFriendSearchName.setText(friendList.get(position).getFriendName());
         // if friend, then set tv to visible
-
-        if (friendList.get(position).getType().equals("friend")) {
+        if (friendList.get(position).getType().equals("a_pending_b")) {
+            holder.tvFriend.setVisibility(View.INVISIBLE);
+            holder.btnAddFriend.setVisibility(View.INVISIBLE);
+            holder.btnCancelRequest.setVisibility(View.VISIBLE);
+            holder.btnConfirmFriend.setVisibility(View.INVISIBLE);
+            holder.ivDeleteRequest.setVisibility(View.INVISIBLE);
+        }
+        else if(friendList.get(position).getType().equals("b_pending_a")) {
+            holder.tvFriend.setVisibility(View.INVISIBLE);
+            holder.btnAddFriend.setVisibility(View.INVISIBLE);
+            holder.btnCancelRequest.setVisibility(View.INVISIBLE);
+            holder.btnConfirmFriend.setVisibility(View.VISIBLE);
+            holder.ivDeleteRequest.setVisibility(View.VISIBLE);
+        }
+         else if (friendList.get(position).getType().equals("friend")) {
             holder.tvFriend.setVisibility(View.VISIBLE);
             holder.btnAddFriend.setVisibility(View.INVISIBLE);
+            holder.btnCancelRequest.setVisibility(View.INVISIBLE);
+            holder.btnConfirmFriend.setVisibility(View.INVISIBLE);
+            holder.ivDeleteRequest.setVisibility(View.INVISIBLE);
         }
         // load image using Glide
         Glide.with(mContext).load(friendList.get(position).getProfilePicURL()).apply(options).into(holder.imageViewFriendSearch);
@@ -104,9 +121,9 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout friendSearchRecords_container;
-        ImageView imageViewFriendSearch;
+        ImageView imageViewFriendSearch,ivDeleteRequest;
         TextView tvFriendSearchName, tvFriend;
-        Button btnAddFriend;
+        Button btnAddFriend, btnCancelRequest, btnConfirmFriend;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -115,6 +132,10 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
             imageViewFriendSearch = (ImageView) itemView.findViewById(R.id.imageViewFriendSearch);
             friendSearchRecords_container = (LinearLayout)itemView.findViewById(R.id.friendSearchRecords_container);
             btnAddFriend = (Button) itemView.findViewById(R.id.btnAddFriend);
+            btnCancelRequest = (Button) itemView.findViewById(R.id.btnCancelRequest);
+            btnConfirmFriend = (Button) itemView.findViewById(R.id.btnConfirmFriend);
+            ivDeleteRequest = (ImageView) itemView.findViewById(R.id.ivDeleteRequest);
+
         }
     }
 

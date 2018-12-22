@@ -59,28 +59,47 @@
                 android:layout_alignParentRight="true"
                 android:layout_height="40dp"
                 android:layout_width="100dp"
-                android:layout_marginRight="40dp"
+                android:layout_marginRight="30dp"
                 android:layout_gravity="right"
                 android:background="@color/colorPrimaryDark"
                 />
             <Button
-                android:id="@+id/btnConfirmFriend"
-                android:text="Confirm"
+                android:id="@+id/btnCancelRequest"
+                android:text="Cancel Request"
                 android:visibility="invisible"
                 android:fontFamily="sans-serif-condensed"
                 android:layout_alignParentRight="true"
                 android:layout_height="40dp"
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_marginRight="40dp"
+                android:textColor="@android:color/darker_gray"
                 android:layout_gravity="right"
-                android:background="@color/colorPrimaryDark"
+                android:background="@android:color/white"
                 />
+            <Button
+                android:id="@+id/btnConfirmFriend"
+                android:text="Accept Friend"
+                android:visibility="invisible"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_alignParentRight="true"
+                android:layout_height="40dp"
+                android:layout_width="150dp"
+                android:layout_marginRight="40dp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_gravity="right"
+                android:background="@android:color/white"
+                />
+
             <ImageView
+                android:id="@+id/ivDeleteRequest"
                 android:layout_width="30dp"
                 android:layout_height="40dp"
+                android:visibility="invisible"
                 android:src="@drawable/ic_delete_black"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="5dp"/>
+                android:layout_marginRight="5dp"
+                />
+
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
