@@ -286,11 +286,17 @@ public class EditUploadItemActivity extends AppCompatActivity {
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
 
+                    try {
+                        Thread.sleep(500);
+                        params.put("itemImage", item.getImageURL());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
                     // put the parameters with specific values
                     params.put("itemCategory", item.getItemCategory());
                     params.put("itemName", item.getItemName());
                     params.put("itemDesc", item.getItemDescription());
-                    params.put("itemImage", item.getImageURL());
                     params.put("itemPrice", String.valueOf(item.getItemPrice()));
                     params.put("itemID", String.valueOf(itemID));
                     params.put("email", item.getEmail());

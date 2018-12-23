@@ -240,6 +240,14 @@ public class RegisterActivity extends AppCompatActivity {
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
 
+                    try {
+                        Thread.sleep(500);
+                        params.put("profilepic", user.getProfilepicURL());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
                     // put the parameters with specific values
                     params.put("email", user.getEmail());
                     params.put("password", user.getPassword());
@@ -247,7 +255,7 @@ public class RegisterActivity extends AppCompatActivity {
                     params.put("fullname", user.getFullname());
                     params.put("dateofbirth",user.getDateofbirth());
                     params.put("gender",user.getGender());
-                    params.put("profilepic", user.getProfilepicURL());
+
                     params.put("faculty", user.getFaculty());
                     params.put("course", user.getCourse());
                     params.put("biodata", user.getBiodata());

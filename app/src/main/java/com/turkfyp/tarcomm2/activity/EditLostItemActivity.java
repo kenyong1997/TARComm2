@@ -314,11 +314,17 @@ public class EditLostItemActivity extends AppCompatActivity {
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
 
+                    try {
+                        Thread.sleep(500);
+                        params.put("lostItemImage", lostFound.getLostItemURL());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
                     // put the parameters with specific values
                     params.put("category", lostFound.getCategory());
                     params.put("lostItemName", lostFound.getLostItemName());
                     params.put("lostItemDesc", lostFound.getLostItemDesc());
-                    params.put("lostItemImage", lostFound.getLostItemURL());
                     params.put("lostDate", lostFound.getLostDate());
                     params.put("lostID", String.valueOf(lostID));
 

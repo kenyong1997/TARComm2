@@ -329,9 +329,16 @@ public class EditProfileActivity extends AppCompatActivity {
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
 
+                    try {
+                        Thread.sleep(500);
+                        params.put("profilepicURL", user.getProfilepicURL());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
                     // put the parameters with specific values
                     params.put("email", user.getEmail());
-                    params.put("profilepicURL", user.getProfilepicURL());
+
                     params.put("fullName", user.getFullname());
                     params.put("gender",user.getGender());
                     params.put("contactNo", user.getContactno());
