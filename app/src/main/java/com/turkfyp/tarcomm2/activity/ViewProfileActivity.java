@@ -53,6 +53,8 @@ public class ViewProfileActivity extends AppCompatActivity {
         tvProfilePhone = (TextView) findViewById(R.id.tvProfilePhone);
         tvProfileBioData = (TextView) findViewById(R.id.tvProfileBioData);
         btnEditProfile = (Button) findViewById(R.id.btnEditProfile);
+        CircleImageView imgViewProfilePic = (CircleImageView) findViewById(R.id.imgViewProfilePic);
+
 
         tvProfileName.setText(preferences.getString("loggedInUser",""));
         tvProfileEmail.setText(preferences.getString("email", ""));
@@ -60,6 +62,16 @@ public class ViewProfileActivity extends AppCompatActivity {
         tvProfileFaculty.setText(preferences.getString("faculty",""));
         tvProfileCourse.setText(preferences.getString("course",""));
         tvProfileBioData.setText(preferences.getString("biodata",""));
+
+        //glide
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .placeholder(R.drawable.background_white)
+                .error(R.drawable.background_white);
+
+        Glide.with(getApplicationContext()).load(preferences.getString("profilePicURL","")).apply(options).into(imgViewProfilePic);
 
     }
     public void onBackClicked(View view){
@@ -72,4 +84,5 @@ public class ViewProfileActivity extends AppCompatActivity {
         this.startActivity(i);
         finish();
     }
+
 }

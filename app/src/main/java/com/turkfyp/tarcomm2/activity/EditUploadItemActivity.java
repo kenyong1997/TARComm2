@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -103,7 +104,8 @@ public class EditUploadItemActivity extends AppCompatActivity {
 
         Glide.with(getApplicationContext()).load(imageURL).apply(options).into(imgViewEditMarketItem);
 
-        bitmap = extras.getParcelable("Image");
+        convertImage(imageURL);
+        //bitmap = extras.getParcelable("Image");
 
         //set text on edittext
         etEditItemName.setText(itemName);
@@ -326,7 +328,36 @@ public class EditUploadItemActivity extends AppCompatActivity {
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
     }
+    private void convertImage(String imageURL){
+        class ConvertImage extends AsyncTask<String, Void, Bitmap> {
 
+            @Override
+            protected Bitmap doInBackground(String... strings) {
+                String imageURL = strings[0];
+
+                try {
+                    bitmap = Glide.with(getApplicationContext())
+                            .asBitmap()
+                            .load(imageURL)
+                            .submit(200,200)
+                            .get();
+
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return bitmap;
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap bitmap) {
+                super.onPostExecute(bitmap);
+            }
+        }
+        ConvertImage convertImage = new ConvertImage();
+        convertImage.execute(imageURL);
+    }
 }
 
 

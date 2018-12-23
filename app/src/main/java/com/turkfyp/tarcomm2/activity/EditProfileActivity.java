@@ -54,6 +54,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -96,9 +97,9 @@ public class EditProfileActivity extends AppCompatActivity {
         imgViewEditProfilePic = (CircleImageView) findViewById(R.id.imgViewEditProfilePic);
         Glide.with(getApplicationContext()).load(imageURL).apply(options).into(imgViewEditProfilePic);
 
-
+        convertImage(imageURL);
         //Get bitmap from intent
-        bitmap = getIntent().getExtras().getParcelable("image");
+        //bitmap = getIntent().getExtras().getParcelable("image");
 
 //        convertImage(imageURL);
 
@@ -401,41 +402,6 @@ public class EditProfileActivity extends AppCompatActivity {
     }
     //End Side Menu Navigation
 
-    //Get Profile Image for Navigation Menu
-    private void convertImage(String imageURL){
-        class ConvertImage extends AsyncTask<String, Void, Bitmap> {
-
-            @Override
-            protected Bitmap doInBackground(String... strings) {
-                String imageURL = strings[0];
-
-                try {
-                    URL url = new URL(imageURL);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setDoInput(true);
-                    connection.connect();
-                    InputStream input = connection.getInputStream();
-                    Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                    return myBitmap;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-
-            @Override
-            protected void onPostExecute(Bitmap bitmap) {
-                super.onPostExecute(bitmap);
-
-
-                CircleImageView imgViewProfilePic = (CircleImageView) findViewById(R.id.imgViewEditProfilePic);
-                imgViewProfilePic.setImageBitmap(bitmap);
-            }
-        }
-        ConvertImage convertImage = new ConvertImage();
-        convertImage.execute(imageURL);
-    }
-
 
 
     public String getStringImage(Bitmap bmp) {
@@ -465,6 +431,36 @@ public class EditProfileActivity extends AppCompatActivity {
         ui.execute(bitmap);
 
         return ui.image;
+    }
+    private void convertImage(String imageURL){
+        class ConvertImage extends AsyncTask<String, Void, Bitmap> {
+
+            @Override
+            protected Bitmap doInBackground(String... strings) {
+                String imageURL = strings[0];
+
+                try {
+                    bitmap = Glide.with(getApplicationContext())
+                            .asBitmap()
+                            .load(imageURL)
+                            .submit(200,200)
+                            .get();
+
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return bitmap;
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap bitmap) {
+                super.onPostExecute(bitmap);
+            }
+        }
+        ConvertImage convertImage = new ConvertImage();
+        convertImage.execute(imageURL);
     }
 }
 

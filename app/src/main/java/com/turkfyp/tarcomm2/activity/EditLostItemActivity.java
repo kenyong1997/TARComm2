@@ -38,6 +38,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.DatabaseObjects.Item;
 import com.turkfyp.tarcomm2.DatabaseObjects.LostFound;
 import com.turkfyp.tarcomm2.DatabaseObjects.User;
@@ -56,6 +59,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -101,13 +105,21 @@ public class EditLostItemActivity extends AppCompatActivity {
         lostItemDesc = extras.getString("lostItemDesc");
         itemCategory = extras.getString("itemCategory");
         lostDate = extras.getString("lostDate");
-
-        Bitmap image = extras.getParcelable("Image");
-        ivEditLostFoundItem.setImageBitmap(image);
-
-        bitmap = image;
-
         String imageURL = extras.getString("ImageURL");
+
+        //For Glide image
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .placeholder(R.drawable.background_white)
+                .error(R.drawable.background_white);
+
+        Glide.with(getApplicationContext()).load(imageURL).apply(options).into(ivEditLostFoundItem);
+
+        convertImage(imageURL);
+        //bitmap = image;
+
         lostID = Integer.parseInt(imageURL.split("=")[1]);
 
         //set text on edittext
@@ -396,6 +408,37 @@ public class EditLostItemActivity extends AppCompatActivity {
 
         return lostFound;
     }
+    private void convertImage(String imageURL){
+        class ConvertImage extends AsyncTask<String, Void, Bitmap> {
+
+            @Override
+            protected Bitmap doInBackground(String... strings) {
+                String imageURL = strings[0];
+
+                try {
+                    bitmap = Glide.with(getApplicationContext())
+                            .asBitmap()
+                            .load(imageURL)
+                            .submit(200,200)
+                            .get();
+
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return bitmap;
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap bitmap) {
+                super.onPostExecute(bitmap);
+            }
+        }
+        ConvertImage convertImage = new ConvertImage();
+        convertImage.execute(imageURL);
+    }
+
 }
 
 
