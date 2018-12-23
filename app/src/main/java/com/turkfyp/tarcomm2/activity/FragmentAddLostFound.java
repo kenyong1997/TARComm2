@@ -136,6 +136,7 @@ public class FragmentAddLostFound extends Fragment {
                     etAddLostFoundItemDesc.setError("This field is required.");
 
                 if(!TextUtils.isEmpty(lostItemName) && !TextUtils.isEmpty(lostItemDesc)) {
+                    progressDialog = new ProgressDialog(getActivity());
                     LostFound lostFound = new LostFound();
                     lostFound.setCategory(category);
                     lostFound.setLostItemName(lostItemName);
@@ -144,9 +145,9 @@ public class FragmentAddLostFound extends Fragment {
                     lostFound.setEmail(preferences.getString("email", ""));
                     lostFound.setContactName(preferences.getString("loggedInUser", ""));
                     lostFound.setContactNo(preferences.getString("contactNo", ""));
-                    uploadImage(lostFound);
+                    uploadImage(lostFound);//show in app
 
-                    progressDialog = new ProgressDialog(getActivity());
+
                     try {
                         makeServiceCall(getActivity().getApplicationContext(), "https://tarcomm.000webhostapp.com/createLostFoundItem.php", lostFound);
                     } catch (Exception e) {
@@ -199,9 +200,10 @@ public class FragmentAddLostFound extends Fragment {
 
             @Override
             protected String doInBackground(Bitmap... params) {
-                Bitmap bitmap = params[0];
-                String uploadImage = getStringImage(bitmap);
 
+                Bitmap bitmap = params[0];
+
+                String uploadImage = getStringImage(bitmap);
                 image = uploadImage;
 
                 lostFound.setLostItemURL(image);
@@ -263,13 +265,17 @@ public class FragmentAddLostFound extends Fragment {
                     Map<String, String> params = new HashMap<>();
 
                     // put the parameters with specific values
+                    try {
+                        Thread.sleep(500);
+                        params.put("lostItemImage", lostFound.getLostItemURL());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     params.put("category", lostFound.getCategory());
                     params.put("lostItemName", lostFound.getLostItemName());
                     params.put("lostItemDesc", lostFound.getLostItemDesc());
-                    params.put("lostItemImage", lostFound.getLostItemURL());
                     params.put("email", lostFound.getEmail());
                     params.put("lostDate", lostFound.getLostDate());
-
                     return params;
                 }
 
@@ -287,4 +293,5 @@ public class FragmentAddLostFound extends Fragment {
             e.printStackTrace();
         }
     }
+
 }
