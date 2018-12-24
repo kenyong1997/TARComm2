@@ -30,8 +30,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ViewProfileActivity extends AppCompatActivity {
 
-    private static final long RIPPLE_DURATION = 250;
-
     TextView tvProfileName, tvProfileFaculty, tvProfileCourse, tvProfileEmail, tvProfilePhone,tvProfileBioData;
     Button btnEditProfile;
 

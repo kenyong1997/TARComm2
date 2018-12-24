@@ -208,7 +208,7 @@
 
             <com.turkfyp.tarcomm2.widget.CanaroTextView
                 style="@style/TextView.GuillotineItem"
-                android:textColor="@color/light_gray"
+                android:onClick="promotion_onclick"
                 android:text="Contact for Promotion" />
         </LinearLayout>
 

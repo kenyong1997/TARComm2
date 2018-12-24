@@ -482,6 +482,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
         animation.close();
     }
+    public void promotion_onclick(View view){
+        animation.opened=false;
+        Intent i = new Intent (this,PromotionActivity.class);
+        startActivity(i);
+        animation.close();
+    }
     public void map_event_onclick(View view){
         animation.opened=false;
         Intent i = new Intent(this,MapEventActivity.class);
