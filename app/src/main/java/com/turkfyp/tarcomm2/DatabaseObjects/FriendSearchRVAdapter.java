@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.support.v7.widget.RecyclerView;
@@ -49,8 +50,6 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
     RequestOptions options;
     private Context mContext ;
     private List<Friend> friendList;
-
-    Bitmap bitmap;
 
     ProgressDialog progressDialog;
 
@@ -266,8 +265,11 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
 
+                    SharedPreferences preferences = mContext.getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
+                    String userEmail = preferences.getString("email", "");
+
                     // put the parameters with specific values
-                    params.put("userEmail", friend.getUserEmail());
+                    params.put("userEmail", userEmail);
                     params.put("friendEmail", friend.getFriendEmail());
                     params.put("confirmation", "true");
 
