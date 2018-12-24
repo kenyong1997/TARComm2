@@ -1,7 +1,9 @@
 package com.turkfyp.tarcomm2.DatabaseObjects;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
@@ -39,6 +41,11 @@ import org.json.JSONObject;
 
 public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAdapter.MyViewHolder> {
 
+    private static String ADD_URL = "https://tarcomm.000webhostapp.com/sendFriendRequest.php";
+    private static String UPDATE_URL = "https://tarcomm.000webhostapp.com/acceptFriendRequest.php";
+    private static String DELETE_URL = "https://tarcomm.000webhostapp.com/deleteFriendRequest.php";
+    private static String CANCEL_URL = "https://tarcomm.000webhostapp.com/cancelFriendRequest.php";
+
     RequestOptions options;
     private Context mContext ;
     private List<Friend> friendList;
@@ -72,10 +79,83 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
             @Override
             public void onClick(View view) {
 
-
                 Intent i = new Intent(mContext,ViewOtherProfileActivity.class);
                 i.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getFriendEmail());
                 mContext.startActivity(i);
+            }
+        });
+
+        viewHolder.btnAddFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateFriendRequest(mContext,ADD_URL,friendList.get(viewHolder.getAdapterPosition()));
+            }
+        });
+
+        viewHolder.btnConfirmFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateFriendRequest(mContext,UPDATE_URL,friendList.get(viewHolder.getAdapterPosition()));
+            }
+        });
+
+        viewHolder.btnCancelRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setMessage("Confirm to cancel friend request?");
+                builder.setCancelable(true);
+
+                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+
+                        updateFriendRequest(mContext,CANCEL_URL,friendList.get(viewHolder.getAdapterPosition()));
+
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
+
+        viewHolder.ivDeleteRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setMessage("Confirm to delete friend?");
+                builder.setCancelable(true);
+
+                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+
+                        updateFriendRequest(mContext,DELETE_URL,friendList.get(viewHolder.getAdapterPosition()));
+
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
 
@@ -139,12 +219,10 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
         }
     }
 
-
     public void updateFriendRequest(final Context context, String url, final Friend friend) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
         try{
-
             if(!progressDialog.isShowing()){
                 progressDialog.setMessage("Processing, please wait awhile.");
                 progressDialog.show();
