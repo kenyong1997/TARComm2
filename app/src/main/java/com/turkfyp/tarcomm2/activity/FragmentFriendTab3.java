@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -40,6 +42,7 @@ public class FragmentFriendTab3 extends Fragment {
     private static final String TAG = "FragmentFriendTab3";
 
     private static String GET_URL = "https://tarcomm.000webhostapp.com/getAllUser.php";
+    private static String GET_SEARCH_URL = "https://tarcomm.000webhostapp.com/getSearchUser.php";
 
     SwipeRefreshLayout swipeRefreshFriends;
     List<Friend> friendList;
@@ -47,6 +50,9 @@ public class FragmentFriendTab3 extends Fragment {
 
     RequestQueue queue;
     RecyclerView rvFriendSearch;
+
+    EditText etSearchFriendName;
+    ImageView buttonSearch;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,6 +66,9 @@ public class FragmentFriendTab3 extends Fragment {
 
         swipeRefreshFriends = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefreshFriends);
         rvFriendSearch = (RecyclerView) v.findViewById(R.id.rvFriendSearch);
+
+        buttonSearch = (ImageView) v.findViewById(R.id.buttonSearch);
+        etSearchFriendName = (EditText) v.findViewById(R.id.etSearchFriendName);
 
         try {
             friendList = new ArrayList<>();
@@ -84,6 +93,15 @@ public class FragmentFriendTab3 extends Fragment {
                 }
 
                 swipeRefreshFriends.setRefreshing(false);
+            }
+        });
+
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String search = etSearchFriendName.getText().toString();
+
+                findUser(getActivity().getApplicationContext(), GET_SEARCH_URL, search);
             }
         });
 
@@ -187,7 +205,10 @@ public class FragmentFriendTab3 extends Fragment {
         }
     }
 
-    public void findUser(final Context context, String url, final String userEmail, final int position) {
+    public void findUser(final Context context, String url, final String searchName) {
+        SharedPreferences preferences = getActivity().getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
+        final String email = preferences.getString("email", "");
+
         RequestQueue queue = Volley.newRequestQueue(context);
 
         //Send data
@@ -198,12 +219,29 @@ public class FragmentFriendTab3 extends Fragment {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            JSONObject jsonObject;
                             try {
-                                jsonObject = new JSONObject(response);
-                                String name = jsonObject.getString("fullname");
+                                JSONArray j = new JSONArray(response);
+                                try {
+                                    friendList.clear();
+                                    for (int i = 0; i < j.length(); i++) {
+                                        JSONObject searchResponse = (JSONObject) j.get(i);
 
-                                friendList.get(position).setFriendName(name);
+                                        String userEmail = searchResponse.getString("userEmail");
+                                        String friendEmail = searchResponse.getString("friendEmail");
+                                        String friendType = searchResponse.getString("type");
+                                        String friendName = searchResponse.getString("friendName");
+                                        String profilePicURL = searchResponse.getString("profilePicURL");
+
+                                        Friend friend = new Friend(userEmail, friendEmail, friendType, friendName, profilePicURL);
+                                        friendList.add(friend);
+
+                                    }
+                                    //Load friendList into RecyclerView Adapter
+                                    setRVAdapter(friendList);
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -218,7 +256,8 @@ public class FragmentFriendTab3 extends Fragment {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
-                    params.put("email", userEmail);
+                    params.put("email", email);
+                    params.put("search", searchName);
                     return params;
                 }
 

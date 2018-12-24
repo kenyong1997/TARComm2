@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="14"
-            android:id="@+id/tvSearchFriendName"
+            android:id="@+id/etSearchFriendName"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="15dp"
             android:textSize="22sp"
