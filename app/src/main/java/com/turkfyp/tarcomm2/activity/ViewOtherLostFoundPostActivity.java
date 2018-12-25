@@ -5,13 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -38,45 +35,41 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 public class ViewOtherLostFoundPostActivity extends AppCompatActivity {
-    public static boolean allowRefresh;
+
     protected String email;
-    private static final String TAG = "ViewOtherLostFoundPostActivity";
-
+    protected ExpandableListView elvLostFoundUpload;
+    protected SwipeRefreshLayout swipeRefreshLostFound;
     private static String GET_URL = "https://tarcomm.000webhostapp.com/getLostFoundUserPost.php";
-    SwipeRefreshLayout swipeRefreshLostFound;
-    List<LostFound> lostFoundList;
 
-    ExpandableListView elvLostFoundUpload;
-    LostFoundUploadAdapter lostFoundUploadAdapter;
+    List<LostFound> lostFoundList;
     List<String> listDataHeader;
     HashMap<String, List<LostFound>> listDataChild;
-
+    LostFoundUploadAdapter lostFoundUploadAdapter;
     RequestQueue queue;
     Bitmap bitmap;
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_view_other_lost_found_post);
 
         Bundle extras = getIntent().getExtras();
         email = extras.getString("email");
-        elvLostFoundUpload = (ExpandableListView) findViewById(R.id.elvLostItemUpload);
+
+
+        elvLostFoundUpload = (ExpandableListView) findViewById(R.id.elvOtherLostItemUpload);
         swipeRefreshLostFound = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLostFound);
 
-
         try {
-            //initialize lostFoundList
+            //initialize textBookList
             lostFoundList = new ArrayList<>();
 
             downloadLostFoundRecords(getApplicationContext(), GET_URL);
 
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
         elvLostFoundUpload.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -85,7 +78,7 @@ public class ViewOtherLostFoundPostActivity extends AppCompatActivity {
                 LostFound selectedItem;
                 selectedItem = listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition);
 
-                Intent lostFoundDetail = new Intent(getApplicationContext(),LostFoundDetailActivity.class);
+                Intent lostFoundDetail = new Intent(ViewOtherLostFoundPostActivity.this,LostFoundDetailActivity.class);
                 lostFoundDetail.putExtra("lostCategory",selectedItem.getCategory());
                 lostFoundDetail.putExtra("lostItemName",selectedItem.getLostItemName());
                 lostFoundDetail.putExtra("email",selectedItem.getEmail());
@@ -93,17 +86,18 @@ public class ViewOtherLostFoundPostActivity extends AppCompatActivity {
                 lostFoundDetail.putExtra("lostDate", selectedItem.getLostDate());
                 lostFoundDetail.putExtra("lostItemContactName",selectedItem.getContactName());
                 lostFoundDetail.putExtra("lostItemContactNo",selectedItem.getContactNo());
-                lostFoundDetail.putExtra("checkYourUpload",true);
+                lostFoundDetail.putExtra("checkYourUpload",false);
 
-                convertImage(selectedItem.getLostItemURL());
-                lostFoundDetail.putExtra("LostImage", bitmap);
+                ImageView ivImage = (ImageView) view.findViewById(R.id.imageViewLostItemImage);
+                ivImage.buildDrawingCache();
+                Bitmap image = ivImage.getDrawingCache();
+                lostFoundDetail.putExtra("LostImage", image);
                 lostFoundDetail.putExtra("LostImageURL", selectedItem.getLostItemURL());
 
                 startActivity(lostFoundDetail);
                 return false;
             }
         });
-
 
         swipeRefreshLostFound.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -120,8 +114,11 @@ public class ViewOtherLostFoundPostActivity extends AppCompatActivity {
                 swipeRefreshLostFound.setRefreshing(false);
             }
         });
-
     }
+    public void onBackClicked(View view){
+        finish();
+    }
+    //retrieve the records from database
 
     //retrieve the records from database
     public void downloadLostFoundRecords(Context context, String url) {
@@ -213,53 +210,6 @@ public class ViewOtherLostFoundPostActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (allowRefresh) {
-            allowRefresh = false;
-            if (lostFoundList == null) {
-                lostFoundList = new ArrayList<>();
-                downloadLostFoundRecords(getApplicationContext(), GET_URL);
-            } else {
-                lostFoundUploadAdapter = new LostFoundUploadAdapter(getApplicationContext(),listDataHeader, listDataChild);
-                elvLostFoundUpload.setAdapter(lostFoundUploadAdapter);
-            }
-        }
-    }
-
-
-
-    //Convert Glide Image to bitmap
-    private void convertImage(String imageURL){
-        class ConvertImage extends AsyncTask<String, Void, Bitmap> {
-
-            @Override
-            protected Bitmap doInBackground(String... strings) {
-                String imageURL = strings[0];
-
-                try {
-                    bitmap = Glide.with(getApplicationContext())
-                            .asBitmap()
-                            .load(imageURL)
-                            .submit(200,200)
-                            .get();
-
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                return bitmap;
-            }
-
-            @Override
-            protected void onPostExecute(Bitmap bitmap) {
-                super.onPostExecute(bitmap);
-            }
-        }
-        ConvertImage convertImage = new ConvertImage();
-        convertImage.execute(imageURL);
     }
 
 
@@ -269,4 +219,3 @@ public class ViewOtherLostFoundPostActivity extends AppCompatActivity {
 
 
 
-}
