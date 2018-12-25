@@ -204,6 +204,8 @@ public class FragmentTradingTab4 extends Fragment {
                                     itemUploadAdapter = new ItemUploadAdapter(getActivity(),listDataHeader, listDataChild);
                                     elvItemUpload.setAdapter(itemUploadAdapter);
                                     elvItemUpload.expandGroup(0);
+                                    elvItemUpload.expandGroup(1);
+                                    elvItemUpload.expandGroup(2);
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();

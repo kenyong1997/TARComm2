@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/viewotherpost_layout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.turkfyp.tarcomm2.activity.ViewOtherMarketPostActivity">
+
+    <View
+        android:layout_gravity="top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/guillotine_actionbar_background_view_height"
+        android:background="@color/guillotine_background" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/Toolbar"
+            app:contentInsetStart="0dp">
+
+            <LinearLayout
+                android:layout_width="55dp"
+                android:layout_height="50dp"
+                android:onClick="onBackClicked">
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_back"
+                    android:layout_gravity="center"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="15dp"/>
+            </LinearLayout>
+
+            <com.turkfyp.tarcomm2.widget.CanaroTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Posts"
+                android:textSize="@dimen/guillotine_item_text_size" />
+        </android.support.v7.widget.Toolbar>
+
+
+
+        <!--<android.support.v4.view.ViewPager-->
+        <!--android:id="@+id/vp_trading"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:background="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefreshMarketplace"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ExpandableListView
+                    android:id="@+id/elvItemUpload"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:paddingBottom="10dp"
+                    android:groupIndicator="@drawable/custom_expandable"
+                    android:scrollbars="vertical"/>
+
+            </android.support.v4.widget.SwipeRefreshLayout>
+
+
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</FrameLayout>

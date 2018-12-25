@@ -196,8 +196,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:id="@+id/tvProfileFriend"
-                        android:text="54"
+                        android:id="@+id/tvProfileFriendCount"
                         android:textColor="@android:color/white"
                         android:textSize="25sp" />
 
@@ -206,6 +205,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:text="Friends"
+                        android:lines="2"
                         android:textAllCaps="true"
                         android:textColor="@android:color/white"
                         android:textSize="13sp" />
@@ -228,15 +228,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:onClick="onViewOtherPostClicked"
+                    android:onClick="onViewOtherMarketPostClicked"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:id="@+id/tvProfilePost"
-                        android:text="4"
+                        android:id="@+id/tvProfileMarketPost"
                         android:textColor="@android:color/white"
                         android:textSize="25sp" />
 
@@ -244,12 +243,55 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="Posts"
+                        android:lines="2"
+                        android:text="Marketplace Posts"
+                        android:textAlignment="center"
                         android:textAllCaps="true"
                         android:textColor="@android:color/white"
                         android:textSize="13sp" />
 
                 </LinearLayout>
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="#0000ff"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:onClick="onViewOtherMarketPostClicked"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:id="@+id/tvProfileLostFoundPost"
+                        android:textColor="@android:color/white"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Lost and Found Posts"
+                        android:lines="2"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
 
             </RelativeLayout>
         </LinearLayout>

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ViewOtherPostActivity extends AppCompatActivity {
+public class ViewOtherMarketPostActivity extends AppCompatActivity {
 
     protected String email;
     protected ExpandableListView elvItemUpload;
@@ -48,7 +47,7 @@ public class ViewOtherPostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_other_post);
+        setContentView(R.layout.activity_view_other_market_post);
 
         Bundle extras = getIntent().getExtras();
         email = extras.getString("email");
@@ -74,7 +73,7 @@ public class ViewOtherPostActivity extends AppCompatActivity {
                 Item selectedItem;
                 selectedItem = listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition);
 
-                Intent itemDetailIntent = new Intent(ViewOtherPostActivity.this,MarketplaceDetailActivity.class);
+                Intent itemDetailIntent = new Intent(ViewOtherMarketPostActivity.this,MarketplaceDetailActivity.class);
                 itemDetailIntent.putExtra("itemCategory", selectedItem.getItemCategory());
                 itemDetailIntent.putExtra("itemName",selectedItem.getItemName());
                 itemDetailIntent.putExtra("itemPrice",selectedItem.getItemPrice());
@@ -168,7 +167,7 @@ public class ViewOtherPostActivity extends AppCompatActivity {
                                     listDataChild.put(listDataHeader.get(1), buyItemList);
                                     listDataChild.put(listDataHeader.get(2), tradeItemList);
 
-                                    itemUploadAdapter = new ItemUploadAdapter(ViewOtherPostActivity.this,listDataHeader, listDataChild);
+                                    itemUploadAdapter = new ItemUploadAdapter(ViewOtherMarketPostActivity.this,listDataHeader, listDataChild);
                                     elvItemUpload.setAdapter(itemUploadAdapter);
                                     elvItemUpload.expandGroup(0);
                                     elvItemUpload.expandGroup(1);
@@ -185,13 +184,13 @@ public class ViewOtherPostActivity extends AppCompatActivity {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(ViewOtherPostActivity.this, "Error. " + error.toString(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(ViewOtherMarketPostActivity.this, "Error. " + error.toString(), Toast.LENGTH_LONG).show();
                         }
                     }) {
                 @Override
                 protected Map<String, String> getParams() {
 
-                    SharedPreferences preferences = ViewOtherPostActivity.this.getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
+                    SharedPreferences preferences = ViewOtherMarketPostActivity.this.getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
 
                     Map<String, String> params = new HashMap<>();
                     params.put("email", email);

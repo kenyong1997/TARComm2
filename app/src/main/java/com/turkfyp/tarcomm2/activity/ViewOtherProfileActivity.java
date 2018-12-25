@@ -2,7 +2,6 @@ package com.turkfyp.tarcomm2.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,13 +9,10 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,8 +24,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.turkfyp.tarcomm2.R;
-import com.turkfyp.tarcomm2.guillotine.animation.GuillotineAnimation;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,8 +42,12 @@ public class ViewOtherProfileActivity extends AppCompatActivity {
 
 
     String email,gender,profilePicURL,contactNo,dateofbirth,faculty,biodata,course,name;
-    TextView tvProfileName, tvProfileFaculty, tvProfileCourse, tvProfileEmail, tvProfilePhone,tvProfileBioData;
+    TextView tvProfileName, tvProfileFaculty, tvProfileCourse, tvProfileEmail, tvProfilePhone,tvProfileBioData,tvProfileFriendCount,tvProfileMarketPost, tvProfileLostFoundPost;
     Button btnEditProfile;
+    RequestQueue queue;
+    private static final String TAG = "ViewOtherProfileActivity";
+
+    private static String GET_URL = "https://tarcomm.000webhostapp.com/getTotalPost.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,14 +63,16 @@ public class ViewOtherProfileActivity extends AppCompatActivity {
         tvProfileBioData = (TextView) findViewById(R.id.tvProfileBioData);
         btnEditProfile = (Button) findViewById(R.id.btnEditProfile);
 
-
+        tvProfileFriendCount = (TextView) findViewById(R.id.tvProfileFriendCount);
+        tvProfileMarketPost = (TextView) findViewById(R.id.tvProfileMarketPost);
+        tvProfileLostFoundPost = (TextView) findViewById(R.id.tvProfileLostFoundPost);
 
         Bundle extras = getIntent().getExtras();
         email = extras.getString("email");
 
 
         findUser(this,"https://tarcomm.000webhostapp.com/select_user.php",email);
-
+        countPost(this,"https://tarcomm.000webhostapp.com/getTotalPost.php");
 
 
     }
@@ -80,19 +82,79 @@ public class ViewOtherProfileActivity extends AppCompatActivity {
         finish();
     }
 
-    public void onViewOtherPostClicked(View view){
-        Intent i = new Intent (this,ViewOtherPostActivity.class);
+    public void onViewOtherMarketPostClicked(View view){
+        Intent i = new Intent (this,ViewOtherMarketPostActivity.class);
         i.putExtra("email",email);
         startActivity(i);
     }
 
 
+
+    public void countPost(Context context, String url) {
+        // Instantiate the RequestQueue
+        queue = Volley.newRequestQueue(context);
+
+        try{
+            StringRequest postRequest = new StringRequest(
+                    Request.Method.POST,
+                    url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONArray j = new JSONArray(response);
+                                try {
+
+                                    JSONObject postCountResponse = (JSONObject) j.get(0);
+                                    String lostFoundPostCount = postCountResponse.getString("totalPost");
+                                    tvProfileLostFoundPost.setText(lostFoundPostCount);
+
+                                    postCountResponse = (JSONObject) j.get(1);
+                                    String marketPostCount = postCountResponse.getString("totalPost");
+                                    tvProfileMarketPost.setText(marketPostCount);
+
+                                    postCountResponse = (JSONObject) j.get(2);
+                                    String friendCount = postCountResponse.getString("totalPost");
+                                    tvProfileFriendCount.setText(friendCount);
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            Toast.makeText(getApplicationContext(), "Error: " + volleyError.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }){
+                @Override
+                protected Map<String, String> getParams() {
+
+                    Map<String, String> params = new HashMap<>();
+                    params.put("email", email);
+                    return params;
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("Content-Type", "application/x-www-form-urlencoded");
+                    return params;
+                }
+            };
+            queue.add(postRequest);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public void findUser(Context context, String url, final String userEmail) {
         //mPostCommentResponse.requestStarted();
         RequestQueue queue = Volley.newRequestQueue(context);
-
-
-
 
         //Send data
         try {
