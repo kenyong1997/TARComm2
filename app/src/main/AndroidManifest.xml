@@ -78,7 +78,8 @@
         <activity android:name=".activity.MapEventActivity" />
         <activity android:name=".activity.FriendListActivity" />
         <activity android:name=".activity.PromotionActivity" />
-        <activity android:name=".activity.ViewLostFoundPostActivity"></activity>
+        <activity android:name=".activity.ViewLostFoundPostActivity" />
+        <activity android:name=".activity.ViewOtherLostFoundPostActivity"></activity>
     </application>
 
 </manifest>
