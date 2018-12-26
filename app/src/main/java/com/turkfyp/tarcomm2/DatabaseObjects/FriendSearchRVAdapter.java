@@ -36,6 +36,8 @@ import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.activity.EditLostItemActivity;
 import com.turkfyp.tarcomm2.activity.LostAndFoundActivity;
 import com.turkfyp.tarcomm2.activity.ViewOtherProfileActivity;
+import com.turkfyp.tarcomm2.activity.ViewProfileActivity;
+import com.turkfyp.tarcomm2.activity.FragmentFriendTab3;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,6 +52,7 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
     RequestOptions options;
     private Context mContext ;
     private List<Friend> friendList;
+    FragmentFriendTab3 fragment;
 
     ProgressDialog progressDialog;
 
@@ -78,9 +81,14 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
             @Override
             public void onClick(View view) {
 
-                Intent i = new Intent(mContext,ViewOtherProfileActivity.class);
-                i.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getFriendEmail());
-                mContext.startActivity(i);
+                if(friendList.get(viewHolder.getAdapterPosition()).getType().equals("ownself")){
+                    Intent i = new Intent(mContext,ViewProfileActivity.class);
+                    mContext.startActivity(i);
+                }else{
+                    Intent i = new Intent(mContext,ViewOtherProfileActivity.class);
+                    i.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getFriendEmail());
+                    mContext.startActivity(i);
+                }
             }
         });
 
@@ -88,6 +96,9 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
             @Override
             public void onClick(View v) {
                 updateFriendRequest(mContext,ADD_URL,friendList.get(viewHolder.getAdapterPosition()));
+                //fragment.downloadFriendRecords(fragment.getContext(),"https://tarcomm.000webhostapp.com/getAllUser.php");
+
+
             }
         });
 
@@ -95,6 +106,7 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
             @Override
             public void onClick(View v) {
                 updateFriendRequest(mContext,UPDATE_URL,friendList.get(viewHolder.getAdapterPosition()));
+                notifyDataSetChanged();
             }
         });
 
@@ -112,7 +124,6 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
                         dialogInterface.cancel();
 
                         updateFriendRequest(mContext,CANCEL_URL,friendList.get(viewHolder.getAdapterPosition()));
-
                     }
                 });
 
@@ -125,6 +136,7 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
 
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
+
             }
         });
 
@@ -142,7 +154,6 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
                         dialogInterface.cancel();
 
                         updateFriendRequest(mContext,DELETE_URL,friendList.get(viewHolder.getAdapterPosition()));
-
                     }
                 });
 
@@ -182,6 +193,13 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
         }
          else if (friendList.get(position).getType().equals("friend")) {
             holder.tvFriend.setVisibility(View.VISIBLE);
+            holder.btnAddFriend.setVisibility(View.INVISIBLE);
+            holder.btnCancelRequest.setVisibility(View.INVISIBLE);
+            holder.btnConfirmFriend.setVisibility(View.INVISIBLE);
+            holder.ivDeleteRequest.setVisibility(View.INVISIBLE);
+        }
+        else if (friendList.get(position).getType().equals("ownself")) {
+            holder.tvFriend.setVisibility(View.INVISIBLE);
             holder.btnAddFriend.setVisibility(View.INVISIBLE);
             holder.btnCancelRequest.setVisibility(View.INVISIBLE);
             holder.btnConfirmFriend.setVisibility(View.INVISIBLE);

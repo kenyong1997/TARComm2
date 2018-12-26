@@ -50,61 +50,28 @@
         <!--android:id="@+id/vp_trading"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent" />-->
+
+
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:background="@android:color/white"
             android:layout_width="match_parent"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="15"
-                android:id="@+id/relativeLayout1">
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="14"
-                    android:id="@+id/etSearchFriendName"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="15dp"
-                    android:textSize="22sp"
-                    android:fontFamily="sans-serif-light"
-                    android:hint="Search" />
-
-                <ImageView
-                    android:id="@+id/buttonSearch"
-                    android:layout_width="20dp"
-                    android:layout_height="35dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_gravity="center"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="3dp"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_search" />
-
-            </LinearLayout>
-
 
             <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/swipeRefreshFriends"
+                android:id="@+id/swipeRefreshLostFound"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/relativeLayout1">
+                android:layout_height="match_parent">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rvFriendSearch"
-                    android:layout_width="match_parent"
+                <ExpandableListView
+                    android:id="@+id/elvOtherLostItemUpload"
                     android:layout_height="match_parent"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="7dp"
-                    android:paddingRight="10dp">
-
-                </android.support.v7.widget.RecyclerView>
+                    android:layout_width="match_parent"
+                    android:paddingBottom="10dp"
+                    android:groupIndicator="@drawable/custom_expandable"
+                    android:scrollbars="vertical"/>
 
             </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -112,6 +79,7 @@
 
 
         </RelativeLayout>
+
 
     </LinearLayout>
 </FrameLayout>

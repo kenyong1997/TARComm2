@@ -102,6 +102,7 @@ public class FragmentFriendTab3 extends Fragment {
                 String search = etSearchFriendName.getText().toString();
 
                 findUser(getActivity().getApplicationContext(), GET_SEARCH_URL, search);
+
             }
         });
 

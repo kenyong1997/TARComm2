@@ -93,7 +93,7 @@ public class ViewOtherProfileActivity extends AppCompatActivity {
         startActivity(i);
     }
     public void onViewOtherFriendClicked(View view){
-        Intent i = new Intent (this,ViewOtherLostFoundPostActivity.class);
+        Intent i = new Intent (this,ViewOtherFriendActivity.class);
         i.putExtra("email",email);
         startActivity(i);
     }

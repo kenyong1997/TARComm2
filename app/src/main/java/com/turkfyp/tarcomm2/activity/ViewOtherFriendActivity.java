@@ -136,8 +136,11 @@ public class ViewOtherFriendActivity extends AppCompatActivity {
                                         String friendName = eventResponse.getString("friendName");
                                         String profilePicURL = eventResponse.getString("profilePicURL");
 
-                                        if(friendType == null){
-                                            friendType = "self";
+                                        if(friendType == "null"){
+                                            if(friendEmail.equals(email))
+                                                friendType = "ownself";
+                                            else
+                                                friendType = "self";
                                         }
                                         Friend friend = new Friend(userEmail, friendEmail, friendType, friendName, profilePicURL);
                                         friendList.add(friend);
@@ -183,8 +186,8 @@ public class ViewOtherFriendActivity extends AppCompatActivity {
     }
 
     private void setRVAdapter(List<Friend> friendList){
-        FriendSearchRVAdapter myAdapter = new FriendSearchRVAdapter(getApplicationContext(),friendList) ;
-        rvFriendSearch.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        FriendSearchRVAdapter myAdapter = new FriendSearchRVAdapter(ViewOtherFriendActivity.this,friendList) ;
+        rvFriendSearch.setLayoutManager(new LinearLayoutManager(ViewOtherFriendActivity.this));
         rvFriendSearch.setAdapter(myAdapter);
     }
     public void onBackClicked(View view){
