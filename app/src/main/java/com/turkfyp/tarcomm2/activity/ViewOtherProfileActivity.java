@@ -92,7 +92,11 @@ public class ViewOtherProfileActivity extends AppCompatActivity {
         i.putExtra("email",email);
         startActivity(i);
     }
-
+    public void onViewOtherFriendClicked(View view){
+        Intent i = new Intent (this,ViewOtherLostFoundPostActivity.class);
+        i.putExtra("email",email);
+        startActivity(i);
+    }
 
     public void countPost(Context context, String url) {
         // Instantiate the RequestQueue

@@ -79,7 +79,8 @@
         <activity android:name=".activity.FriendListActivity" />
         <activity android:name=".activity.PromotionActivity" />
         <activity android:name=".activity.ViewLostFoundPostActivity" />
-        <activity android:name=".activity.ViewOtherLostFoundPostActivity"></activity>
+        <activity android:name=".activity.ViewOtherLostFoundPostActivity" />
+        <activity android:name=".activity.ViewOtherFriendActivity"></activity>
     </application>
 
 </manifest>
