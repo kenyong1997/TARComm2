@@ -136,6 +136,9 @@ public class ViewOtherFriendActivity extends AppCompatActivity {
                                         String friendName = eventResponse.getString("friendName");
                                         String profilePicURL = eventResponse.getString("profilePicURL");
 
+                                        if(friendType == null){
+                                            friendType = "self";
+                                        }
                                         Friend friend = new Friend(userEmail, friendEmail, friendType, friendName, profilePicURL);
                                         friendList.add(friend);
 
@@ -187,6 +190,7 @@ public class ViewOtherFriendActivity extends AppCompatActivity {
     public void onBackClicked(View view){
         finish();
     }
+
     public void findUser(final Context context, String url, final String searchName) {
         SharedPreferences preferences = getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
         final String email = preferences.getString("email", "");
