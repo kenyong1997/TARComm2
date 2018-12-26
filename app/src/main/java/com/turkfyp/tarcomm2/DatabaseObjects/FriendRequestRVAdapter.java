@@ -30,6 +30,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.activity.EditLostItemActivity;
+import com.turkfyp.tarcomm2.activity.FriendListActivity;
 import com.turkfyp.tarcomm2.activity.LostAndFoundActivity;
 import com.turkfyp.tarcomm2.activity.ViewOtherProfileActivity;
 
@@ -85,6 +86,9 @@ public class FriendRequestRVAdapter extends RecyclerView.Adapter<FriendRequestRV
             public void onClick(View v) {
                 try{
                     updateFriendRequest(mContext,"https://tarcomm.000webhostapp.com/acceptFriendRequest.php",friendList.get(viewHolder.getAdapterPosition()));
+                    Intent intent = new Intent(mContext,FriendListActivity.class);
+                    mContext.startActivity(intent);
+                    
                 } catch (Exception e){
                     Toast.makeText(mContext , "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
@@ -95,6 +99,8 @@ public class FriendRequestRVAdapter extends RecyclerView.Adapter<FriendRequestRV
             @Override
             public void onClick(View v) {
                 updateFriendRequest(mContext,"https://tarcomm.000webhostapp.com/deleteFriendRequest.php",friendList.get(viewHolder.getAdapterPosition()));
+                Intent intent = new Intent(mContext,FriendListActivity.class);
+                mContext.startActivity(intent);
             }
         });
 

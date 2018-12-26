@@ -34,6 +34,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.activity.EditLostItemActivity;
+import com.turkfyp.tarcomm2.activity.FriendListActivity;
 import com.turkfyp.tarcomm2.activity.LostAndFoundActivity;
 import com.turkfyp.tarcomm2.activity.ViewOtherProfileActivity;
 import com.turkfyp.tarcomm2.activity.ViewProfileActivity;
@@ -84,6 +85,7 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
                 if(friendList.get(viewHolder.getAdapterPosition()).getType().equals("ownself")){
                     Intent i = new Intent(mContext,ViewProfileActivity.class);
                     mContext.startActivity(i);
+
                 }else{
                     Intent i = new Intent(mContext,ViewOtherProfileActivity.class);
                     i.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getFriendEmail());
@@ -96,8 +98,8 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
             @Override
             public void onClick(View v) {
                 updateFriendRequest(mContext,ADD_URL,friendList.get(viewHolder.getAdapterPosition()));
-                //fragment.downloadFriendRecords(fragment.getContext(),"https://tarcomm.000webhostapp.com/getAllUser.php");
-
+                Intent i = new Intent(mContext,FriendListActivity.class);
+                mContext.startActivity(i);
 
             }
         });
@@ -106,7 +108,8 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
             @Override
             public void onClick(View v) {
                 updateFriendRequest(mContext,UPDATE_URL,friendList.get(viewHolder.getAdapterPosition()));
-                notifyDataSetChanged();
+                Intent i = new Intent(mContext,FriendListActivity.class);
+                mContext.startActivity(i);
             }
         });
 
@@ -124,6 +127,9 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
                         dialogInterface.cancel();
 
                         updateFriendRequest(mContext,CANCEL_URL,friendList.get(viewHolder.getAdapterPosition()));
+                        Intent intent = new Intent(mContext,FriendListActivity.class);
+                        mContext.startActivity(intent);
+
                     }
                 });
 
@@ -154,6 +160,8 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
                         dialogInterface.cancel();
 
                         updateFriendRequest(mContext,DELETE_URL,friendList.get(viewHolder.getAdapterPosition()));
+                        Intent intent = new Intent(mContext,FriendListActivity.class);
+                        mContext.startActivity(intent);
                     }
                 });
 
