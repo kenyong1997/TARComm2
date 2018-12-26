@@ -21,6 +21,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.turkfyp.tarcomm2.DatabaseObjects.Friend;
 import com.turkfyp.tarcomm2.DatabaseObjects.FriendSearchRVAdapter;
+import com.turkfyp.tarcomm2.DatabaseObjects.OtherFriendSearchRVAdapter;
 import com.turkfyp.tarcomm2.R;
 
 import org.json.JSONArray;
@@ -186,7 +187,7 @@ public class ViewOtherFriendActivity extends AppCompatActivity {
     }
 
     private void setRVAdapter(List<Friend> friendList){
-        FriendSearchRVAdapter myAdapter = new FriendSearchRVAdapter(ViewOtherFriendActivity.this,friendList) ;
+        OtherFriendSearchRVAdapter myAdapter = new OtherFriendSearchRVAdapter(ViewOtherFriendActivity.this,friendList,friendEmail) ;
         rvFriendSearch.setLayoutManager(new LinearLayoutManager(ViewOtherFriendActivity.this));
         rvFriendSearch.setAdapter(myAdapter);
     }
@@ -247,6 +248,7 @@ public class ViewOtherFriendActivity extends AppCompatActivity {
                     Map<String, String> params = new HashMap<>();
                     params.put("email", email);
                     params.put("search", searchName);
+                    params.put("friendEmail",friendEmail);
                     return params;
                 }
 

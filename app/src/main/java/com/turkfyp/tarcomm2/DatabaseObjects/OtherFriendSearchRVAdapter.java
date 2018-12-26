@@ -34,7 +34,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.activity.EditLostItemActivity;
-import com.turkfyp.tarcomm2.activity.FriendListActivity;
 import com.turkfyp.tarcomm2.activity.LostAndFoundActivity;
 import com.turkfyp.tarcomm2.activity.ViewOtherProfileActivity;
 import com.turkfyp.tarcomm2.activity.ViewProfileActivity;
@@ -43,7 +42,7 @@ import com.turkfyp.tarcomm2.activity.ViewOtherFriendActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAdapter.MyViewHolder> {
+public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriendSearchRVAdapter.MyViewHolder> {
 
     private static String ADD_URL = "https://tarcomm.000webhostapp.com/sendFriendRequest.php";
     private static String UPDATE_URL = "https://tarcomm.000webhostapp.com/acceptFriendRequest.php";
@@ -57,7 +56,7 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
 
     ProgressDialog progressDialog;
 
-    public FriendSearchRVAdapter(Context mContext, List friendList) {
+    public OtherFriendSearchRVAdapter(Context mContext, List friendList, String friendEmail) {
         this.mContext = mContext;
         this.friendList = friendList;
 
@@ -77,13 +76,14 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
         view = mInflater.inflate(R.layout.friend_search_records, parent, false);
 
         //OnClick Listener for RecyclerView
-        final FriendSearchRVAdapter.MyViewHolder viewHolder = new FriendSearchRVAdapter.MyViewHolder(view);
+        final OtherFriendSearchRVAdapter.MyViewHolder viewHolder = new OtherFriendSearchRVAdapter.MyViewHolder(view);
         viewHolder.friendSearchRecords_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if(friendList.get(viewHolder.getAdapterPosition()).getType().equals("ownself")){
                     Intent i = new Intent(mContext,ViewProfileActivity.class);
+
                     mContext.startActivity(i);
 
                 }else{
@@ -101,8 +101,8 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
 
                 try {
                     Thread.sleep(500);
-                    Intent intent = new Intent(mContext,FriendListActivity.class);
-                    intent.putExtra("tabnumber",2);
+                    Intent intent = new Intent(mContext,ViewOtherFriendActivity.class);
+                    intent.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getUserEmail());
                     mContext.startActivity(intent);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -118,8 +118,8 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
 
                 try {
                     Thread.sleep(500);
-                    Intent intent = new Intent(mContext,FriendListActivity.class);
-                    intent.putExtra("tabnumber",2);
+                    Intent intent = new Intent(mContext,ViewOtherFriendActivity.class);
+                    intent.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getUserEmail());
                     mContext.startActivity(intent);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -144,8 +144,8 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
 
                         try {
                             Thread.sleep(500);
-                            Intent intent = new Intent(mContext,FriendListActivity.class);
-                            intent.putExtra("tabnumber",2);
+                            Intent intent = new Intent(mContext,ViewOtherFriendActivity.class);
+                            intent.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getUserEmail());
                             mContext.startActivity(intent);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -184,8 +184,8 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
 
                         try {
                             Thread.sleep(500);
-                            Intent intent = new Intent(mContext,FriendListActivity.class);
-                            intent.putExtra("tabnumber",2);
+                            Intent intent = new Intent(mContext,ViewOtherFriendActivity.class);
+                            intent.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getUserEmail());
                             mContext.startActivity(intent);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -228,7 +228,7 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
             holder.btnConfirmFriend.setVisibility(View.VISIBLE);
             holder.ivDeleteRequest.setVisibility(View.VISIBLE);
         }
-         else if (friendList.get(position).getType().equals("friend")) {
+        else if (friendList.get(position).getType().equals("friend")) {
             holder.tvFriend.setVisibility(View.VISIBLE);
             holder.btnAddFriend.setVisibility(View.INVISIBLE);
             holder.btnCancelRequest.setVisibility(View.INVISIBLE);
