@@ -40,7 +40,7 @@ public class ViewOtherFriendActivity extends AppCompatActivity {
     private static final String TAG = "ViewOtherFriendActivity";
 
     private static String GET_URL = "https://tarcomm.000webhostapp.com/getOtherFriend.php";
-    private static String GET_SEARCH_URL = "https://tarcomm.000webhostapp.com/getSearchUser.php";
+    private static String GET_SEARCH_URL = "https://tarcomm.000webhostapp.com/getSearchOtherFriend.php";
 
     SwipeRefreshLayout swipeRefreshFriends;
     List<Friend> friendList;

@@ -53,7 +53,7 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
     RequestOptions options;
     private Context mContext ;
     private List<Friend> friendList;
-    FragmentFriendTab3 fragment;
+
 
     ProgressDialog progressDialog;
 
@@ -98,8 +98,15 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
             @Override
             public void onClick(View v) {
                 updateFriendRequest(mContext,ADD_URL,friendList.get(viewHolder.getAdapterPosition()));
-                Intent i = new Intent(mContext,FriendListActivity.class);
-                mContext.startActivity(i);
+
+                try {
+                    Thread.sleep(500);
+                    Intent intent = new Intent(mContext,FriendListActivity.class);
+                    intent.putExtra("tabnumber",2);
+                    mContext.startActivity(intent);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -108,8 +115,15 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
             @Override
             public void onClick(View v) {
                 updateFriendRequest(mContext,UPDATE_URL,friendList.get(viewHolder.getAdapterPosition()));
-                Intent i = new Intent(mContext,FriendListActivity.class);
-                mContext.startActivity(i);
+
+                try {
+                    Thread.sleep(500);
+                    Intent intent = new Intent(mContext,FriendListActivity.class);
+                    intent.putExtra("tabnumber",2);
+                    mContext.startActivity(intent);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -127,8 +141,15 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
                         dialogInterface.cancel();
 
                         updateFriendRequest(mContext,CANCEL_URL,friendList.get(viewHolder.getAdapterPosition()));
-                        Intent intent = new Intent(mContext,FriendListActivity.class);
-                        mContext.startActivity(intent);
+
+                        try {
+                            Thread.sleep(500);
+                            Intent intent = new Intent(mContext,FriendListActivity.class);
+                            intent.putExtra("tabnumber",2);
+                            mContext.startActivity(intent);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
 
                     }
                 });
@@ -160,8 +181,16 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
                         dialogInterface.cancel();
 
                         updateFriendRequest(mContext,DELETE_URL,friendList.get(viewHolder.getAdapterPosition()));
-                        Intent intent = new Intent(mContext,FriendListActivity.class);
-                        mContext.startActivity(intent);
+
+                        try {
+                            Thread.sleep(500);
+                            Intent intent = new Intent(mContext,FriendListActivity.class);
+                            intent.putExtra("tabnumber",2);
+                            mContext.startActivity(intent);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 });
 

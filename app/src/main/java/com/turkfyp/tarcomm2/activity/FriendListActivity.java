@@ -1,5 +1,6 @@
 package com.turkfyp.tarcomm2.activity;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -15,12 +16,14 @@ import com.turkfyp.tarcomm2.R;
 public class FriendListActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
-
+    int tabNumber =0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_list);
 
+        Bundle extras = getIntent().getExtras();
+        tabNumber = extras.getInt("tabnumber");
         //Tab Fragment
         tabLayout = (TabLayout) findViewById(R.id.tab_friendlist);
 
@@ -30,7 +33,20 @@ public class FriendListActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Search"));
 
         //replace default fragment
-        replaceFragment(new FragmentFriendTab1());
+
+
+        if(tabNumber==0) {
+            TabLayout.Tab tab = tabLayout.getTabAt(tabNumber);
+            tab.select();
+            replaceFragment(new FragmentFriendTab1());
+        }
+        else if(tabNumber==2){
+            TabLayout.Tab tab = tabLayout.getTabAt(tabNumber);
+            tab.select();
+            replaceFragment(new FragmentFriendTab3());
+        }
+
+
 
 
         //handling tab click event
@@ -60,7 +76,8 @@ public class FriendListActivity extends AppCompatActivity {
 
     }
     public void onBackClicked(View view){
-        finish();
+        Intent i = new Intent (this,MainActivity.class);
+        startActivity(i);
     }
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();

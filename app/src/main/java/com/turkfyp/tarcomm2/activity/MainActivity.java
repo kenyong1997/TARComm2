@@ -473,6 +473,7 @@ public class MainActivity extends AppCompatActivity {
     public void friend_list_onclick(View view){
         animation.opened=false;
         Intent i = new Intent (this,FriendListActivity.class);
+        i.putExtra("tabnumber",0);
         startActivity(i);
         animation.close();
     }
