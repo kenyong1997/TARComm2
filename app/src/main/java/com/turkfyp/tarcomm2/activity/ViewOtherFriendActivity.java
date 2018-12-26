@@ -113,6 +113,7 @@ public class ViewOtherFriendActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
         final String email = preferences.getString("email", "");
 
+
         RequestQueue queue = Volley.newRequestQueue(context);
 
         //Send data
