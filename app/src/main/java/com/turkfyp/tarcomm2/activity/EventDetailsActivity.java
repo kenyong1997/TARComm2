@@ -2,10 +2,7 @@ package com.turkfyp.tarcomm2.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
@@ -15,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.R;
 
@@ -25,7 +21,6 @@ public class EventDetailsActivity extends AppCompatActivity {
     protected String eventName, eventDate, eventDesc, eventVenue,eventEndDate;
     public static String EVENT_VENUE_LOCATION="" ;
     public static boolean DIRECT_TO_EVENT=false;
-
 
     int eventID;
     RequestOptions options;
@@ -42,8 +37,6 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         //No Activity Title
         getSupportActionBar().setTitle(null);
-
-
 
 
         //Link code to UI

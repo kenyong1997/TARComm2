@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
@@ -77,10 +75,6 @@ public class EditUploadItemActivity extends AppCompatActivity {
         imgViewEditMarketItem = (ImageView) findViewById(R.id.imgViewEditMarketItem);
         tvEditItemPrice = (TextView) findViewById(R.id.tvEditItemPrice);
 
-
-        //put on click
-        //rbEditItemCategory = (RadioButton) findViewById(rgItemCategory.getCheckedRadioButtonId());
-
         //get the extras and values
         Bundle extras = getIntent().getExtras();
         itemSeller = extras.getString("itemSeller");
@@ -105,7 +99,6 @@ public class EditUploadItemActivity extends AppCompatActivity {
         Glide.with(getApplicationContext()).load(imageURL).apply(options).into(imgViewEditMarketItem);
 
         convertImage(imageURL);
-        //bitmap = extras.getParcelable("Image");
 
         //set text on edittext
         etEditItemName.setText(itemName);
@@ -143,7 +136,6 @@ public class EditUploadItemActivity extends AppCompatActivity {
                 showFileChooser();
             }
         });
-
     }
 
     public void onSaveEditUploadItemClicked(View view){
@@ -191,8 +183,6 @@ public class EditUploadItemActivity extends AppCompatActivity {
             item.setSellerContact(preferences.getString("contactNo", ""));
             item.setImageURL(newImgURL);
 
-
-
             progressDialog = new ProgressDialog(this);
             try {
                 makeServiceCall(getApplicationContext(), "https://tarcomm.000webhostapp.com/updateItem.php", item);
@@ -211,8 +201,6 @@ public class EditUploadItemActivity extends AppCompatActivity {
     public void onBackClicked(View view){
         finish();
     }
-
-
 
     private void showFileChooser() {
         Intent intent = new Intent();

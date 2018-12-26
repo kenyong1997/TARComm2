@@ -5,27 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -40,16 +32,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.DatabaseObjects.User;
 import com.turkfyp.tarcomm2.R;
-import com.turkfyp.tarcomm2.guillotine.animation.GuillotineAnimation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -98,15 +86,8 @@ public class EditProfileActivity extends AppCompatActivity {
         Glide.with(getApplicationContext()).load(imageURL).apply(options).into(imgViewEditProfilePic);
 
         convertImage(imageURL);
-        //Get bitmap from intent
-        //bitmap = getIntent().getExtras().getParcelable("image");
-
-//        convertImage(imageURL);
-
-
 
         //------------------------Activity Codes
-
         etEditName = (EditText)findViewById(R.id.etEditName);
         etEditContactNo=(EditText)findViewById(R.id.etEditContactNo);
         etEditCourse=(EditText)findViewById(R.id.etEditCourse);
@@ -248,6 +229,7 @@ public class EditProfileActivity extends AppCompatActivity {
     public void onBackClicked(View view){
         finish();
     }
+
     public boolean isValidContact(String string) {
         String PATTERN;
 
@@ -374,35 +356,6 @@ public class EditProfileActivity extends AppCompatActivity {
         Intent i = new Intent (this,LoginActivity.class);
         startActivity(i);
     }
-
-    //Side Menu Navigation
-    public void highlight_event_onclick(View view){
-        Intent i = new Intent (this,MainActivity.class);
-        startActivity(i);
-    }
-    public void event_onclick(View view){
-        Intent i = new Intent (this,EventActivity.class);
-        startActivity(i);
-    }
-    public void market_onclick(View view){
-        Intent i = new Intent (this,MarketplaceActivity.class);
-        startActivity(i);
-    }
-    public void lost_and_found_onclick(View view){
-        Intent i = new Intent (this,LostAndFoundActivity.class);
-        startActivity(i);
-    }
-    public void map_onclick(View view){
-        Intent i = new Intent (this,MapActivity.class);
-        startActivity(i);
-    }
-    public void view_profile_onclick(View view){
-        Intent i = new Intent (this,ViewProfileActivity.class);
-        startActivity(i);
-    }
-    //End Side Menu Navigation
-
-
 
     public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

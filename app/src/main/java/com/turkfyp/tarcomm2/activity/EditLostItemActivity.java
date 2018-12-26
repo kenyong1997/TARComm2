@@ -5,30 +5,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -41,29 +31,19 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.turkfyp.tarcomm2.DatabaseObjects.Item;
 import com.turkfyp.tarcomm2.DatabaseObjects.LostFound;
-import com.turkfyp.tarcomm2.DatabaseObjects.User;
 import com.turkfyp.tarcomm2.R;
-import com.turkfyp.tarcomm2.guillotine.animation.GuillotineAnimation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditLostItemActivity extends AppCompatActivity {
     private int PICK_IMAGE_REQUEST = 1;
@@ -71,7 +51,6 @@ public class EditLostItemActivity extends AppCompatActivity {
     private Uri filePath;
 
     ProgressDialog progressDialog;
-
 
     protected ImageView ivEditLostFoundItem;
     protected int lostID;
@@ -94,9 +73,6 @@ public class EditLostItemActivity extends AppCompatActivity {
         ivEditLostFoundItem = (ImageView) findViewById(R.id.ivEditLostFoundItem);
         dpEditLostFoundDate = (DatePicker) findViewById(R.id.dpEditLostFoundDate);
 
-        //put on click
-        //rbEditItemCategory = (RadioButton) findViewById(rgItemCategory.getCheckedRadioButtonId());
-
         //get the extras and values
         Bundle extras = getIntent().getExtras();
         ownerContact= extras.getString("lostItemContactNo");
@@ -118,7 +94,6 @@ public class EditLostItemActivity extends AppCompatActivity {
         Glide.with(getApplicationContext()).load(imageURL).apply(options).into(ivEditLostFoundItem);
 
         convertImage(imageURL);
-        //bitmap = image;
 
         lostID = Integer.parseInt(imageURL.split("=")[1]);
 
@@ -147,65 +122,6 @@ public class EditLostItemActivity extends AppCompatActivity {
                 showFileChooser();
             }
         });
-
-//        btnEditLostFound.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                //Get Updated Radio Button Value
-//                rbEditLostItemCategory = (RadioButton) findViewById(rgEditLostCategory.getCheckedRadioButtonId());
-//
-//                String lostItemName = etEditLostFoundItemName.getText().toString();
-//                String lostItemDesc = etEditLostFoundItemDesc.getText().toString();
-//                String lostItemCategory = rbEditLostItemCategory.getText().toString();
-//
-//
-//
-//                int dpDay = dpEditLostFoundDate.getDayOfMonth();
-//                int dpMonth = dpEditLostFoundDate.getMonth();
-//                int dpYear = dpEditLostFoundDate.getYear();
-//                SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-//                Calendar d = Calendar.getInstance();
-//                d.set(dpYear, dpMonth, dpDay);
-//                String strDate = dateFormatter.format(d.getTime());
-//
-//
-//
-//                SharedPreferences preferences = getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
-//
-//                if(TextUtils.isEmpty(lostItemName))
-//                    etEditLostFoundItemName.setError("This field is required.");
-//                if(TextUtils.isEmpty(lostItemDesc))
-//                    etEditLostFoundItemDesc.setError("This field is required.");
-//
-//
-//
-//                if(!TextUtils.isEmpty(lostItemName) && !TextUtils.isEmpty(lostItemDesc)) {
-//                    LostFound lostFoundItem = new LostFound();
-//                    lostFoundItem.setContactName(itemOwner);
-//                    lostFoundItem.setCategory(lostItemCategory);
-//                    lostFoundItem.setContactNo(ownerContact);
-//                    lostFoundItem.setLostDate(strDate);
-//                    lostFoundItem.setLostItemDesc(lostItemDesc);
-//                    lostFoundItem.setLostItemName(lostItemName);
-//                    lostFoundItem.setEmail(preferences.getString("email", ""));
-//                    uploadImage(lostFoundItem);
-//
-//
-//
-//                    progressDialog = new ProgressDialog(getApplicationContext());
-//                    try {
-//                        makeServiceCall(getApplicationContext(), "https://tarcomm.000webhostapp.com/createItem.php", lostFoundItem);
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                        Toast.makeText(getApplicationContext() , "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-//                    }
-//
-//                }
-//            }
-//        });
-//
-
     }
 
     public void onSaveEditLostItemClicked(View view){
@@ -216,8 +132,6 @@ public class EditLostItemActivity extends AppCompatActivity {
         String lostItemDesc = etEditLostFoundItemDesc.getText().toString();
         String lostItemCategory = rbEditLostItemCategory.getText().toString();
 
-
-
         int dpDay = dpEditLostFoundDate.getDayOfMonth();
         int dpMonth = dpEditLostFoundDate.getMonth();
         int dpYear = dpEditLostFoundDate.getYear();
@@ -226,16 +140,12 @@ public class EditLostItemActivity extends AppCompatActivity {
         d.set(dpYear, dpMonth, dpDay);
         String strDate = dateFormatter.format(d.getTime());
 
-
-
         SharedPreferences preferences = getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
 
         if(TextUtils.isEmpty(lostItemName))
             etEditLostFoundItemName.setError("This field is required.");
         if(TextUtils.isEmpty(lostItemDesc))
             etEditLostFoundItemDesc.setError("This field is required.");
-
-
 
         if(!TextUtils.isEmpty(lostItemName) && !TextUtils.isEmpty(lostItemDesc)) {
             LostFound lostFoundItem = new LostFound();
@@ -249,7 +159,6 @@ public class EditLostItemActivity extends AppCompatActivity {
             uploadImage(lostFoundItem);
 
 
-
             progressDialog = new ProgressDialog(this);
             try {
                 makeServiceCall(getApplicationContext(), "https://tarcomm.000webhostapp.com/updateLostFoundItem.php", lostFoundItem);
@@ -259,7 +168,6 @@ public class EditLostItemActivity extends AppCompatActivity {
             }
         }
     }
-
 
     public void onImgEditProfileClicked(View view){
         showFileChooser();
@@ -274,9 +182,6 @@ public class EditLostItemActivity extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
-
-
-
 
     public void makeServiceCall(Context context, String url, final LostFound lostFound) {
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -358,11 +263,6 @@ public class EditLostItemActivity extends AppCompatActivity {
         }
     }
 
-
-
-
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -408,6 +308,7 @@ public class EditLostItemActivity extends AppCompatActivity {
 
         return lostFound;
     }
+
     private void convertImage(String imageURL){
         class ConvertImage extends AsyncTask<String, Void, Bitmap> {
 
@@ -438,7 +339,6 @@ public class EditLostItemActivity extends AppCompatActivity {
         ConvertImage convertImage = new ConvertImage();
         convertImage.execute(imageURL);
     }
-
 }
 
 

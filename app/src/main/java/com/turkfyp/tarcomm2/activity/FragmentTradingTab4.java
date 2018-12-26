@@ -14,8 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -79,9 +77,6 @@ public class FragmentTradingTab4 extends Fragment {
 
 
         elvItemUpload = (ExpandableListView) v.findViewById(R.id.elvItemUpload);
-
-        //collapse group on default not working due to null pointer exception
-        //elvItemUpload.collapseGroup(0);
 
         swipeRefreshMarketplace = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefreshMarketplace);
         FloatingActionButton fabAddMarketItem = (FloatingActionButton)v.findViewById(R.id.addMarketItemFAB);

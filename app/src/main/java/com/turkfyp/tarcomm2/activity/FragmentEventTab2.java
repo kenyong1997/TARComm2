@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.turkfyp.tarcomm2.DatabaseObjects.Event;
+
 public class FragmentEventTab2 extends android.support.v4.app.Fragment{
 
     public static boolean allowRefresh;

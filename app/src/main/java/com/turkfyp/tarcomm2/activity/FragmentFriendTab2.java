@@ -20,7 +20,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.turkfyp.tarcomm2.DatabaseObjects.Friend;
-import com.turkfyp.tarcomm2.DatabaseObjects.FriendRVAdapter;
 import com.turkfyp.tarcomm2.DatabaseObjects.FriendRequestRVAdapter;
 import com.turkfyp.tarcomm2.R;
 
