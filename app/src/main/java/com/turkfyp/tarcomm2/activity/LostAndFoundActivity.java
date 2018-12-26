@@ -77,7 +77,8 @@ public class LostAndFoundActivity extends AppCompatActivity {
 
     }
     public void onBackClicked(View view){
-        finish();
+        Intent i = new Intent (this,MainActivity.class);
+        startActivity(i);
     }
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();

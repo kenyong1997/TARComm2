@@ -2,6 +2,7 @@ package com.turkfyp.tarcomm2.DatabaseObjects;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,8 @@ import com.turkfyp.tarcomm2.activity.LostFoundDetailActivity;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class LostFoundRVAdapter extends RecyclerView.Adapter<LostFoundRVAdapter.MyViewHolder> {
 
@@ -61,7 +64,14 @@ public class LostFoundRVAdapter extends RecyclerView.Adapter<LostFoundRVAdapter.
                 lostFoundDetailIntent.putExtra("lostDate", lostFoundList.get(viewHolder.getAdapterPosition()).getLostDate());
                 lostFoundDetailIntent.putExtra("lostItemContactName",lostFoundList.get(viewHolder.getAdapterPosition()).getContactName());
                 lostFoundDetailIntent.putExtra("lostItemContactNo",lostFoundList.get(viewHolder.getAdapterPosition()).getContactNo());
-                lostFoundDetailIntent.putExtra("checkYourUpload",false);
+                lostFoundDetailIntent.putExtra("itemCategory",lostFoundList.get(viewHolder.getAdapterPosition()).getCategory());
+
+                SharedPreferences preferences = mContext.getSharedPreferences("tarcommUser", MODE_PRIVATE);
+                String email = preferences.getString("email", "");
+                if(lostFoundList.get(viewHolder.getAdapterPosition()).getEmail().equals(email))
+                    lostFoundDetailIntent.putExtra("checkYourUpload",true);
+                else
+                    lostFoundDetailIntent.putExtra("checkYourUpload",false);
 
                 convertImage(lostFoundList.get(viewHolder.getAdapterPosition()).getLostItemURL());
                 lostFoundDetailIntent.putExtra("LostImage", bitmap);

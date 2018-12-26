@@ -2,6 +2,7 @@ package com.turkfyp.tarcomm2.DatabaseObjects;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v4.content.MimeTypeFilter;
@@ -22,6 +23,8 @@ import com.turkfyp.tarcomm2.activity.MarketplaceDetailActivity;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.MyViewHolder> {
 
@@ -85,11 +88,19 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.MyViewHold
                 itemDetailIntent.putExtra("itemSeller",itemList.get(viewHolder.getAdapterPosition()).getSellerName());
                 itemDetailIntent.putExtra("sellerContact",itemList.get(viewHolder.getAdapterPosition()).getSellerContact());
                 itemDetailIntent.putExtra("email",itemList.get(viewHolder.getAdapterPosition()).getEmail());
-
+                itemDetailIntent.putExtra("itemCategory",itemList.get(viewHolder.getAdapterPosition()).getItemCategory());
                 if(itemList.get(viewHolder.getAdapterPosition()).getItemCategory().equals("WTT"))
                     itemDetailIntent.putExtra("checkWTT",true);
+
+                SharedPreferences preferences = mContext.getSharedPreferences("tarcommUser", MODE_PRIVATE);
+                String email = preferences.getString("email", "");
+                if(itemList.get(viewHolder.getAdapterPosition()).getItemCategory().equals("WTT"))
+                    itemDetailIntent.putExtra("checkWTT",true);
+                if(itemList.get(viewHolder.getAdapterPosition()).getEmail().equals(email))
+                    itemDetailIntent.putExtra("checkYourUpload",true);
                 else
                     itemDetailIntent.putExtra("checkYourUpload",false);
+
 
                 convertImage(itemList.get(viewHolder.getAdapterPosition()).getImageURL());
                 itemDetailIntent.putExtra("Image", bitmap);

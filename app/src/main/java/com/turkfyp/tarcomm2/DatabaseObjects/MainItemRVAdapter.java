@@ -2,6 +2,7 @@ package com.turkfyp.tarcomm2.DatabaseObjects;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +19,8 @@ import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.activity.MarketplaceDetailActivity;
 
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class MainItemRVAdapter extends RecyclerView.Adapter<MainItemRVAdapter.MyViewHolder> {
 
@@ -85,9 +88,12 @@ public class MainItemRVAdapter extends RecyclerView.Adapter<MainItemRVAdapter.My
                 itemDetailIntent.putExtra("itemSeller",itemList.get(viewHolder.getAdapterPosition()).getSellerName());
                 itemDetailIntent.putExtra("sellerContact",itemList.get(viewHolder.getAdapterPosition()).getSellerContact());
                 itemDetailIntent.putExtra("email",itemList.get(viewHolder.getAdapterPosition()).getEmail());
-
+                SharedPreferences preferences = mContext.getSharedPreferences("tarcommUser", MODE_PRIVATE);
+                String email = preferences.getString("email", "");
                 if(itemList.get(viewHolder.getAdapterPosition()).getItemCategory().equals("WTT"))
                     itemDetailIntent.putExtra("checkWTT",true);
+                if(itemList.get(viewHolder.getAdapterPosition()).getEmail().equals(email))
+                    itemDetailIntent.putExtra("checkYourUpload",true);
                 else
                     itemDetailIntent.putExtra("checkYourUpload",false);
 
