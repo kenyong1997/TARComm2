@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -47,7 +48,7 @@ import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
     private int PICK_IMAGE_REQUEST = 1;
-    private Bitmap bitmap;
+    private Bitmap bitmap,bitmap2;
     private Uri filePath;
 
 
@@ -59,6 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
     boolean picChosen;
     ProgressDialog progressDialog;
     Spinner faculty_spinner;
+    Drawable dw;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -77,18 +79,23 @@ public class RegisterActivity extends AppCompatActivity {
         faculty_spinner = (Spinner) findViewById(R.id.faculty_spinner);
         editTextCourse = (EditText) findViewById(R.id.editTextCourse);
         editTextBioData = (EditText) findViewById(R.id.editTextBioData);
-
+        dw = getResources().getDrawable(R.drawable.user_male);
         rgGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == R.id.gender_male){
                     imgViewProfilePic.setImageDrawable(getResources().getDrawable(R.drawable.user_male));
+                    dw = getResources().getDrawable(R.drawable.user_male);
+
                 }else if (checkedId == R.id.gender_female){
                     imgViewProfilePic.setImageDrawable(getResources().getDrawable(R.drawable.user_female));
+                    dw = getResources().getDrawable(R.drawable.user_female);
+
                 }
             }
         });
 
+        bitmap = ((BitmapDrawable)dw).getBitmap();
     }
 
     public void imgViewProfilePic_onClicked(View view){
@@ -118,6 +125,7 @@ public class RegisterActivity extends AppCompatActivity {
         Calendar d = Calendar.getInstance();
         d.set(dpYear, dpMonth, dpDay);
         String strDate = dateFormatter.format(d.getTime());
+
 
 
 
@@ -311,7 +319,8 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             protected String doInBackground(Bitmap... params) {
-                Bitmap bitmap = params[0];
+
+                bitmap = params[0];
                 String uploadImage = getStringImage(bitmap);
 
                 image = uploadImage;
