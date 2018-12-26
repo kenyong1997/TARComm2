@@ -222,6 +222,12 @@ public class ViewOtherFriendActivity extends AppCompatActivity {
                                         String friendName = searchResponse.getString("friendName");
                                         String profilePicURL = searchResponse.getString("profilePicURL");
 
+                                        if(friendType == "null"){
+                                            if(friendEmail.equals(email))
+                                                friendType = "ownself";
+                                            else
+                                                friendType = "self";
+                                        }
                                         Friend friend = new Friend(userEmail, friendEmail, friendType, friendName, profilePicURL);
                                         friendList.add(friend);
 
@@ -246,9 +252,10 @@ public class ViewOtherFriendActivity extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
-                    params.put("email", email);
-                    params.put("search", searchName);
+                    params.put("userEmail", email);
                     params.put("friendEmail",friendEmail);
+                    params.put("search", searchName);
+
                     return params;
                 }
 
