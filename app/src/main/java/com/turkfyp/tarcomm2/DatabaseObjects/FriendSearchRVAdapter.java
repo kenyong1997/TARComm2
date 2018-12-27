@@ -73,6 +73,8 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
         LayoutInflater mInflater = LayoutInflater.from(mContext);
         view = mInflater.inflate(R.layout.friend_search_records, parent, false);
 
+        progressDialog = new ProgressDialog(mContext);
+
         //OnClick Listener for RecyclerView
         final FriendSearchRVAdapter.MyViewHolder viewHolder = new FriendSearchRVAdapter.MyViewHolder(view);
         viewHolder.friendSearchRecords_container.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +100,10 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
 
                 try {
                     Thread.sleep(500);
+
+                    if(progressDialog.isShowing())
+                        progressDialog.dismiss();
+
                     Intent intent = new Intent(mContext,FriendListActivity.class);
                     intent.putExtra("tabnumber",2);
                     mContext.startActivity(intent);
@@ -116,6 +122,10 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
 
                 try {
                     Thread.sleep(500);
+
+                    if(progressDialog.isShowing())
+                        progressDialog.dismiss();
+
                     Intent intent = new Intent(mContext,FriendListActivity.class);
                     intent.putExtra("tabnumber",2);
                     mContext.startActivity(intent);
@@ -143,6 +153,10 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
 
                         try {
                             Thread.sleep(500);
+
+                            if(progressDialog.isShowing())
+                                progressDialog.dismiss();
+
                             Intent intent = new Intent(mContext,FriendListActivity.class);
                             intent.putExtra("tabnumber",2);
                             mContext.startActivity(intent);
@@ -184,6 +198,10 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
 
                         try {
                             Thread.sleep(500);
+
+                            if(progressDialog.isShowing())
+                                progressDialog.dismiss();
+
                             Intent intent = new Intent(mContext,FriendListActivity.class);
                             intent.putExtra("tabnumber",2);
                             mContext.startActivity(intent);
@@ -223,6 +241,10 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
 
                         try {
                             Thread.sleep(500);
+
+                            if(progressDialog.isShowing())
+                                progressDialog.dismiss();
+
                             Intent intent = new Intent(mContext,FriendListActivity.class);
                             intent.putExtra("tabnumber",2);
                             mContext.startActivity(intent);
@@ -246,7 +268,6 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
             }
         });
 
-        progressDialog = new ProgressDialog(mContext);
         return viewHolder;
     }
 

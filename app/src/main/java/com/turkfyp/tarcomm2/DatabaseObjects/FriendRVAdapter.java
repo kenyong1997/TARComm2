@@ -66,6 +66,8 @@ public class FriendRVAdapter extends RecyclerView.Adapter<FriendRVAdapter.MyView
         LayoutInflater mInflater = LayoutInflater.from(mContext);
         view = mInflater.inflate(R.layout.friend_list_records, parent, false);
 
+        progressDialog = new ProgressDialog(mContext);
+
         //OnClick Listener for RecyclerView
         final FriendRVAdapter.MyViewHolder viewHolder = new FriendRVAdapter.MyViewHolder(view);
         viewHolder.friendListRecords_container.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +97,10 @@ public class FriendRVAdapter extends RecyclerView.Adapter<FriendRVAdapter.MyView
 
                         try {
                             Thread.sleep(500);
+
+                            if(progressDialog.isShowing())
+                                progressDialog.dismiss();
+
                             Intent intent = new Intent(mContext,FriendListActivity.class);
                             intent.putExtra("tabnumber",0);
                             mContext.startActivity(intent);

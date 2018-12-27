@@ -86,6 +86,10 @@ public class FriendRequestRVAdapter extends RecyclerView.Adapter<FriendRequestRV
             public void onClick(View v) {
                 try{
                     updateFriendRequest(mContext,"https://tarcomm.000webhostapp.com/acceptFriendRequest.php",friendList.get(viewHolder.getAdapterPosition()));
+
+                    if(progressDialog.isShowing())
+                        progressDialog.dismiss();
+
                     Intent intent = new Intent(mContext,FriendListActivity.class);
                     intent.putExtra("tabnumber",0);
                     mContext.startActivity(intent);
@@ -100,6 +104,10 @@ public class FriendRequestRVAdapter extends RecyclerView.Adapter<FriendRequestRV
             @Override
             public void onClick(View v) {
                 updateFriendRequest(mContext,"https://tarcomm.000webhostapp.com/deleteFriendRequest.php",friendList.get(viewHolder.getAdapterPosition()));
+
+                if(progressDialog.isShowing())
+                    progressDialog.dismiss();
+
                 Intent intent = new Intent(mContext,FriendListActivity.class);
                 intent.putExtra("tabnumber",0);
                 mContext.startActivity(intent);
