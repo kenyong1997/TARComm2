@@ -169,13 +169,51 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
 
             }
         });
+        viewHolder.ivDeleteFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+        public void onClick(View v) {
 
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            builder.setMessage("Confirm to delete friend?");
+            builder.setCancelable(true);
+
+            builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.cancel();
+
+                    updateFriendRequest(mContext,DELETE_URL,friendList.get(viewHolder.getAdapterPosition()));
+
+                    try {
+                        Thread.sleep(500);
+                        Intent intent = new Intent(mContext,ViewOtherFriendActivity.class);
+                        intent.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getUserEmail());
+                        mContext.startActivity(intent);
+                        ((Activity)mContext).finish();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.cancel();
+                }
+            });
+
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
+    });
         viewHolder.ivDeleteRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setMessage("Confirm to delete friend?");
+                builder.setMessage("Confirm to delete friend request?");
                 builder.setCancelable(true);
 
                 builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
@@ -224,6 +262,7 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
             holder.btnCancelRequest.setVisibility(View.VISIBLE);
             holder.btnConfirmFriend.setVisibility(View.INVISIBLE);
             holder.ivDeleteRequest.setVisibility(View.INVISIBLE);
+            holder.ivDeleteFriend.setVisibility(View.INVISIBLE);
         }
         else if(friendList.get(position).getType().equals("b_pending_a")) {
             holder.tvFriend.setVisibility(View.INVISIBLE);
@@ -231,6 +270,7 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
             holder.btnCancelRequest.setVisibility(View.INVISIBLE);
             holder.btnConfirmFriend.setVisibility(View.VISIBLE);
             holder.ivDeleteRequest.setVisibility(View.VISIBLE);
+            holder.ivDeleteFriend.setVisibility(View.INVISIBLE);
         }
         else if (friendList.get(position).getType().equals("friend")) {
             holder.tvFriend.setVisibility(View.VISIBLE);
@@ -238,6 +278,7 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
             holder.btnCancelRequest.setVisibility(View.INVISIBLE);
             holder.btnConfirmFriend.setVisibility(View.INVISIBLE);
             holder.ivDeleteRequest.setVisibility(View.INVISIBLE);
+            holder.ivDeleteFriend.setVisibility(View.VISIBLE);
         }
         else if (friendList.get(position).getType().equals("ownself")) {
             holder.tvFriend.setVisibility(View.INVISIBLE);
@@ -245,6 +286,7 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
             holder.btnCancelRequest.setVisibility(View.INVISIBLE);
             holder.btnConfirmFriend.setVisibility(View.INVISIBLE);
             holder.ivDeleteRequest.setVisibility(View.INVISIBLE);
+            holder.ivDeleteFriend.setVisibility(View.INVISIBLE);
         }
         else if (friendList.get(position).getType().equals("self")) {
             holder.tvFriend.setVisibility(View.INVISIBLE);
@@ -252,6 +294,7 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
             holder.btnCancelRequest.setVisibility(View.INVISIBLE);
             holder.btnConfirmFriend.setVisibility(View.INVISIBLE);
             holder.ivDeleteRequest.setVisibility(View.INVISIBLE);
+            holder.ivDeleteFriend.setVisibility(View.INVISIBLE);
         }
         // load image using Glide
         Glide.with(mContext).load(friendList.get(position).getProfilePicURL()).apply(options).into(holder.imageViewFriendSearch);
@@ -266,7 +309,7 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout friendSearchRecords_container;
-        ImageView imageViewFriendSearch,ivDeleteRequest;
+        ImageView imageViewFriendSearch,ivDeleteRequest,ivDeleteFriend;
         TextView tvFriendSearchName, tvFriend;
         Button btnAddFriend, btnCancelRequest, btnConfirmFriend;
 
@@ -280,7 +323,7 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
             btnCancelRequest = (Button) itemView.findViewById(R.id.btnCancelRequest);
             btnConfirmFriend = (Button) itemView.findViewById(R.id.btnConfirmFriend);
             ivDeleteRequest = (ImageView) itemView.findViewById(R.id.ivDeleteRequest);
-
+            ivDeleteFriend = (ImageView) itemView.findViewById(R.id.ivDeleteFriend);
         }
     }
 

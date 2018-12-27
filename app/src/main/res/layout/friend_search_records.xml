@@ -86,13 +86,22 @@
                 android:layout_height="40dp"
                 android:layout_width="150dp"
                 android:layout_marginRight="40dp"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="@android:color/white"
                 android:layout_gravity="right"
-                android:background="@android:color/white"
+                android:background="@android:color/holo_blue_light"
                 />
 
             <ImageView
                 android:id="@+id/ivDeleteRequest"
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:visibility="invisible"
+                android:src="@drawable/ic_delete_black"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                />
+            <ImageView
+                android:id="@+id/ivDeleteFriend"
                 android:layout_width="30dp"
                 android:layout_height="40dp"
                 android:visibility="invisible"
