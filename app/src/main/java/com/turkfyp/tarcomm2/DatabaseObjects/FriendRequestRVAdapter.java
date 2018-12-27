@@ -87,6 +87,7 @@ public class FriendRequestRVAdapter extends RecyclerView.Adapter<FriendRequestRV
                 try{
                     updateFriendRequest(mContext,"https://tarcomm.000webhostapp.com/acceptFriendRequest.php",friendList.get(viewHolder.getAdapterPosition()));
                     Intent intent = new Intent(mContext,FriendListActivity.class);
+                    intent.putExtra("tabnumber",0);
                     mContext.startActivity(intent);
                     
                 } catch (Exception e){
@@ -100,6 +101,7 @@ public class FriendRequestRVAdapter extends RecyclerView.Adapter<FriendRequestRV
             public void onClick(View v) {
                 updateFriendRequest(mContext,"https://tarcomm.000webhostapp.com/deleteFriendRequest.php",friendList.get(viewHolder.getAdapterPosition()));
                 Intent intent = new Intent(mContext,FriendListActivity.class);
+                intent.putExtra("tabnumber",0);
                 mContext.startActivity(intent);
             }
         });

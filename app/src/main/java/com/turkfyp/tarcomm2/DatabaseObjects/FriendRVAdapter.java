@@ -1,7 +1,12 @@
 package com.turkfyp.tarcomm2.DatabaseObjects;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,23 +15,37 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.R;
+import com.turkfyp.tarcomm2.activity.FriendListActivity;
 import com.turkfyp.tarcomm2.activity.ViewOtherProfileActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class FriendRVAdapter extends RecyclerView.Adapter<FriendRVAdapter.MyViewHolder> {
 
     RequestOptions options;
     private Context mContext ;
     private List<Friend> friendList;
-
+    private static String DELETE_URL = "https://tarcomm.000webhostapp.com/deleteFriend.php";
     Bitmap bitmap;
-
+    ProgressDialog progressDialog;
 
     public FriendRVAdapter(Context mContext, List friendList) {
         this.mContext = mContext;
@@ -59,7 +78,45 @@ public class FriendRVAdapter extends RecyclerView.Adapter<FriendRVAdapter.MyView
 
             }
         });
+        viewHolder.ivDeleteFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setMessage("Confirm to delete friend?");
+                builder.setCancelable(true);
+
+                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+
+                        updateFriendRequest(mContext, DELETE_URL,friendList.get(viewHolder.getAdapterPosition()));
+
+                        try {
+                            Thread.sleep(500);
+                            Intent intent = new Intent(mContext,FriendListActivity.class);
+                            intent.putExtra("tabnumber",0);
+                            mContext.startActivity(intent);
+                            ((Activity)mContext).finish();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
         return viewHolder;
     }
 
@@ -80,7 +137,7 @@ public class FriendRVAdapter extends RecyclerView.Adapter<FriendRVAdapter.MyView
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout friendListRecords_container;
-        ImageView imageViewFriendList;
+        ImageView imageViewFriendList,ivDeleteFriend;
         TextView tvFriendName;
 
         public MyViewHolder(View itemView) {
@@ -88,6 +145,80 @@ public class FriendRVAdapter extends RecyclerView.Adapter<FriendRVAdapter.MyView
             tvFriendName = (TextView) itemView.findViewById(R.id.tvFriendName);
             imageViewFriendList = (ImageView) itemView.findViewById(R.id.imageViewFriendList);
             friendListRecords_container = (LinearLayout)itemView.findViewById(R.id.friendListRecords_container);
+            ivDeleteFriend = (ImageView) itemView.findViewById(R.id.ivDeleteFriend);
+        }
+    }
+
+    public void updateFriendRequest(final Context context, String url, final Friend friend) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        try{
+            if(!progressDialog.isShowing()){
+                progressDialog.setMessage("Processing, please wait awhile.");
+                progressDialog.show();
+            }
+
+            StringRequest postRequest = new StringRequest(
+                    Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            JSONObject jsonObject;
+
+                            try{
+                                jsonObject = new JSONObject(response);
+                                int success = jsonObject.getInt("success");
+                                String message = jsonObject.getString("message");
+
+                                if(success == 0){
+                                    if (progressDialog.isShowing())
+                                        progressDialog.dismiss();
+
+                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                                } else {
+                                    if (progressDialog.isShowing())
+                                        progressDialog.dismiss();
+
+                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, "Error. " + error.toString(), Toast.LENGTH_LONG).show();
+                    if (progressDialog.isShowing())
+                        progressDialog.dismiss();
+                }
+            }){
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+
+                    SharedPreferences preferences = mContext.getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
+                    String userEmail = preferences.getString("email", "");
+
+                    // put the parameters with specific values
+                    params.put("userEmail", userEmail);
+                    params.put("friendEmail", friend.getFriendEmail());
+                    params.put("confirmation", "true");
+
+                    return params;
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("Content-Type", "application/x-www-form-urlencoded");
+                    return params;
+                }
+            };
+
+            queue.add(postRequest);
+
+        }catch(Exception e) {
+            e.printStackTrace();
         }
     }
 }
