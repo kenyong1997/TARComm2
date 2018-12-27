@@ -79,17 +79,17 @@ public class RegisterActivity extends AppCompatActivity {
         faculty_spinner = (Spinner) findViewById(R.id.faculty_spinner);
         editTextCourse = (EditText) findViewById(R.id.editTextCourse);
         editTextBioData = (EditText) findViewById(R.id.editTextBioData);
-        dw = getResources().getDrawable(R.drawable.user_male);
+        dw = getResources().getDrawable(R.drawable.def_male);
         rgGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == R.id.gender_male){
                     imgViewProfilePic.setImageDrawable(getResources().getDrawable(R.drawable.user_male));
-                    dw = getResources().getDrawable(R.drawable.user_male);
+                    dw = getResources().getDrawable(R.drawable.def_male);
 
                 }else if (checkedId == R.id.gender_female){
                     imgViewProfilePic.setImageDrawable(getResources().getDrawable(R.drawable.user_female));
-                    dw = getResources().getDrawable(R.drawable.user_female);
+                    dw = getResources().getDrawable(R.drawable.def_female);
 
                 }
             }
