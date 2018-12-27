@@ -86,10 +86,12 @@ public class RegisterActivity extends AppCompatActivity {
                 if(checkedId == R.id.gender_male){
                     imgViewProfilePic.setImageDrawable(getResources().getDrawable(R.drawable.user_male));
                     dw = getResources().getDrawable(R.drawable.def_male);
+                    bitmap = ((BitmapDrawable)dw).getBitmap();
 
                 }else if (checkedId == R.id.gender_female){
                     imgViewProfilePic.setImageDrawable(getResources().getDrawable(R.drawable.user_female));
                     dw = getResources().getDrawable(R.drawable.def_female);
+                    bitmap = ((BitmapDrawable)dw).getBitmap();
 
                 }
             }
