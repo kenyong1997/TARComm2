@@ -1,5 +1,6 @@
 package com.turkfyp.tarcomm2.DatabaseObjects;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -83,7 +84,6 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
 
                 if(friendList.get(viewHolder.getAdapterPosition()).getType().equals("ownself")){
                     Intent i = new Intent(mContext,ViewProfileActivity.class);
-
                     mContext.startActivity(i);
 
                 }else{
@@ -104,6 +104,7 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
                     Intent intent = new Intent(mContext,ViewOtherFriendActivity.class);
                     intent.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getUserEmail());
                     mContext.startActivity(intent);
+                    ((Activity)mContext).finish();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -121,6 +122,7 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
                     Intent intent = new Intent(mContext,ViewOtherFriendActivity.class);
                     intent.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getUserEmail());
                     mContext.startActivity(intent);
+                    ((Activity)mContext).finish();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -147,6 +149,7 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
                             Intent intent = new Intent(mContext,ViewOtherFriendActivity.class);
                             intent.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getUserEmail());
                             mContext.startActivity(intent);
+                            ((Activity)mContext).finish();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -187,6 +190,7 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
                             Intent intent = new Intent(mContext,ViewOtherFriendActivity.class);
                             intent.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getUserEmail());
                             mContext.startActivity(intent);
+                            ((Activity)mContext).finish();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }

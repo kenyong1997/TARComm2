@@ -1,5 +1,6 @@
 package com.turkfyp.tarcomm2.DatabaseObjects;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -104,6 +105,7 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
                     Intent intent = new Intent(mContext,FriendListActivity.class);
                     intent.putExtra("tabnumber",2);
                     mContext.startActivity(intent);
+                    ((Activity)mContext).finish();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -121,6 +123,7 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
                     Intent intent = new Intent(mContext,FriendListActivity.class);
                     intent.putExtra("tabnumber",2);
                     mContext.startActivity(intent);
+                    ((Activity)mContext).finish();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -147,6 +150,7 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
                             Intent intent = new Intent(mContext,FriendListActivity.class);
                             intent.putExtra("tabnumber",2);
                             mContext.startActivity(intent);
+                            ((Activity)mContext).finish();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -187,6 +191,7 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
                             Intent intent = new Intent(mContext,FriendListActivity.class);
                             intent.putExtra("tabnumber",2);
                             mContext.startActivity(intent);
+                            ((Activity)mContext).finish();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
