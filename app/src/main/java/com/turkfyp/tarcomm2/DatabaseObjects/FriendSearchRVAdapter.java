@@ -246,6 +246,12 @@ public class FriendSearchRVAdapter extends RecyclerView.Adapter<FriendSearchRVAd
             holder.btnCancelRequest.setVisibility(View.INVISIBLE);
             holder.btnConfirmFriend.setVisibility(View.INVISIBLE);
             holder.ivDeleteRequest.setVisibility(View.INVISIBLE);
+        }else if (friendList.get(position).getType().equals("self")) {
+            holder.tvFriend.setVisibility(View.INVISIBLE);
+            holder.btnAddFriend.setVisibility(View.VISIBLE);
+            holder.btnCancelRequest.setVisibility(View.INVISIBLE);
+            holder.btnConfirmFriend.setVisibility(View.INVISIBLE);
+            holder.ivDeleteRequest.setVisibility(View.INVISIBLE);
         }
         // load image using Glide
         Glide.with(mContext).load(friendList.get(position).getProfilePicURL()).apply(options).into(holder.imageViewFriendSearch);
