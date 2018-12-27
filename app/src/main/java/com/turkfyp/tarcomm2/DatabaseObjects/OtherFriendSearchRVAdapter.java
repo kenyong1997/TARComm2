@@ -7,8 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,8 +32,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.R;
-import com.turkfyp.tarcomm2.activity.EditLostItemActivity;
-import com.turkfyp.tarcomm2.activity.LostAndFoundActivity;
 import com.turkfyp.tarcomm2.activity.ViewOtherProfileActivity;
 import com.turkfyp.tarcomm2.activity.ViewProfileActivity;
 import com.turkfyp.tarcomm2.activity.ViewOtherFriendActivity;
@@ -47,7 +43,8 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
 
     private static String ADD_URL = "https://tarcomm.000webhostapp.com/sendFriendRequest.php";
     private static String UPDATE_URL = "https://tarcomm.000webhostapp.com/acceptFriendRequest.php";
-    private static String DELETE_URL = "https://tarcomm.000webhostapp.com/deleteFriendRequest.php";
+    private static String REJECT_URL = "https://tarcomm.000webhostapp.com/deleteFriendRequest.php";
+    private static String DELETE_URL = "https://tarcomm.000webhostapp.com/deleteFriend.php";
     private static String CANCEL_URL = "https://tarcomm.000webhostapp.com/cancelFriendRequest.php";
 
     RequestOptions options;
@@ -76,6 +73,8 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
         LayoutInflater mInflater = LayoutInflater.from(mContext);
         view = mInflater.inflate(R.layout.friend_search_records, parent, false);
 
+        progressDialog = new ProgressDialog(mContext);
+
         //OnClick Listener for RecyclerView
         final OtherFriendSearchRVAdapter.MyViewHolder viewHolder = new OtherFriendSearchRVAdapter.MyViewHolder(view);
         viewHolder.friendSearchRecords_container.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +100,10 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
 
                 try {
                     Thread.sleep(500);
+
+                    if(progressDialog.isShowing())
+                        progressDialog.dismiss();
+
                     Intent intent = new Intent(mContext,ViewOtherFriendActivity.class);
                     intent.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getUserEmail());
                     mContext.startActivity(intent);
@@ -119,6 +122,10 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
 
                 try {
                     Thread.sleep(500);
+
+                    if(progressDialog.isShowing())
+                        progressDialog.dismiss();
+
                     Intent intent = new Intent(mContext,ViewOtherFriendActivity.class);
                     intent.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getUserEmail());
                     mContext.startActivity(intent);
@@ -146,6 +153,10 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
 
                         try {
                             Thread.sleep(500);
+
+                            if(progressDialog.isShowing())
+                                progressDialog.dismiss();
+
                             Intent intent = new Intent(mContext,ViewOtherFriendActivity.class);
                             intent.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getUserEmail());
                             mContext.startActivity(intent);
@@ -182,10 +193,14 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.cancel();
 
-                    updateFriendRequest(mContext,DELETE_URL,friendList.get(viewHolder.getAdapterPosition()));
+                    updateFriendRequest(mContext, DELETE_URL,friendList.get(viewHolder.getAdapterPosition()));
 
                     try {
                         Thread.sleep(500);
+
+                        if(progressDialog.isShowing())
+                            progressDialog.dismiss();
+
                         Intent intent = new Intent(mContext,ViewOtherFriendActivity.class);
                         intent.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getUserEmail());
                         mContext.startActivity(intent);
@@ -221,10 +236,14 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.cancel();
 
-                        updateFriendRequest(mContext,DELETE_URL,friendList.get(viewHolder.getAdapterPosition()));
+                        updateFriendRequest(mContext, REJECT_URL,friendList.get(viewHolder.getAdapterPosition()));
 
                         try {
                             Thread.sleep(500);
+
+                            if(progressDialog.isShowing())
+                                progressDialog.dismiss();
+
                             Intent intent = new Intent(mContext,ViewOtherFriendActivity.class);
                             intent.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getUserEmail());
                             mContext.startActivity(intent);
@@ -248,7 +267,6 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
             }
         });
 
-        progressDialog = new ProgressDialog(mContext);
         return viewHolder;
     }
 
