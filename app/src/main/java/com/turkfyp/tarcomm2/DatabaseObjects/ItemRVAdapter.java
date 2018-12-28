@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v4.content.MimeTypeFilter;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,12 +39,17 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.MyViewHold
         this.mContext = mContext;
         this.itemList = lst;
 
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(mContext);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
+
         //For Glide image
         options = new RequestOptions()
                 .centerCrop()
                 .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .placeholder(R.drawable.background_white)
+                .placeholder(circularProgressDrawable)
                 .error(R.drawable.background_white);
     }
 

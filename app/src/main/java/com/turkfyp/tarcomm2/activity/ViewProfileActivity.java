@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -69,15 +70,21 @@ public class ViewProfileActivity extends AppCompatActivity {
         tvProfileCourse.setText(preferences.getString("course",""));
         tvProfileBioData.setText(preferences.getString("biodata",""));
 
-        //glide
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(this);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
+
+        //For Glide image
         RequestOptions options = new RequestOptions()
                 .centerCrop()
                 .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .placeholder(R.drawable.background_white)
+                .placeholder(circularProgressDrawable)
                 .error(R.drawable.background_white);
 
         Glide.with(getApplicationContext()).load(preferences.getString("profilePicURL","")).apply(options).into(imgViewProfilePic);
+
         countPost(this,"https://tarcomm.000webhostapp.com/getTotalPost.php");
     }
     public void onBackClicked(View view){

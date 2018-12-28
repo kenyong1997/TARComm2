@@ -3,6 +3,7 @@ package com.turkfyp.tarcomm2.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.R;
 
@@ -73,12 +75,17 @@ public class EventDetailsActivity extends AppCompatActivity {
         String imageURL = extras.getString("ImageURL");
         eventID = Integer.parseInt(imageURL.split("=")[1]);
 
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(this);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
+
         //For Glide image
         options = new RequestOptions()
                 .fitCenter()
 //                .skipMemoryCache(true)
 //                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .placeholder(R.drawable.background_white)
+                .placeholder(circularProgressDrawable)
                 .error(R.drawable.background_white);
 
         Glide.with(getApplicationContext()).load(imageURL).apply(options).into(imageViewDetailEvent);

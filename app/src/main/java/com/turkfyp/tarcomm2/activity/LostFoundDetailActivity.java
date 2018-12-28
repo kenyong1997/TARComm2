@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
@@ -112,12 +113,18 @@ public class LostFoundDetailActivity extends AppCompatActivity {
 
         imageURL = extras.getString("LostImageURL");
         lostID = Integer.parseInt(imageURL.split("=")[1]);
+
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(this);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
+
         //For Glide image
         options = new RequestOptions()
                 .fitCenter()
                 .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .placeholder(R.drawable.background_white)
+                .placeholder(circularProgressDrawable)
                 .error(R.drawable.background_white);
 
         Glide.with(getApplicationContext()).load(imageURL).apply(options).into(imageViewLostItem);

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.activity.EventActivity;
@@ -38,11 +40,16 @@ public class ViewPagerAdapter extends PagerAdapter{
         this.contents = contents;
         this.context = context;
 
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(context);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
+
         //For Glide image
         options = new RequestOptions()
                 .override(1500,2000)
                 .fitCenter()
-                .placeholder(R.drawable.background_white)
+                .placeholder(circularProgressDrawable)
                 .error(R.drawable.background_white);
     }
 

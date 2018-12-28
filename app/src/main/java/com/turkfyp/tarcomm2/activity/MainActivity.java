@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -93,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
         rvMainLost = (RecyclerView) findViewById(R.id.rvMainLost);
 
 
-
         //Navigation Menu - START
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -114,11 +114,16 @@ public class MainActivity extends AppCompatActivity {
 
         CircleImageView profile_image = (CircleImageView) findViewById(R.id.profile_image);
 
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(this);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
+
         RequestOptions options = new RequestOptions()
                 .circleCrop()
                 .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .placeholder(R.drawable.background_white)
+                .placeholder(circularProgressDrawable)
                 .error(R.drawable.background_white);
 
         Glide.with(getApplicationContext()).load(imageURL).apply(options).into(profile_image);
