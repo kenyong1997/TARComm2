@@ -230,10 +230,15 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
 
     public void onSellerClicked(View view){
 
-        Intent sellerIntent = new Intent(this,ViewOtherProfileActivity.class);
-        sellerIntent.putExtra("email",email);
-
-        startActivity(sellerIntent);
+        if(checkYourUpload){
+            Intent sellerIntent = new Intent(this,ViewProfileActivity.class);
+            startActivity(sellerIntent);
+        }
+        else{
+            Intent sellerIntent = new Intent(this,ViewOtherProfileActivity.class);
+            sellerIntent.putExtra("email",email);
+            startActivity(sellerIntent);
+        }
     }
     public void onBackClicked(View view){
         finish();
