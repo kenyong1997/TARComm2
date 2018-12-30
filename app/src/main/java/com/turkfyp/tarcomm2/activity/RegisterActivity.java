@@ -182,13 +182,19 @@ public class RegisterActivity extends AppCompatActivity {
     }
     public boolean isValidContact(String string) {
         String PATTERN;
-
+        boolean checkNumber=false;
+        if(editTextContactNo.getText().length()==10 || editTextContactNo.getText().length()==11 )
+            checkNumber=true;
         //PATTERN = only 1 - 9 and length is 12
-        PATTERN = "^[0-9]{10}$";
+        PATTERN = "^[0-9]$";
 
         Pattern pattern = Pattern.compile(PATTERN);
         Matcher matcher = pattern.matcher(string);
-        return matcher.matches();
+
+        if (matcher.matches()&&checkNumber)
+            return true;
+        else
+            return false;
     }
 
     private void showFileChooser() {
