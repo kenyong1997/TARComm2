@@ -111,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void onRegisterClicked(View view){
 
         rbGender = (RadioButton) findViewById(rgGender.getCheckedRadioButtonId());
-        final String email = editTextEmail.getText().toString();
+        final String email = editTextEmail.getText().toString().trim();
         final String password = editTextPassword1.getText().toString();
         final String fullName = editTextFullName.getText().toString();
         final String contactNo = editTextContactNo.getText().toString();
