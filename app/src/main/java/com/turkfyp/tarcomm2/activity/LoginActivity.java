@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginClicked(View view) {
 
         String password = editTextPassword.getText().toString();
-        String username = editTextUserName.getText().toString();
+        String username = editTextUserName.getText().toString().trim();
 
         if (username.matches("")) {
             Toast.makeText(this, "Please fill in username.", Toast.LENGTH_SHORT).show();
