@@ -858,7 +858,7 @@ public class MapFragment extends android.support.v4.app.Fragment implements OnMa
                                 String course = userResponse.getString("course");
                                 String biodata = userResponse.getString("biodata");
 
-                                User friend = new User(email, password, fullname, gender, dateofbirth, contactno, latitude, longitude, status, profilepicURL, faculty, course, biodata);
+                                User friend = new User(email, password, fullname, gender, dateofbirth, contactno, latitude, longitude, status, profilepicURL, faculty, course, biodata,currentDate);
                                 userList.add(friend);
                             }
 

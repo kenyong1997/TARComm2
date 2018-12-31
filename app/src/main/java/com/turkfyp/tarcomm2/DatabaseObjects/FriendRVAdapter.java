@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,8 +29,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.activity.FriendListActivity;
 import com.turkfyp.tarcomm2.activity.ViewOtherProfileActivity;
@@ -39,31 +38,19 @@ import com.turkfyp.tarcomm2.activity.ViewOtherProfileActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class FriendRVAdapter extends RecyclerView.Adapter<FriendRVAdapter.MyViewHolder> {
 
     RequestOptions options;
     private Context mContext ;
     private List<Friend> friendList;
     private static String DELETE_URL = "https://tarcomm.000webhostapp.com/deleteFriend.php";
-    Bitmap bitmap;
     ProgressDialog progressDialog;
 
     public FriendRVAdapter(Context mContext, List friendList) {
         this.mContext = mContext;
         this.friendList = friendList;
-
-        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(mContext);
-        circularProgressDrawable.setStrokeWidth(5f);
-        circularProgressDrawable.setCenterRadius(30f);
-        circularProgressDrawable.start();
-
-        //For Glide image
-        options = new RequestOptions()
-                .centerCrop()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .placeholder(circularProgressDrawable)
-                .error(R.drawable.background_white);
     }
 
     @Override
@@ -135,6 +122,18 @@ public class FriendRVAdapter extends RecyclerView.Adapter<FriendRVAdapter.MyView
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.tvFriendName.setText(friendList.get(position).getFriendName());
+
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(mContext);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
+
+        //For Glide image
+        options = new RequestOptions()
+                .centerCrop()
+                .signature(new ObjectKey(friendList.get(position).getFriendLastModified()))
+                .placeholder(circularProgressDrawable)
+                .error(R.drawable.background_white);
 
         // load image using Glide
         Glide.with(mContext).load(friendList.get(position).getProfilePicURL()).apply(options).into(holder.imageViewFriendList);
@@ -208,7 +207,7 @@ public class FriendRVAdapter extends RecyclerView.Adapter<FriendRVAdapter.MyView
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
 
-                    SharedPreferences preferences = mContext.getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
+                    SharedPreferences preferences = mContext.getSharedPreferences("tarcommUser", MODE_PRIVATE);
                     String userEmail = preferences.getString("email", "");
 
                     // put the parameters with specific values

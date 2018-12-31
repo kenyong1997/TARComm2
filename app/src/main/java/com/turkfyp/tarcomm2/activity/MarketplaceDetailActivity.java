@@ -29,6 +29,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.turkfyp.tarcomm2.R;
 
 import org.json.JSONException;
@@ -49,6 +50,7 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
     int itemID;
     String confirmation;
     RequestOptions options;
+    String currentDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +89,7 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
         checkWTT = extras.getBoolean("checkWTT");
         itemCategory = extras.getString("itemCategory");
         email = extras.getString("email");
+        currentDate = extras.getString("itemLastModified");
 
 
 
@@ -131,9 +134,8 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
 
         //For Glide image
         options = new RequestOptions()
-                .centerCrop()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .fitCenter()
+                .signature(new ObjectKey(currentDate))
                 .placeholder(circularProgressDrawable)
                 .error(R.drawable.background_white);
 
@@ -224,6 +226,7 @@ public class MarketplaceDetailActivity extends AppCompatActivity {
         itemDetailIntent.putExtra("itemCategory",itemCategory);
         itemDetailIntent.putExtra("Image", image);
         itemDetailIntent.putExtra("ImageURL", imageURL);
+        itemDetailIntent.putExtra("itemLastModified", currentDate);
 
         startActivity(itemDetailIntent);
     }

@@ -15,8 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.activity.LostFoundDetailActivity;
 
@@ -36,19 +36,6 @@ public class LostFoundRVAdapter extends RecyclerView.Adapter<LostFoundRVAdapter.
     public LostFoundRVAdapter(Context mContext, List lst) {
         this.mContext = mContext;
         this.lostFoundList = lst;
-
-        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(mContext);
-        circularProgressDrawable.setStrokeWidth(5f);
-        circularProgressDrawable.setCenterRadius(30f);
-        circularProgressDrawable.start();
-
-        //For Glide image
-        options = new RequestOptions()
-                .centerCrop()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .placeholder(circularProgressDrawable)
-                .error(R.drawable.background_white);
     }
 
     @Override
@@ -71,6 +58,7 @@ public class LostFoundRVAdapter extends RecyclerView.Adapter<LostFoundRVAdapter.
                 lostFoundDetailIntent.putExtra("lostItemContactName",lostFoundList.get(viewHolder.getAdapterPosition()).getContactName());
                 lostFoundDetailIntent.putExtra("lostItemContactNo",lostFoundList.get(viewHolder.getAdapterPosition()).getContactNo());
                 lostFoundDetailIntent.putExtra("itemCategory",lostFoundList.get(viewHolder.getAdapterPosition()).getCategory());
+                lostFoundDetailIntent.putExtra("lostLastModified",lostFoundList.get(viewHolder.getAdapterPosition()).getLastModified());
 
                 SharedPreferences preferences = mContext.getSharedPreferences("tarcommUser", MODE_PRIVATE);
                 String email = preferences.getString("email", "");
@@ -95,6 +83,18 @@ public class LostFoundRVAdapter extends RecyclerView.Adapter<LostFoundRVAdapter.
         holder.tvLostItemName.setText(lostFoundList.get(position).getLostItemName());
         holder.tvLostItemDate.setText(lostFoundList.get(position).getLostDate());
         holder.tvLostItemOwner.setText(lostFoundList.get(position).getContactName());
+
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(mContext);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
+
+        //For Glide image
+        options = new RequestOptions()
+                .centerCrop()
+                .signature(new ObjectKey(lostFoundList.get(position).getLastModified()))
+                .placeholder(circularProgressDrawable)
+                .error(R.drawable.background_white);
 
         // load image using Glide
         Glide.with(mContext).load(lostFoundList.get(position).getLostItemURL()).apply(options).into(holder.ivLostItemImage);

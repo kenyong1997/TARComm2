@@ -26,6 +26,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.turkfyp.tarcomm2.DatabaseObjects.Event;
 import com.turkfyp.tarcomm2.DatabaseObjects.Item;
 import com.turkfyp.tarcomm2.DatabaseObjects.LostFound;
@@ -119,10 +120,11 @@ public class MainActivity extends AppCompatActivity {
         circularProgressDrawable.setCenterRadius(30f);
         circularProgressDrawable.start();
 
+        String lastModified = preferences.getString("lastModified","");
+
         RequestOptions options = new RequestOptions()
                 .circleCrop()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .signature(new ObjectKey(lastModified))
                 .placeholder(circularProgressDrawable)
                 .error(R.drawable.background_white);
 
@@ -178,8 +180,9 @@ public class MainActivity extends AppCompatActivity {
                             String contactName = lostFoundResponse.getString("fullname");
                             String contactNo = lostFoundResponse.getString("contactno");
                             String lostDate = lostFoundResponse.getString("lostDate");
+                            String lastModified = lostFoundResponse.getString("lostLastModified");
 
-                            LostFound lostFound = new LostFound(category, lostItemName, lostItemDesc, lostItemURL, lostDate, email, contactName, contactNo);
+                            LostFound lostFound = new LostFound(category, lostItemName, lostItemDesc, lostItemURL, lostDate, email, contactName, contactNo, lastModified);
                             lostFoundList.add(lostFound);
                         }
                         //Load item into RecyclerView Adapter
@@ -244,8 +247,9 @@ public class MainActivity extends AppCompatActivity {
                             String email = itemResponse.getString("email");
                             String sellerName = itemResponse.getString("fullname");
                             String sellerContact = itemResponse.getString("contactno");
+                            String itemLastModified = itemResponse.getString("itemLastModified");
 
-                            Item item = new Item(itemCategory, itemName, itemDescription, imageURL, itemPrice, email, sellerName, sellerContact);
+                            Item item = new Item(itemCategory, itemName, itemDescription, imageURL, itemPrice, email, sellerName, sellerContact, itemLastModified);
                             itemList.add(item);
                         }
                         //Load item into RecyclerView Adapter
@@ -502,4 +506,32 @@ public class MainActivity extends AppCompatActivity {
     }
     //End Side Menu Navigation
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //For Profile Image Refreshing
+        SharedPreferences preferences = getSharedPreferences("tarcommUser", MODE_PRIVATE);
+
+        //Set Profile Picture on Navigation Bar
+        String imageURL = preferences.getString("profilePicURL","");
+
+        CircleImageView profile_image = (CircleImageView) findViewById(R.id.profile_image);
+
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(this);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
+
+        String lastModified = preferences.getString("lastModified","");
+
+        RequestOptions options = new RequestOptions()
+                .circleCrop()
+                .signature(new ObjectKey(lastModified))
+                .placeholder(circularProgressDrawable)
+                .error(R.drawable.background_white);
+
+        Glide.with(getApplicationContext()).load(imageURL).apply(options).into(profile_image);
+    }
 }

@@ -104,8 +104,9 @@ public class FragmentTradingTab1 extends Fragment {
                                 String email = itemResponse.getString("email");
                                 String sellerName = itemResponse.getString("fullname");
                                 String sellerContact = itemResponse.getString("contactno");
+                                String itemLastModified = itemResponse.getString("itemLastModified");
 
-                                Item item = new Item(itemCategory, itemName, itemDescription, imageURL, itemPrice, email, sellerName, sellerContact);
+                                Item item = new Item(itemCategory, itemName, itemDescription, imageURL, itemPrice, email, sellerName, sellerContact, itemLastModified);
                                 itemList.add(item);
                             }
                             //Load item into RecyclerView Adapter

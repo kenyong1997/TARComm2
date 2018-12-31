@@ -99,6 +99,7 @@ public class FragmentLostFoundTab3 extends Fragment {
                 lostFoundDetail.putExtra("lostItemContactName",selectedItem.getContactName());
                 lostFoundDetail.putExtra("lostItemContactNo",selectedItem.getContactNo());
                 lostFoundDetail.putExtra("checkYourUpload",true);
+                lostFoundDetail.putExtra("lostLastModified", selectedItem.getLastModified());
 
                 convertImage(selectedItem.getLostItemURL());
                 lostFoundDetail.putExtra("LostImage", bitmap);
@@ -173,8 +174,9 @@ public class FragmentLostFoundTab3 extends Fragment {
                                         String contactName = lostFoundResponse.getString("fullname");
                                         String contactNo = lostFoundResponse.getString("contactno");
                                         String lostDate = lostFoundResponse.getString("lostDate");
+                                        String lastModified = lostFoundResponse.getString("lostLastModified");
 
-                                        LostFound lostFound = new LostFound(category, lostItemName, lostItemDesc, lostItemURL, lostDate, email, contactName, contactNo);
+                                        LostFound lostFound = new LostFound(category, lostItemName, lostItemDesc, lostItemURL, lostDate, email, contactName, contactNo, lastModified);
 
                                         if(category.toUpperCase().equals("LOST"))
                                             lostList.add(lostFound);

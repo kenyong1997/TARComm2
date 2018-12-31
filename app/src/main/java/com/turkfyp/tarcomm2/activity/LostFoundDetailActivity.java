@@ -31,6 +31,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.turkfyp.tarcomm2.R;
 
 import org.json.JSONException;
@@ -47,6 +48,8 @@ public class LostFoundDetailActivity extends AppCompatActivity {
     protected Boolean checkYourUpload;
     protected Bitmap image;
     protected String imageURL,itemCategory;
+
+    String currentDate;
 
     int lostID;
     String confirmation;
@@ -81,10 +84,12 @@ public class LostFoundDetailActivity extends AppCompatActivity {
         itemOwner=extras.getString("lostItemContactName");
         lostItemName=extras.getString("lostItemName");
         lostItemDesc=extras.getString("lostItemDesc");
-        itemCategory=extras.getString("lostCategory");
+        itemCategory=extras.getString("itemCategory");
         lostDate = extras.getString("lostDate");
         checkYourUpload=extras.getBoolean("checkYourUpload");
         email =extras.getString("email");
+        currentDate = extras.getString("lostLastModified");
+
 
         if(checkYourUpload){
             ivEditLostItem.setVisibility(View.VISIBLE);
@@ -122,8 +127,7 @@ public class LostFoundDetailActivity extends AppCompatActivity {
         //For Glide image
         options = new RequestOptions()
                 .fitCenter()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .signature(new ObjectKey(currentDate))
                 .placeholder(circularProgressDrawable)
                 .error(R.drawable.background_white);
 
@@ -180,6 +184,7 @@ public class LostFoundDetailActivity extends AppCompatActivity {
     public void onBackClicked(View view){
         finish();
     }
+
     public void onSellerClicked(View view){
 
         if(checkYourUpload){
@@ -192,6 +197,7 @@ public class LostFoundDetailActivity extends AppCompatActivity {
             startActivity(sellerIntent);
         }
     }
+
     public void onEditLostItemClicked(View view){
 
         Intent lostFoundDetailIntent = new Intent(this,EditLostItemActivity.class);
@@ -203,6 +209,7 @@ public class LostFoundDetailActivity extends AppCompatActivity {
         lostFoundDetailIntent.putExtra("itemCategory",itemCategory);
         lostFoundDetailIntent.putExtra("Image", image);
         lostFoundDetailIntent.putExtra("ImageURL", imageURL);
+        lostFoundDetailIntent.putExtra("lostLastModified", currentDate);
 
         startActivity(lostFoundDetailIntent);
     }

@@ -19,14 +19,11 @@ public class User {
     private String faculty;
     private String course;
     private String biodata;
+    private String lastModified;
 
+    public User(){}
 
-    public User(){
-
-
-    }
-
-    public User(String email, String password, String fullname, String gender, String dateofbirth, String contactno, String profilepicURL, String faculty, String course, String biodata) {
+    public User(String email, String password, String fullname, String gender, String dateofbirth, String contactno, String profilepicURL, String faculty, String course, String biodata, String lastModified) {
         this.email = email;
         this.password = password;
         this.fullname = fullname;
@@ -37,9 +34,10 @@ public class User {
         this.faculty = faculty;
         this.course = course;
         this.biodata = biodata;
+        this.lastModified = lastModified;
     }
 
-    public User(String email, String password, String fullname, String gender, String dateofbirth, String contactno, String latitude, String longitude, String status, String profilepicURL, String faculty, String course, String biodata) {
+    public User(String email, String password, String fullname, String gender, String dateofbirth, String contactno, String latitude, String longitude, String status, String profilepicURL, String faculty, String course, String biodata, String lastModified) {
         this.email = email;
         this.password = password;
         this.fullname = fullname;
@@ -53,6 +51,7 @@ public class User {
         this.faculty = faculty;
         this.course = course;
         this.biodata = biodata;
+        this.lastModified = lastModified;
     }
 
     public String getEmail() { return email; }
@@ -117,5 +116,13 @@ public class User {
 
     public void setBiodata(String biodata) {
         this.biodata = biodata;
+    }
+
+    public String getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(String lastModified) {
+        this.lastModified = lastModified;
     }
 }

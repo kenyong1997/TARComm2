@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.turkfyp.tarcomm2.R;
 
 public class LostFoundUploadAdapter extends BaseExpandableListAdapter {
@@ -34,19 +35,6 @@ public class LostFoundUploadAdapter extends BaseExpandableListAdapter {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
-
-        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(context);
-        circularProgressDrawable.setStrokeWidth(5f);
-        circularProgressDrawable.setCenterRadius(30f);
-        circularProgressDrawable.start();
-
-        //For Glide image
-        options = new RequestOptions()
-                .centerCrop()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .placeholder(circularProgressDrawable)
-                .error(R.drawable.background_white);
     }
 
     @Override
@@ -83,6 +71,18 @@ public class LostFoundUploadAdapter extends BaseExpandableListAdapter {
         tvLostItemName.setText(lostFound.getLostItemName());
         tvLostItemDate.setText(lostFound.getLostDate());
         tvLostItemOwner.setText(lostFound.getContactName());
+
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(_context);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
+
+        //For Glide image
+        options = new RequestOptions()
+                .centerCrop()
+                .signature(new ObjectKey(lostFound.getLastModified()))
+                .placeholder(circularProgressDrawable)
+                .error(R.drawable.background_white);
 
         //Load image into imageViewer with Glide
         Glide.with(_context).load(lostFound.getLostItemURL()).apply(options).into(ivLostItemImage);

@@ -106,8 +106,9 @@ public class FragmentLostFoundTab2 extends Fragment {
                                 String contactName = lostFoundResponse.getString("fullname");
                                 String contactNo = lostFoundResponse.getString("contactno");
                                 String lostDate = lostFoundResponse.getString("lostDate");
+                                String lastModified = lostFoundResponse.getString("lostLastModified");
 
-                                LostFound lostFound = new LostFound(category, lostItemName, lostItemDesc, lostItemURL, lostDate, email, contactName, contactNo);
+                                LostFound lostFound = new LostFound(category, lostItemName, lostItemDesc, lostItemURL, lostDate, email, contactName, contactNo, lastModified);
                                 lostFoundList.add(lostFound);
                             }
                             //load the item into adapter

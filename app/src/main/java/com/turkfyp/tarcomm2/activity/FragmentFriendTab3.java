@@ -128,16 +128,16 @@ public class FragmentFriendTab3 extends Fragment {
                                 try {
                                     friendList.clear();
                                     for (int i = 0; i < j.length(); i++) {
-                                        JSONObject eventResponse = (JSONObject) j.get(i);
-                                        String userEmail = eventResponse.getString("userEmail");
-                                        String friendEmail = eventResponse.getString("friendEmail");
-                                        String friendType = eventResponse.getString("type");
-                                        String friendName = eventResponse.getString("friendName");
-                                        String profilePicURL = eventResponse.getString("profilePicURL");
+                                        JSONObject friendResponse = (JSONObject) j.get(i);
+                                        String userEmail = friendResponse.getString("userEmail");
+                                        String friendEmail = friendResponse.getString("friendEmail");
+                                        String friendType = friendResponse.getString("type");
+                                        String friendName = friendResponse.getString("friendName");
+                                        String profilePicURL = friendResponse.getString("profilePicURL");
+                                        String friendLastModified = friendResponse.getString("friendLastModified");
 
-                                        Friend friend = new Friend(userEmail, friendEmail, friendType, friendName, profilePicURL);
+                                        Friend friend = new Friend(userEmail, friendEmail, friendType, friendName, profilePicURL, friendLastModified);
                                         friendList.add(friend);
-
                                     }
                                     //Load friendList into RecyclerView Adapter
                                     setRVAdapter(friendList);
@@ -232,8 +232,9 @@ public class FragmentFriendTab3 extends Fragment {
                                         String friendType = searchResponse.getString("type");
                                         String friendName = searchResponse.getString("friendName");
                                         String profilePicURL = searchResponse.getString("profilePicURL");
+                                        String friendLastModified = searchResponse.getString("friendLastModified");
 
-                                        Friend friend = new Friend(userEmail, friendEmail, friendType, friendName, profilePicURL);
+                                        Friend friend = new Friend(userEmail, friendEmail, friendType, friendName, profilePicURL, friendLastModified);
                                         friendList.add(friend);
 
                                     }

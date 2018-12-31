@@ -84,6 +84,7 @@ public class ViewOtherLostFoundPostActivity extends AppCompatActivity {
                 lostFoundDetail.putExtra("lostItemContactName",selectedItem.getContactName());
                 lostFoundDetail.putExtra("lostItemContactNo",selectedItem.getContactNo());
                 lostFoundDetail.putExtra("checkYourUpload",false);
+                lostFoundDetail.putExtra("lostLastModified", selectedItem.getLastModified());
 
                 ImageView ivImage = (ImageView) view.findViewById(R.id.imageViewLostItemImage);
                 ivImage.buildDrawingCache();
@@ -153,8 +154,9 @@ public class ViewOtherLostFoundPostActivity extends AppCompatActivity {
                                         String contactName = lostFoundResponse.getString("fullname");
                                         String contactNo = lostFoundResponse.getString("contactno");
                                         String lostDate = lostFoundResponse.getString("lostDate");
+                                        String lostLastModified = lostFoundResponse.getString("lostLastModified");
 
-                                        LostFound lostFound = new LostFound(category, lostItemName, lostItemDesc, lostItemURL, lostDate, email, contactName, contactNo);
+                                        LostFound lostFound = new LostFound(category, lostItemName, lostItemDesc, lostItemURL, lostDate, email, contactName, contactNo, lostLastModified);
 
                                         if(category.toUpperCase().equals("LOST"))
                                             lostList.add(lostFound);

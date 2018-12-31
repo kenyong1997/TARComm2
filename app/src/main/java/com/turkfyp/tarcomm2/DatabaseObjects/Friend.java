@@ -2,7 +2,7 @@ package com.turkfyp.tarcomm2.DatabaseObjects;
 
 public class Friend {
 
-    private String userEmail, friendEmail, type, friendName, profilePicURL;
+    private String userEmail, friendEmail, type, friendName, profilePicURL, friendLastModified;
 
     public Friend() {
         this.userEmail = "";
@@ -10,14 +10,16 @@ public class Friend {
         this.type = "";
         this.friendName = "";
         this.profilePicURL = "";
+        this.friendLastModified = "";
     }
 
-    public Friend(String userEmail, String friendEmail, String type, String friendName, String profilePicURL) {
+    public Friend(String userEmail, String friendEmail, String type, String friendName, String profilePicURL, String friendLastModified) {
         this.userEmail = userEmail;
         this.friendEmail = friendEmail;
         this.type = type;
         this.friendName = friendName;
         this.profilePicURL = profilePicURL;
+        this.friendLastModified = friendLastModified;
     }
 
     public String getUserEmail() {
@@ -58,5 +60,13 @@ public class Friend {
 
     public void setProfilePicURL(String profilePicURL) {
         this.profilePicURL = profilePicURL;
+    }
+
+    public String getFriendLastModified() {
+        return friendLastModified;
+    }
+
+    public void setFriendLastModified(String friendLastModified) {
+        this.friendLastModified = friendLastModified;
     }
 }

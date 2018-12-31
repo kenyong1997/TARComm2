@@ -153,8 +153,9 @@ public class ViewOtherMarketPostActivity extends AppCompatActivity {
                                         String email = textbookResponse.getString("email");
                                         String sellerName = textbookResponse.getString("fullname");
                                         String sellerContact = textbookResponse.getString("contactno");
+                                        String itemLastModified = textbookResponse.getString("itemLastModified");
 
-                                        Item item = new Item(itemCategory, itemName, itemDescription, imageURL, itemPrice, email, sellerName, sellerContact);
+                                        Item item = new Item(itemCategory, itemName, itemDescription, imageURL, itemPrice, email, sellerName, sellerContact,itemLastModified);
 
                                         if(itemCategory.equals("WTS"))
                                             sellItemList.add(item);

@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
@@ -25,8 +24,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,8 +42,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 
 
 import org.json.JSONArray;
@@ -69,13 +64,8 @@ import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
 
 import com.turkfyp.tarcomm2.DatabaseObjects.Event;
-import com.turkfyp.tarcomm2.DatabaseObjects.LostFound;
 import com.turkfyp.tarcomm2.DatabaseObjects.MapEventRVAdapter;
-import com.turkfyp.tarcomm2.DatabaseObjects.PlacesAutoCompleteAdapter;
-import com.turkfyp.tarcomm2.MapObjects.DirectionFinder;
-import com.turkfyp.tarcomm2.MapObjects.DirectionFinderListener;
 import com.turkfyp.tarcomm2.MapObjects.GPSTracker;
-import com.turkfyp.tarcomm2.MapObjects.Route;
 import com.turkfyp.tarcomm2.R;
 
 

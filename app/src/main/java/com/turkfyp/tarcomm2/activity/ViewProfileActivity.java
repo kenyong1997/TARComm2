@@ -22,6 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.turkfyp.tarcomm2.R;
 
 import org.json.JSONArray;
@@ -75,11 +76,12 @@ public class ViewProfileActivity extends AppCompatActivity {
         circularProgressDrawable.setCenterRadius(30f);
         circularProgressDrawable.start();
 
+        String lastModified = preferences.getString("lastModified","");
+
         //For Glide image
         RequestOptions options = new RequestOptions()
                 .centerCrop()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .signature(new ObjectKey(lastModified))
                 .placeholder(circularProgressDrawable)
                 .error(R.drawable.background_white);
 
@@ -90,6 +92,7 @@ public class ViewProfileActivity extends AppCompatActivity {
     public void onBackClicked(View view){
         finish();
     }
+
     public void onEditProfileClicked(View view){
         Intent i = new Intent (this,EditProfileActivity.class);
 
@@ -97,6 +100,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         this.startActivity(i);
         finish();
     }
+
     public void countPost(Context context, String url) {
         // Instantiate the RequestQueue
         queue = Volley.newRequestQueue(context);

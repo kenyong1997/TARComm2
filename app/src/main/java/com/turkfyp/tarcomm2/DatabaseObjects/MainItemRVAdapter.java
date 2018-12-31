@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.activity.MarketplaceDetailActivity;
 
@@ -32,6 +33,12 @@ public class MainItemRVAdapter extends RecyclerView.Adapter<MainItemRVAdapter.My
     public MainItemRVAdapter(Context mContext, List lst) {
         this.mContext = mContext;
         this.itemList = lst;
+    }
+
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
+        holder.tvMainItemName.setText(itemList.get(position).getItemName());
+        holder.tvMainItemPrice.setText(itemList.get(position).getItemPrice());
 
         CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(mContext);
         circularProgressDrawable.setStrokeWidth(5f);
@@ -41,17 +48,9 @@ public class MainItemRVAdapter extends RecyclerView.Adapter<MainItemRVAdapter.My
         //For Glide image
         options = new RequestOptions()
                 .centerCrop()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .signature(new ObjectKey(itemList.get(position).getItemLastModified()))
                 .placeholder(circularProgressDrawable)
                 .error(R.drawable.background_white);
-    }
-
-    @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
-        holder.tvMainItemName.setText(itemList.get(position).getItemName());
-        holder.tvMainItemPrice.setText(itemList.get(position).getItemPrice());
-
 
         // load image using Glide
         Glide.with(mContext).load(itemList.get(position).getImageURL()).apply(options).into(holder.ivMarketItem);
@@ -104,6 +103,7 @@ public class MainItemRVAdapter extends RecyclerView.Adapter<MainItemRVAdapter.My
                     itemDetailIntent.putExtra("checkYourUpload",false);
 
                 itemDetailIntent.putExtra("ImageURL", itemList.get(viewHolder.getAdapterPosition()).getImageURL());
+                itemDetailIntent.putExtra("itemLastModified", itemList.get(viewHolder.getAdapterPosition()).getItemLastModified());
 
                 mContext.startActivity(itemDetailIntent);
             }

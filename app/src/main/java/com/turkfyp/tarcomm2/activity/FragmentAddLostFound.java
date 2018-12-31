@@ -43,12 +43,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 
 public class FragmentAddLostFound extends Fragment {
+
+    private static String CREATE_URL = "https://tarcomm.000webhostapp.com/createLostFoundItem.php";
 
     private int PICK_IMAGE_REQUEST = 1;
     private Bitmap bitmap;
@@ -62,6 +65,8 @@ public class FragmentAddLostFound extends Fragment {
     EditText etAddLostFoundItemName, etAddLostFoundItemDesc;
     Button btnAddLostFound, btnCancelAddLostFound;
     DatePicker dpLostFoundDate;
+
+    String currentDate;
 
     @Nullable
     @Override
@@ -124,6 +129,11 @@ public class FragmentAddLostFound extends Fragment {
                 d.set(dpYear, dpMonth, dpDay);
                 String lostDate = dateFormatter.format(d.getTime());
 
+                //get current Date
+                Date cal = Calendar.getInstance().getTime();
+                java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                currentDate = df.format(cal);
+
                 if(TextUtils.isEmpty(lostItemName))
                     etAddLostFoundItemName.setError("This field is required.");
                 if(TextUtils.isEmpty(lostItemDesc))
@@ -139,10 +149,11 @@ public class FragmentAddLostFound extends Fragment {
                     lostFound.setEmail(preferences.getString("email", ""));
                     lostFound.setContactName(preferences.getString("loggedInUser", ""));
                     lostFound.setContactNo(preferences.getString("contactNo", ""));
+                    lostFound.setLastModified(currentDate);
                     uploadImage(lostFound);//show in app
 
                     try {
-                        makeServiceCall(getActivity().getApplicationContext(), "https://tarcomm.000webhostapp.com/createLostFoundItem.php", lostFound);
+                        makeServiceCall(getActivity().getApplicationContext(), CREATE_URL, lostFound);
                     } catch (Exception e) {
                         e.printStackTrace();
                         Toast.makeText(getActivity().getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -272,6 +283,7 @@ public class FragmentAddLostFound extends Fragment {
                     params.put("lostItemDesc", lostFound.getLostItemDesc());
                     params.put("email", lostFound.getEmail());
                     params.put("lostDate", lostFound.getLostDate());
+                    params.put("lostLastModified",lostFound.getLastModified());
                     return params;
                 }
 

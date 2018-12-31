@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.activity.LostFoundDetailActivity;
 
@@ -29,6 +30,12 @@ public class MainLostItemRVAdapter extends RecyclerView.Adapter<MainLostItemRVAd
     public MainLostItemRVAdapter(Context mContext, List lst) {
         this.mContext = mContext;
         this.lostFoundItemList = lst;
+    }
+
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
+        holder.tvMainLostItemName.setText( lostFoundItemList.get(position).getLostItemName());
+        holder.tvLostCategory.setText( lostFoundItemList.get(position).getCategory());
 
         CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(mContext);
         circularProgressDrawable.setStrokeWidth(5f);
@@ -38,21 +45,12 @@ public class MainLostItemRVAdapter extends RecyclerView.Adapter<MainLostItemRVAd
         //For Glide image
         options = new RequestOptions()
                 .centerCrop()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .signature(new ObjectKey(lostFoundItemList.get(position).getLastModified()))
                 .placeholder(circularProgressDrawable)
                 .error(R.drawable.background_white);
-    }
-
-    @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
-        holder.tvMainLostItemName.setText( lostFoundItemList.get(position).getLostItemName());
-        holder.tvLostCategory.setText( lostFoundItemList.get(position).getCategory());
 
         // load image using Glide
         Glide.with(mContext).load( lostFoundItemList.get(position).getLostItemURL()).apply(options).into(holder.ivLostFoundItem);
-
-
     }
 
     @Override
@@ -82,6 +80,7 @@ public class MainLostItemRVAdapter extends RecyclerView.Adapter<MainLostItemRVAd
                 lostItemDetailIntent.putExtra("email",lostFoundItemList.get(viewHolder.getAdapterPosition()).getEmail());
                 lostItemDetailIntent.putExtra("checkYourUpload",false);
                 lostItemDetailIntent.putExtra("LostImageURL", lostFoundItemList.get(viewHolder.getAdapterPosition()).getLostItemURL());
+                lostItemDetailIntent.putExtra("lostLastModified", lostFoundItemList.get(viewHolder.getAdapterPosition()).getLastModified());
 
                 mContext.startActivity(lostItemDetailIntent);
             }

@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.MediaStoreSignature;
+import com.bumptech.glide.signature.ObjectKey;
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.activity.MarketplaceDetailActivity;
 
@@ -39,6 +40,14 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.MyViewHold
         this.mContext = mContext;
         this.itemList = lst;
 
+    }
+
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
+        holder.tvItemName.setText(itemList.get(position).getItemName());
+        holder.tvItemSeller.setText(itemList.get(position).getSellerName());
+        holder.tvItemPrice.setText(itemList.get(position).getItemPrice());
+
         CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(mContext);
         circularProgressDrawable.setStrokeWidth(5f);
         circularProgressDrawable.setCenterRadius(30f);
@@ -47,17 +56,9 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.MyViewHold
         //For Glide image
         options = new RequestOptions()
                 .centerCrop()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .signature(new ObjectKey(itemList.get(position).getItemLastModified()))
                 .placeholder(circularProgressDrawable)
                 .error(R.drawable.background_white);
-    }
-
-    @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
-        holder.tvItemName.setText(itemList.get(position).getItemName());
-        holder.tvItemSeller.setText(itemList.get(position).getSellerName());
-        holder.tvItemPrice.setText(itemList.get(position).getItemPrice());
 
         // load image using Glide
         Glide.with(mContext).load(itemList.get(position).getImageURL()).apply(options).into(holder.ivTradingImage);
@@ -95,11 +96,13 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.MyViewHold
                 itemDetailIntent.putExtra("sellerContact",itemList.get(viewHolder.getAdapterPosition()).getSellerContact());
                 itemDetailIntent.putExtra("email",itemList.get(viewHolder.getAdapterPosition()).getEmail());
                 itemDetailIntent.putExtra("itemCategory",itemList.get(viewHolder.getAdapterPosition()).getItemCategory());
+
                 if(itemList.get(viewHolder.getAdapterPosition()).getItemCategory().equals("WTT"))
                     itemDetailIntent.putExtra("checkWTT",true);
 
                 SharedPreferences preferences = mContext.getSharedPreferences("tarcommUser", MODE_PRIVATE);
                 String email = preferences.getString("email", "");
+
                 if(itemList.get(viewHolder.getAdapterPosition()).getItemCategory().equals("WTT"))
                     itemDetailIntent.putExtra("checkWTT",true);
                 if(itemList.get(viewHolder.getAdapterPosition()).getEmail().equals(email))
@@ -111,6 +114,7 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.MyViewHold
                 convertImage(itemList.get(viewHolder.getAdapterPosition()).getImageURL());
                 itemDetailIntent.putExtra("Image", bitmap);
                 itemDetailIntent.putExtra("ImageURL", itemList.get(viewHolder.getAdapterPosition()).getImageURL());
+                itemDetailIntent.putExtra("itemLastModified", itemList.get(viewHolder.getAdapterPosition()).getItemLastModified());
 
                 mContext.startActivity(itemDetailIntent);
             }

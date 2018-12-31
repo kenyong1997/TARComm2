@@ -40,6 +40,8 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,6 +60,7 @@ public class FragmentAddMarketItem extends Fragment {
     ImageView imgViewMarketItem;
 
     Button btnCancelAddItem, btnUploadAddItem;
+    String currentDate;
 
     @Nullable
     @Override
@@ -117,6 +120,10 @@ public class FragmentAddMarketItem extends Fragment {
                 String itemCategory = rbItemCategory.getText().toString();
                 String itemPrice;
 
+                //get current Date
+                Date cal = Calendar.getInstance().getTime();
+                java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                currentDate = df.format(cal);
 
                 if(itemCategory.equals("Want To Sell"))
                     itemCategory = "WTS";
@@ -148,6 +155,7 @@ public class FragmentAddMarketItem extends Fragment {
                     item.setEmail(preferences.getString("email", ""));
                     item.setSellerName(preferences.getString("loggedInUser", ""));
                     item.setSellerContact(preferences.getString("contactNo", ""));
+                    item.setItemLastModified(currentDate);
                     uploadImage(item);
 
                     progressDialog = new ProgressDialog(getActivity());
@@ -277,11 +285,9 @@ public class FragmentAddMarketItem extends Fragment {
                     params.put("itemCategory", item.getItemCategory());
                     params.put("itemName", item.getItemName());
                     params.put("itemDesc", item.getItemDescription());
-
-
-
                     params.put("itemPrice", String.valueOf(item.getItemPrice()));
                     params.put("email", item.getEmail());
+                    params.put("itemLastModified", item.getItemLastModified());
 
                     return params;
                 }

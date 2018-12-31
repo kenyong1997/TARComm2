@@ -1,11 +1,6 @@
 package com.turkfyp.tarcomm2.DatabaseObjects;
 
-/**
- * Created by User-PC on 7/10/2017.
- */
-
 public class Item {
-
 
     private String itemCategory;
     private String itemName;
@@ -16,11 +11,11 @@ public class Item {
 
     private String sellerName;
     private String sellerContact;
+    private String itemLastModified;
 
-    public Item() {
-    }
+    public Item() {}
 
-    public Item(String itemCategory, String itemName, String itemDescription, String imageURL, String itemPrice, String email, String sellerName, String sellerContact) {
+    public Item(String itemCategory, String itemName, String itemDescription, String imageURL, String itemPrice, String email, String sellerName, String sellerContact, String itemLastModified) {
         this.itemCategory = itemCategory;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
@@ -29,6 +24,7 @@ public class Item {
         this.email = email;
         this.sellerName = sellerName;
         this.sellerContact = sellerContact;
+        this.itemLastModified = itemLastModified;
     }
 
     //GETTER AND SETTER
@@ -83,4 +79,12 @@ public class Item {
     public String getSellerContact() { return sellerContact; }
 
     public void setSellerContact(String sellerContact) { this.sellerContact = sellerContact; }
+
+    public String getItemLastModified() {
+        return itemLastModified;
+    }
+
+    public void setItemLastModified(String itemLastModified) {
+        this.itemLastModified = itemLastModified;
+    }
 }

@@ -39,6 +39,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -58,11 +59,18 @@ public class RegisterActivity extends AppCompatActivity {
     Spinner faculty_spinner;
     Drawable dw;
 
+    String currentDate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        //get current Date
+        Date cal = Calendar.getInstance().getTime();
+        java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        currentDate = df.format(cal);
 
         imgViewProfilePic = (ImageView) findViewById(R.id.imgViewProfilePic) ;
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
@@ -156,10 +164,12 @@ public class RegisterActivity extends AppCompatActivity {
             user.setFaculty(faculty);
             user.setCourse(course);
             user.setBiodata(biodata);
+            user.setLastModified(currentDate);
             uploadImage(user);
 
             //create a new userFullName in database
             progressDialog = new ProgressDialog(this);
+
             try {
                 makeServiceCall(this, "https://tarcomm.000webhostapp.com/insert_user.php", user);
             } catch (Exception e) {
@@ -263,6 +273,7 @@ public class RegisterActivity extends AppCompatActivity {
                     params.put("faculty", user.getFaculty());
                     params.put("course", user.getCourse());
                     params.put("biodata", user.getBiodata());
+                    params.put("lastModified", user.getLastModified());
 
                     return params;
                 }

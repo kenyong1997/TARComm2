@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -23,6 +24,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.turkfyp.tarcomm2.R;
 
 import org.json.JSONArray;
@@ -41,9 +45,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ViewOtherProfileActivity extends AppCompatActivity {
 
 
-    String email,gender,profilePicURL,contactNo,dateofbirth,faculty,biodata,course,name;
+    String email,gender,profilePicURL,contactNo,dateofbirth,faculty,biodata,course,name, lastModified;
     TextView tvProfileName, tvProfileFaculty, tvProfileCourse, tvProfileEmail, tvProfilePhone,tvProfileBioData,tvProfileFriendCount,tvProfileMarketPost, tvProfileLostFoundPost;
     Button btnEditProfile;
+    CircleImageView imgViewProfilePic;
+
     RequestQueue queue;
     private static final String TAG = "ViewOtherProfileActivity";
 
@@ -66,6 +72,7 @@ public class ViewOtherProfileActivity extends AppCompatActivity {
         tvProfileFriendCount = (TextView) findViewById(R.id.tvProfileFriendCount);
         tvProfileMarketPost = (TextView) findViewById(R.id.tvProfileMarketPost);
         tvProfileLostFoundPost = (TextView) findViewById(R.id.tvProfileLostFoundPost);
+        imgViewProfilePic = (CircleImageView) findViewById(R.id.imgViewProfilePic);
 
         Bundle extras = getIntent().getExtras();
         email = extras.getString("email");
@@ -174,21 +181,22 @@ public class ViewOtherProfileActivity extends AppCompatActivity {
                         public void onResponse(String response) {
                             JSONObject jsonObject;
                             try {
-
                                 jsonObject = new JSONObject(response);
-                                        email = userEmail;
-                                        name = jsonObject.getString("fullname");
-                                        gender=jsonObject.getString("gender");
-                                        profilePicURL = jsonObject.getString("profilepicURL");
-                                        contactNo = jsonObject.getString("contactno");
-                                        dateofbirth = jsonObject.getString("dateofbirth");
-                                        faculty = jsonObject.getString("faculty");
-                                        course = jsonObject.getString("course");
-                                        biodata = jsonObject.getString("biodata");
+                                email = userEmail;
+                                name = jsonObject.getString("fullname");
+                                gender=jsonObject.getString("gender");
+                                profilePicURL = jsonObject.getString("profilepicURL");
+                                contactNo = jsonObject.getString("contactno");
+                                dateofbirth = jsonObject.getString("dateofbirth");
+                                faculty = jsonObject.getString("faculty");
+                                course = jsonObject.getString("course");
+                                biodata = jsonObject.getString("biodata");
+                                lastModified = jsonObject.getString("lastModified");
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+
                             //underline contact
                             SpannableString content = new SpannableString(contactNo);
                             content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
@@ -198,7 +206,21 @@ public class ViewOtherProfileActivity extends AppCompatActivity {
                             tvProfileFaculty.setText(faculty);
                             tvProfileCourse.setText(course);
                             tvProfileBioData.setText(biodata);
-                            convertImage(profilePicURL);
+                            //convertImage(profilePicURL);
+
+                            CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(getApplicationContext());
+                            circularProgressDrawable.setStrokeWidth(5f);
+                            circularProgressDrawable.setCenterRadius(30f);
+                            circularProgressDrawable.start();
+
+                            //For Glide image
+                            RequestOptions options = new RequestOptions()
+                                    .centerCrop()
+                                    .signature(new ObjectKey(lastModified))
+                                    .placeholder(circularProgressDrawable)
+                                    .error(R.drawable.background_white);
+
+                            Glide.with(getApplicationContext()).load(profilePicURL).apply(options).into(imgViewProfilePic);
                         }
                     },
                     new Response.ErrorListener() {

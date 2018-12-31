@@ -32,6 +32,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.turkfyp.tarcomm2.DatabaseObjects.Item;
 import com.turkfyp.tarcomm2.R;
 
@@ -40,6 +41,8 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -50,7 +53,7 @@ public class EditUploadItemActivity extends AppCompatActivity {
 
     ProgressDialog progressDialog;
 
-    protected String sellerContact, itemSeller, itemName, itemDesc, itemPrice, itemCategory;
+    protected String sellerContact, itemSeller, itemName, itemDesc, itemPrice, itemCategory, itemLastModified;
     protected ImageView imgViewEditMarketItem;
     protected int itemID;
     protected EditText etEditItemName,etEditItemDesc,etEditItemPrice;
@@ -60,6 +63,7 @@ public class EditUploadItemActivity extends AppCompatActivity {
 
     private Bitmap bitmap;
     protected String newImgURL;
+    String currentDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +88,7 @@ public class EditUploadItemActivity extends AppCompatActivity {
         itemDesc = extras.getString("itemDesc");
         itemPrice = extras.getString("itemPrice");
         itemCategory = extras.getString("itemCategory");
-
+        itemLastModified = extras.getString("itemLastModified");
 
         String imageURL = extras.getString("ImageURL");
         itemID = Integer.parseInt(imageURL.split("=")[1]);
@@ -97,8 +101,7 @@ public class EditUploadItemActivity extends AppCompatActivity {
         //For Glide image
         RequestOptions options = new RequestOptions()
                 .centerCrop()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .signature(new ObjectKey(itemLastModified))
                 .placeholder(circularProgressDrawable)
                 .error(R.drawable.background_white);
 
@@ -156,6 +159,11 @@ public class EditUploadItemActivity extends AppCompatActivity {
 
         newImgURL = getStringImage(bitmap);
 
+        //get current Date
+        Date cal = Calendar.getInstance().getTime();
+        java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        currentDate = df.format(cal);
+
         if(itemCategory.equals("Want To Sell"))
             itemCategory = "WTS";
         else if(itemCategory.equals("Want To Buy"))
@@ -187,6 +195,7 @@ public class EditUploadItemActivity extends AppCompatActivity {
             item.setEmail(preferences.getString("email", ""));
             item.setSellerName(preferences.getString("loggedInUser", ""));
             item.setSellerContact(preferences.getString("contactNo", ""));
+            item.setItemLastModified(currentDate);
             item.setImageURL(newImgURL);
 
             progressDialog = new ProgressDialog(this);
@@ -296,6 +305,7 @@ public class EditUploadItemActivity extends AppCompatActivity {
                     params.put("itemPrice", String.valueOf(item.getItemPrice()));
                     params.put("itemID", String.valueOf(itemID));
                     params.put("email", item.getEmail());
+                    params.put("itemLastModified", item.getItemLastModified());
 
                     return params;
                 }

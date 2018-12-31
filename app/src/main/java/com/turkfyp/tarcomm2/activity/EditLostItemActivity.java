@@ -32,6 +32,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.turkfyp.tarcomm2.DatabaseObjects.LostFound;
 import com.turkfyp.tarcomm2.R;
 
@@ -42,6 +43,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -60,7 +62,9 @@ public class EditLostItemActivity extends AppCompatActivity {
     protected RadioButton category_lost,category_found, rbEditLostItemCategory;
     protected DatePicker dpEditLostFoundDate;
 
-    protected String ownerContact,itemOwner,lostItemName,lostItemDesc,itemCategory,lostDate;
+    protected String ownerContact,itemOwner,lostItemName,lostItemDesc,itemCategory,lostDate,lastModified;
+    String currentDate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +86,7 @@ public class EditLostItemActivity extends AppCompatActivity {
         lostItemDesc = extras.getString("lostItemDesc");
         itemCategory = extras.getString("itemCategory");
         lostDate = extras.getString("lostDate");
+        lastModified = extras.getString("lostLastModified");
         String imageURL = extras.getString("ImageURL");
 
         CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(this);
@@ -92,8 +97,7 @@ public class EditLostItemActivity extends AppCompatActivity {
         //For Glide image
         RequestOptions options = new RequestOptions()
                 .centerCrop()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .signature(new ObjectKey(lastModified))
                 .placeholder(circularProgressDrawable)
                 .error(R.drawable.background_white);
 
@@ -146,6 +150,11 @@ public class EditLostItemActivity extends AppCompatActivity {
         d.set(dpYear, dpMonth, dpDay);
         String strDate = dateFormatter.format(d.getTime());
 
+        //get current Date
+        Date cal = Calendar.getInstance().getTime();
+        java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        currentDate = df.format(cal);
+
         SharedPreferences preferences = getSharedPreferences("tarcommUser", Context.MODE_PRIVATE);
 
         if(TextUtils.isEmpty(lostItemName))
@@ -162,6 +171,7 @@ public class EditLostItemActivity extends AppCompatActivity {
             lostFoundItem.setLostItemDesc(lostItemDesc);
             lostFoundItem.setLostItemName(lostItemName);
             lostFoundItem.setEmail(preferences.getString("email", ""));
+            lostFoundItem.setLastModified(currentDate);
             uploadImage(lostFoundItem);
 
 
@@ -178,6 +188,7 @@ public class EditLostItemActivity extends AppCompatActivity {
     public void onImgEditProfileClicked(View view){
         showFileChooser();
     }
+
     public void onBackClicked(View view){
         finish();
     }
@@ -250,6 +261,7 @@ public class EditLostItemActivity extends AppCompatActivity {
                     params.put("lostItemDesc", lostFound.getLostItemDesc());
                     params.put("lostDate", lostFound.getLostDate());
                     params.put("lostID", String.valueOf(lostID));
+                    params.put("lostLastModified", lostFound.getLastModified());
 
                     return params;
                 }

@@ -32,6 +32,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.activity.ViewOtherProfileActivity;
 import com.turkfyp.tarcomm2.activity.ViewProfileActivity;
@@ -58,19 +59,6 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
     public OtherFriendSearchRVAdapter(Context mContext, List friendList, String friendEmail) {
         this.mContext = mContext;
         this.friendList = friendList;
-
-        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(mContext);
-        circularProgressDrawable.setStrokeWidth(5f);
-        circularProgressDrawable.setCenterRadius(30f);
-        circularProgressDrawable.start();
-
-        //For Glide image
-        options = new RequestOptions()
-                .centerCrop()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .placeholder(circularProgressDrawable)
-                .error(R.drawable.background_white);
     }
 
     @Override
@@ -320,6 +308,19 @@ public class OtherFriendSearchRVAdapter extends RecyclerView.Adapter<OtherFriend
             holder.ivDeleteRequest.setVisibility(View.INVISIBLE);
             holder.ivDeleteFriend.setVisibility(View.INVISIBLE);
         }
+
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(mContext);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
+
+        //For Glide image
+        options = new RequestOptions()
+                .centerCrop()
+                .signature(new ObjectKey(friendList.get(position).getFriendLastModified()))
+                .placeholder(circularProgressDrawable)
+                .error(R.drawable.background_white);
+
         // load image using Glide
         Glide.with(mContext).load(friendList.get(position).getProfilePicURL()).apply(options).into(holder.imageViewFriendSearch);
     }

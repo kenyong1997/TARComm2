@@ -31,6 +31,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.turkfyp.tarcomm2.DatabaseObjects.User;
 import com.turkfyp.tarcomm2.R;
 
@@ -41,6 +42,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -63,6 +65,7 @@ public class EditProfileActivity extends AppCompatActivity {
     RadioGroup rgEditGender;
     RadioButton rbEditGender,rb_male,rb_female;
 
+    String currentDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,15 +83,17 @@ public class EditProfileActivity extends AppCompatActivity {
         circularProgressDrawable.setCenterRadius(30f);
         circularProgressDrawable.start();
 
+        String lastModified = preferences.getString("lastModified","");
+
         //For Glide image
         RequestOptions options = new RequestOptions()
                 .centerCrop()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .signature(new ObjectKey(lastModified))
                 .placeholder(circularProgressDrawable)
                 .error(R.drawable.background_white);
 
         imgViewEditProfilePic = (CircleImageView) findViewById(R.id.imgViewEditProfilePic);
+
         Glide.with(getApplicationContext()).load(imageURL).apply(options).into(imgViewEditProfilePic);
 
         convertImage(imageURL);
@@ -168,6 +173,11 @@ public class EditProfileActivity extends AppCompatActivity {
         d.set(dpYear, dpMonth, dpDay);
         String strDate = dateFormatter.format(d.getTime());
 
+        //get current Date
+        Date cal = Calendar.getInstance().getTime();
+        java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        currentDate = df.format(cal);
+
         if(TextUtils.isEmpty(fullName)){
             etEditName.setError("This field is required.");
         }
@@ -196,6 +206,7 @@ public class EditProfileActivity extends AppCompatActivity {
             user.setFaculty(faculty);
             user.setCourse(course);
             user.setBiodata(biodata);
+            user.setLastModified(currentDate);
             uploadImage(user);
 
             //create a new userFullName in database
@@ -207,7 +218,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         }
-
     }
 
     private void showFileChooser() {
@@ -300,6 +310,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                 editor.putString("faculty",user.getFaculty());
                                 editor.putString("course", user.getCourse());
                                 editor.putString("biodata", user.getBiodata());
+                                editor.putString("lastModified", user.getLastModified());
 
                                 editor.apply();
 
@@ -335,7 +346,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     params.put("faculty", user.getFaculty());
                     params.put("course", user.getCourse());
                     params.put("biodata", user.getBiodata());
-
+                    params.put("lastModified", user.getLastModified());
 
                     return params;
                 }

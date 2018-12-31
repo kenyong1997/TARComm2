@@ -106,6 +106,7 @@ public class FragmentTradingTab4 extends Fragment {
                 itemDetailIntent.putExtra("sellerContact",selectedItem.getSellerContact());
                 itemDetailIntent.putExtra("email",selectedItem.getEmail());
                 itemDetailIntent.putExtra("checkYourUpload",true);
+                itemDetailIntent.putExtra("itemLastModified", selectedItem.getItemLastModified());
 
                 convertImage(selectedItem.getImageURL());
                 itemDetailIntent.putExtra("Image", bitmap);
@@ -172,18 +173,19 @@ public class FragmentTradingTab4 extends Fragment {
                                     List<Item> tradeItemList = new ArrayList<>();
 
                                     for (int i = 0; i < j.length(); i++) {
-                                        JSONObject lostFoundResponse = (JSONObject) j.get(i);
+                                        JSONObject itemResponse = (JSONObject) j.get(i);
 
-                                        String itemCategory = lostFoundResponse.getString("itemCategory");
-                                        String itemName = lostFoundResponse.getString("itemName");
-                                        String itemDescription = lostFoundResponse.getString("itemDesc");
-                                        String imageURL = lostFoundResponse.getString("url");
-                                        String itemPrice = lostFoundResponse.getString("itemPrice");
-                                        String email = lostFoundResponse.getString("email");
-                                        String sellerName = lostFoundResponse.getString("fullname");
-                                        String sellerContact = lostFoundResponse.getString("contactno");
+                                        String itemCategory = itemResponse.getString("itemCategory");
+                                        String itemName = itemResponse.getString("itemName");
+                                        String itemDescription = itemResponse.getString("itemDesc");
+                                        String imageURL = itemResponse.getString("url");
+                                        String itemPrice = itemResponse.getString("itemPrice");
+                                        String email = itemResponse.getString("email");
+                                        String sellerName = itemResponse.getString("fullname");
+                                        String sellerContact = itemResponse.getString("contactno");
+                                        String itemLastModified = itemResponse.getString("itemLastModified");
 
-                                        Item item = new Item(itemCategory, itemName, itemDescription, imageURL, itemPrice, email, sellerName, sellerContact);
+                                        Item item = new Item(itemCategory, itemName, itemDescription, imageURL, itemPrice, email, sellerName, sellerContact, itemLastModified);
 
                                         if(itemCategory.equals("WTS"))
                                             sellItemList.add(item);
