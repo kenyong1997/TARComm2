@@ -139,7 +139,7 @@ public class FragmentAddMarketItem extends Fragment {
                 if(TextUtils.isEmpty(itemPrice))
                     itemPrice = "0";
 
-                if(!TextUtils.isEmpty(itemName) && !TextUtils.isEmpty(itemDesc)) {
+                if(!TextUtils.isEmpty(itemName) && !TextUtils.isEmpty(itemDesc)&& imgViewMarketItem.getDrawable() != null) {
                     Item item = new Item();
                     item.setItemCategory(itemCategory);
                     item.setItemName(itemName);
@@ -157,7 +157,8 @@ public class FragmentAddMarketItem extends Fragment {
                         e.printStackTrace();
                         Toast.makeText(getActivity().getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
-                }
+                } else
+                    Toast.makeText(getActivity().getApplicationContext(), "Please add an image or fill all the mandatory field", Toast.LENGTH_LONG).show();
             }
         });
 

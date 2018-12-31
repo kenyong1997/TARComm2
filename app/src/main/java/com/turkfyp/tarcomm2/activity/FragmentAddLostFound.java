@@ -63,8 +63,6 @@ public class FragmentAddLostFound extends Fragment {
     Button btnAddLostFound, btnCancelAddLostFound;
     DatePicker dpLostFoundDate;
 
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -80,7 +78,6 @@ public class FragmentAddLostFound extends Fragment {
         btnAddLostFound = (Button) v.findViewById(R.id.btnAddLostFound);
         btnCancelAddLostFound = (Button) v.findViewById(R.id.btnCancelAddLostFound);
         dpLostFoundDate = (DatePicker) v.findViewById(R.id.dpLostFoundDate);
-
 
         rgLostCategory.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -119,7 +116,6 @@ public class FragmentAddLostFound extends Fragment {
                 String lostItemName = etAddLostFoundItemName.getText().toString();
                 String lostItemDesc = etAddLostFoundItemDesc.getText().toString();
 
-
                 int dpDay = dpLostFoundDate.getDayOfMonth();
                 int dpMonth = dpLostFoundDate.getMonth();
                 int dpYear = dpLostFoundDate.getYear();
@@ -133,7 +129,7 @@ public class FragmentAddLostFound extends Fragment {
                 if(TextUtils.isEmpty(lostItemDesc))
                     etAddLostFoundItemDesc.setError("This field is required.");
 
-                if(!TextUtils.isEmpty(lostItemName) && !TextUtils.isEmpty(lostItemDesc)) {
+                if(!TextUtils.isEmpty(lostItemName) && !TextUtils.isEmpty(lostItemDesc) && imgViewAddLostFoundItem.getDrawable() != null) {
                     progressDialog = new ProgressDialog(getActivity());
                     LostFound lostFound = new LostFound();
                     lostFound.setCategory(category);
@@ -145,13 +141,15 @@ public class FragmentAddLostFound extends Fragment {
                     lostFound.setContactNo(preferences.getString("contactNo", ""));
                     uploadImage(lostFound);//show in app
 
-
                     try {
                         makeServiceCall(getActivity().getApplicationContext(), "https://tarcomm.000webhostapp.com/createLostFoundItem.php", lostFound);
                     } catch (Exception e) {
                         e.printStackTrace();
                         Toast.makeText(getActivity().getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
+                }
+                else {
+                    Toast.makeText(getActivity().getApplicationContext(), "Please add an image or fill all the mandatory field", Toast.LENGTH_LONG).show();
                 }
             }
         });

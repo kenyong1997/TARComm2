@@ -4,13 +4,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -48,22 +46,20 @@ import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
     private int PICK_IMAGE_REQUEST = 1;
-    private Bitmap bitmap,bitmap2;
+    private Bitmap bitmap;
     private Uri filePath;
-
 
     EditText editTextEmail, editTextPassword1,editTextContactNo,editTextFullName,editTextCourse, editTextBioData;
     DatePicker dpDOB;
     RadioGroup rgGender;
     RadioButton rbGender;
     ImageView imgViewProfilePic;
-    boolean picChosen;
     ProgressDialog progressDialog;
     Spinner faculty_spinner;
     Drawable dw;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
@@ -79,7 +75,9 @@ public class RegisterActivity extends AppCompatActivity {
         faculty_spinner = (Spinner) findViewById(R.id.faculty_spinner);
         editTextCourse = (EditText) findViewById(R.id.editTextCourse);
         editTextBioData = (EditText) findViewById(R.id.editTextBioData);
+
         dw = getResources().getDrawable(R.drawable.def_male);
+
         rgGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -101,13 +99,13 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void imgViewProfilePic_onClicked(View view){
-
                 showFileChooser();
-
     }
+
     public void onBackClicked(View view){
         finish();
     }
+
     public void onRegisterClicked(View view){
 
         rbGender = (RadioButton) findViewById(rgGender.getCheckedRadioButtonId());
@@ -128,9 +126,6 @@ public class RegisterActivity extends AppCompatActivity {
         d.set(dpYear, dpMonth, dpDay);
         String strDate = dateFormatter.format(d.getTime());
 
-
-
-
         if(TextUtils.isEmpty(email)){
             editTextEmail.setError("This field is required.");
         }
@@ -150,42 +145,43 @@ public class RegisterActivity extends AppCompatActivity {
             editTextContactNo.setError("Invalid number, please enter valid contact number without hyphen(-)");
         }
 
-            if(isValidEmail(email)&&!TextUtils.isEmpty(email)&&!TextUtils.isEmpty(fullName)&&isValidEmail(email)&&isValidContact(contactNo)){
-                User user = new User();
-                user.setEmail(email);
-                user.setPassword(password);
-                user.setFullname(fullName);
-                user.setContactno(contactNo);
-                user.setDateofbirth(strDate);
-                user.setGender(gender);
-                user.setFaculty(faculty);
-                user.setCourse(course);
-                user.setBiodata(biodata);
-                uploadImage(user);
+        if(isValidEmail(email)&&!TextUtils.isEmpty(email)&&!TextUtils.isEmpty(fullName)&&isValidEmail(email)&&isValidContact(contactNo)){
+            User user = new User();
+            user.setEmail(email);
+            user.setPassword(password);
+            user.setFullname(fullName);
+            user.setContactno(contactNo);
+            user.setDateofbirth(strDate);
+            user.setGender(gender);
+            user.setFaculty(faculty);
+            user.setCourse(course);
+            user.setBiodata(biodata);
+            uploadImage(user);
 
-                //create a new userFullName in database
-                progressDialog = new ProgressDialog(this);
-                try {
-                    makeServiceCall(this, "https://tarcomm.000webhostapp.com/insert_user.php", user);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                }
-
-        }
+            //create a new userFullName in database
+            progressDialog = new ProgressDialog(this);
+            try {
+                makeServiceCall(this, "https://tarcomm.000webhostapp.com/insert_user.php", user);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        } else
+            Toast.makeText(getApplicationContext(), "Please fill in all the mandatory field", Toast.LENGTH_LONG).show();
     }
+
     public boolean isValidEmail(String string) {
         final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(string);
         return matcher.matches();
     }
+
     public boolean isValidContact(String string) {
         String PATTERN;
 
         //PATTERN = only 1 - 9 and length is 12
         PATTERN = "^[0-9]{10,11}$";
-
 
         Pattern pattern = Pattern.compile(PATTERN);
         Matcher matcher = pattern.matcher(string);
@@ -207,7 +203,6 @@ public class RegisterActivity extends AppCompatActivity {
         try {
 
             //setting up progress dialog
-
             if (!progressDialog.isShowing()) ;
             progressDialog.setMessage("Registering");
             progressDialog.show();
@@ -258,7 +253,6 @@ public class RegisterActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-
                     // put the parameters with specific values
                     params.put("email", user.getEmail());
                     params.put("password", user.getPassword());
@@ -266,11 +260,9 @@ public class RegisterActivity extends AppCompatActivity {
                     params.put("fullname", user.getFullname());
                     params.put("dateofbirth",user.getDateofbirth());
                     params.put("gender",user.getGender());
-
                     params.put("faculty", user.getFaculty());
                     params.put("course", user.getCourse());
                     params.put("biodata", user.getBiodata());
-
 
                     return params;
                 }
@@ -288,6 +280,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -310,15 +303,10 @@ public class RegisterActivity extends AppCompatActivity {
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
     }
+
     private String uploadImage(final User user) {
         class UploadImage extends AsyncTask<Bitmap, Void, String> {
             String image;
-
-            // ADD EVENT LOCATION INFORMATION LATER !!!
-
-            ProgressDialog loading;
-            ImgRequestHandler rh = new ImgRequestHandler();
-
 
             @Override
             protected String doInBackground(Bitmap... params) {
@@ -337,5 +325,4 @@ public class RegisterActivity extends AppCompatActivity {
 
         return ui.image;
     }
-
 }
