@@ -177,7 +177,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         } else
-            Toast.makeText(getApplicationContext(), "Please fill in all the mandatory field", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Please check the mandatory field(s) for any error", Toast.LENGTH_LONG).show();
     }
 
     public boolean isValidEmail(String string) {
