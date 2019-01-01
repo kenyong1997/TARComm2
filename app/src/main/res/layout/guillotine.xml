@@ -163,20 +163,21 @@
                 android:text="Navigation"
                 android:onClick="map_onclick"/>
         </LinearLayout>
-        <!-- future work, add friend database-->
-        <!--<LinearLayout-->
-            <!--android:id="@+id/Friends_nearby_group"-->
-            <!--style="@style/LinearLayout.GuillotineItem">-->
+        <LinearLayout
+            android:id="@+id/Friends_nearby_group"
+            style="@style/LinearLayout.GuillotineItem">
 
-            <!--<ImageView-->
-                <!--style="@style/ImageView.GuillotineItem"-->
-                <!--android:src="@drawable/friends_nearby_icon" />-->
+            <ImageView
+                style="@style/ImageView.GuillotineItem"
+                android:src="@drawable/friends_nearby_icon"
+                />
 
-            <!--<com.turkfyp.tarcomm2.widget.CanaroTextView-->
-                <!--style="@style/TextView.GuillotineItem"-->
-                <!--android:textColor="@color/light_gray"-->
-                <!--android:text="Friends Nearby" />-->
-        <!--</LinearLayout>-->
+            <com.turkfyp.tarcomm2.widget.CanaroTextView
+                style="@style/TextView.GuillotineItem"
+                android:textColor="@color/light_gray"
+                android:text="Friends Nearby"
+                android:onClick="friendsNearby_onclick"/>
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/event_ongoing_group"
             style="@style/LinearLayout.GuillotineItem">

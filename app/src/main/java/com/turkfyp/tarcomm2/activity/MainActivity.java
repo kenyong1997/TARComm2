@@ -479,6 +479,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
         animation.close();
     }
+
+    public void friendsNearby_onclick(View view){
+        animation.opened=false;
+        Intent i = new Intent (this,MapFriendsNearbyActivity.class);
+        startActivity(i);
+        animation.close();
+    }
     public void friend_list_onclick(View view){
         animation.opened=false;
         Intent i = new Intent (this,FriendListActivity.class);
