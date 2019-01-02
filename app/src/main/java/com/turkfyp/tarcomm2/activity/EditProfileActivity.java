@@ -250,7 +250,7 @@ public class EditProfileActivity extends AppCompatActivity {
         String PATTERN;
 
         //PATTERN = only 1 - 9 and length is 12
-        PATTERN = "^[0-9]{10}$";
+        PATTERN = "^[0-9]{10,11}$";
 
         Pattern pattern = Pattern.compile(PATTERN);
         Matcher matcher = pattern.matcher(string);
