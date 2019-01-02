@@ -476,6 +476,12 @@ public class MapFriendsNearbyFragment extends Fragment implements OnMapReadyCall
                                         String friendLatitude = String.valueOf(friendResponse.getString("friendLatitude"));
                                         String friendLongitude = String.valueOf(friendResponse.getString("friendLongitude"));
 
+                                        if(friendLatitude.equals("null"))
+                                            friendLatitude = "0";
+
+                                        if(friendLongitude.equals("null"))
+                                            friendLongitude = "0";
+
                                         Friend friend = new Friend(userEmail, friendEmail, friendType, friendName, profilePicURL, friendLastModified, friendLatitude, friendLongitude);
                                         friendList.add(friend);
 

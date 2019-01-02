@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -87,8 +88,12 @@ public class MapFriendRVAdapter extends RecyclerView.Adapter<MapFriendRVAdapter.
                 double lat = Double.parseDouble(friendList.get(viewHolder.getAdapterPosition()).getLatitude());
                 double lng = Double.parseDouble(friendList.get(viewHolder.getAdapterPosition()).getLongitude());
 
-                LatLng coordinate = new LatLng(lat, lng);
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinate, 18));
+                if(lat == 0 || lng == 0){
+                    Toast.makeText(mContext,friendList.get(viewHolder.getAdapterPosition()).getFriendName() +"'s location is currently not available", Toast.LENGTH_LONG).show();
+                }else {
+                    LatLng coordinate = new LatLng(lat, lng);
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinate, 18));
+                }
             }
         });
 
