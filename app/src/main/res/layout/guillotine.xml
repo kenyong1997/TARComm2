@@ -174,7 +174,6 @@
 
             <com.turkfyp.tarcomm2.widget.CanaroTextView
                 style="@style/TextView.GuillotineItem"
-                android:textColor="@color/light_gray"
                 android:text="Friends Nearby"
                 android:onClick="friendsNearby_onclick"/>
         </LinearLayout>
