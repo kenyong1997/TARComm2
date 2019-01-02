@@ -39,18 +39,6 @@ public class ViewPagerAdapter extends PagerAdapter{
     public ViewPagerAdapter(List<ViewPagerModel> contents, Context context) {
         this.contents = contents;
         this.context = context;
-
-        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(context);
-        circularProgressDrawable.setStrokeWidth(5f);
-        circularProgressDrawable.setCenterRadius(30f);
-        circularProgressDrawable.start();
-
-        //For Glide image
-        options = new RequestOptions()
-                .override(1500,2000)
-                .fitCenter()
-                .placeholder(circularProgressDrawable)
-                .error(R.drawable.background_white);
     }
 
     @Override
@@ -66,6 +54,18 @@ public class ViewPagerAdapter extends PagerAdapter{
         container.addView(view);
 
         ImageView imageView = (ImageView) view.findViewById(R.id.highlight_event);
+
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(context);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
+
+        //For Glide image
+        options = new RequestOptions()
+                .override(1500,2000)
+                .fitCenter()
+                .placeholder(circularProgressDrawable)
+                .error(R.drawable.background_white);
 
         //Load image into imageViewer with Glide
         Glide.with(context).load(contents.get(position).getImage()).apply(options).into(imageView);

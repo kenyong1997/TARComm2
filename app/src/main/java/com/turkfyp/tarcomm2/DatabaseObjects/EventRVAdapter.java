@@ -34,6 +34,14 @@ public class EventRVAdapter extends RecyclerView.Adapter<EventRVAdapter.MyViewHo
         this.mContext = mContext;
         this.eventList = lst;
 
+    }
+
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
+        holder.tvEventName.setText(eventList.get(position).getEventName());
+        holder.tvEventDateTime.setText(eventList.get(position).getEventDateTime());
+        holder.tvEventEndDateTime.setText(eventList.get(position).getEventEndDateTime());
+
         CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(mContext);
         circularProgressDrawable.setStrokeWidth(5f);
         circularProgressDrawable.setCenterRadius(30f);
@@ -42,17 +50,8 @@ public class EventRVAdapter extends RecyclerView.Adapter<EventRVAdapter.MyViewHo
         //For Glide image
         options = new RequestOptions()
                 .centerCrop()
-//                .skipMemoryCache(true)
-//                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .placeholder(circularProgressDrawable)
                 .error(R.drawable.background_white);
-    }
-
-    @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
-        holder.tvEventName.setText(eventList.get(position).getEventName());
-        holder.tvEventDateTime.setText(eventList.get(position).getEventDateTime());
-        holder.tvEventEndDateTime.setText(eventList.get(position).getEventEndDateTime());
 
         // load image using Glide
         Glide.with(mContext).load(eventList.get(position).getEventImageURL()).apply(options).into(holder.ivImageEvent);

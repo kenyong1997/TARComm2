@@ -23,6 +23,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.activity.EventDetailsActivity;
@@ -94,6 +95,15 @@ public class MapFriendRVAdapter extends RecyclerView.Adapter<MapFriendRVAdapter.
                     LatLng coordinate = new LatLng(lat, lng);
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinate, 18));
                 }
+            }
+        });
+
+        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Intent i = new Intent(mContext,ViewOtherProfileActivity.class);
+                i.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getFriendEmail());
+                mContext.startActivity(i);
             }
         });
 
