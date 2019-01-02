@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -24,6 +25,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.turkfyp.tarcomm2.R;
 import com.turkfyp.tarcomm2.activity.EventDetailsActivity;
+import com.turkfyp.tarcomm2.activity.ViewOtherProfileActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,37 +46,21 @@ public class MapFriendRVAdapter extends RecyclerView.Adapter<MapFriendRVAdapter.
 
     RequestOptions options;
     private Context mContext ;
-    private List<Event> eventList;
+    private List<Friend> friendList;
 
-    private String GOOGLE_MAP_API = "AIzaSyDRSuYdn9yoCACUGxd4qGkgl59276mWvcs";
     GoogleMap googleMap;
 
-    Bitmap bitmap;
 
     public MapFriendRVAdapter(Context mContext, List lst, GoogleMap googleMap) {
         this.mContext = mContext;
-        this.eventList = lst;
+        this.friendList = lst;
         this.googleMap = googleMap;
 
-        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(mContext);
-        circularProgressDrawable.setStrokeWidth(5f);
-        circularProgressDrawable.setCenterRadius(30f);
-        circularProgressDrawable.start();
-
-        //For Glide image
-        options = new RequestOptions()
-                .centerCrop()
-//                .skipMemoryCache(true)
-//                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .placeholder(circularProgressDrawable)
-                .error(R.drawable.background_white);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-//        holder.tvMapEventName.setText(eventList.get(position).getEventName());
-//        holder.tvMapEventDate.setText(eventList.get(position).getEventDateTime()+" to " + eventList.get(position).getEventEndDateTime());
-//        holder.tvMapEventVenue.setText(eventList.get(position).getEventVenueName());
+        holder.tvMapFriendName.setText(friendList.get(position).getFriendName());
     }
 
     @Override
@@ -89,42 +75,29 @@ public class MapFriendRVAdapter extends RecyclerView.Adapter<MapFriendRVAdapter.
             @Override
             public void onClick(View view) {
 
-                //change to view profile
-                Intent eventDetailIntent = new Intent(mContext, EventDetailsActivity.class);
-
-                eventDetailIntent.putExtra("eventName", eventList.get(viewHolder.getAdapterPosition()).getEventName());
-                eventDetailIntent.putExtra("eventDateTime", eventList.get(viewHolder.getAdapterPosition()).getEventDateTime());
-                eventDetailIntent.putExtra("eventDesc", eventList.get(viewHolder.getAdapterPosition()).getEventDesc());
-                eventDetailIntent.putExtra("eventVenue", eventList.get(viewHolder.getAdapterPosition()).getEventVenue());
-                eventDetailIntent.putExtra("eventEndDatetime",eventList.get(viewHolder.getAdapterPosition()).getEventEndDateTime());
-
-                //convertImage(eventList.get(viewHolder.getAdapterPosition()).getEventImageURL());
-                //eventDetailIntent.putExtra("Image", bitmap);
-                eventDetailIntent.putExtra("ImageURL", eventList.get(viewHolder.getAdapterPosition()).getEventImageURL());
-
-                mContext.startActivity(eventDetailIntent);
-
-                Geocoding geocoding = new Geocoding();
-                geocoding.execute(eventList.get(viewHolder.getAdapterPosition()).getEventVenue());
+                Intent i = new Intent(mContext,ViewOtherProfileActivity.class);
+                i.putExtra("email",friendList.get(viewHolder.getAdapterPosition()).getFriendEmail());
+                mContext.startActivity(i);
             }
         });
 
         viewHolder.ivLocate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                double lat = Double.parseDouble(friendList.get(viewHolder.getAdapterPosition()).getLatitude());
+                double lng = Double.parseDouble(friendList.get(viewHolder.getAdapterPosition()).getLongitude());
 
-                Geocoding geocoding = new Geocoding();
-                geocoding.execute(eventList.get(viewHolder.getAdapterPosition()).getEventVenue());
+                LatLng coordinate = new LatLng(lat, lng);
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinate, 18));
             }
         });
 
         return viewHolder;
     }
 
-
     @Override
     public int getItemCount() {
-        return eventList.size();
+        return friendList.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -139,94 +112,6 @@ public class MapFriendRVAdapter extends RecyclerView.Adapter<MapFriendRVAdapter.
             ivLocate = (ImageView) itemView.findViewById(R.id.ivLocate);
             mapFriendRecords_container = (LinearLayout)itemView.findViewById(R.id.mapFriendRecords_container);
         }
-    }
-
-    //get Location from Address(GEOCODING API)
-    private class Geocoding extends AsyncTask<String, Void, String[]> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        String encodedAddress;
-
-        String address;
-
-        @Override
-        protected String[] doInBackground(String... params) {
-
-            address = params[0];
-
-            //connection to get result from Geolocation API
-            try {
-                encodedAddress = URLEncoder.encode(address, "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            String response;
-            try {
-                response = getLatLongByURL("https://maps.google.com/maps/api/geocode/json?address=" + encodedAddress + "&key="+ GOOGLE_MAP_API);
-                Log.d("response", "" + response);
-                return new String[]{response};
-            } catch (Exception e) {
-                return new String[]{"error"};
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String... result) {
-            try {
-                JSONObject jsonObject = new JSONObject(result[0]);
-
-                double lng = ((JSONArray) jsonObject.get("results")).getJSONObject(0)
-                        .getJSONObject("geometry").getJSONObject("location")
-                        .getDouble("lng");
-
-                double lat = ((JSONArray) jsonObject.get("results")).getJSONObject(0)
-                        .getJSONObject("geometry").getJSONObject("location")
-                        .getDouble("lat");
-
-                LatLng coordinate = new LatLng(lat, lng);
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinate, 18));
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
-    public String getLatLongByURL(String requestURL) {
-        URL url;
-        String response = "";
-        try {
-            url = new URL(requestURL);
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(15000);
-            conn.setConnectTimeout(15000);
-            conn.setRequestMethod("GET");
-            conn.setDoInput(true);
-            conn.setRequestProperty("Content-Type",
-                    "application/x-www-form-urlencoded");
-            conn.setDoOutput(true);
-            int responseCode = conn.getResponseCode();
-
-            if (responseCode == HttpsURLConnection.HTTP_OK) {
-                String line;
-                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                while ((line = br.readLine()) != null) {
-                    response += line;
-                }
-            } else {
-                response = "";
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return response;
     }
 
 }

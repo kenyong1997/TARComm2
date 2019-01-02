@@ -4,6 +4,8 @@ public class Friend {
 
     private String userEmail, friendEmail, type, friendName, profilePicURL, friendLastModified;
 
+    private String latitude, longitude;
+
     public Friend() {
         this.userEmail = "";
         this.friendEmail = "";
@@ -20,6 +22,17 @@ public class Friend {
         this.friendName = friendName;
         this.profilePicURL = profilePicURL;
         this.friendLastModified = friendLastModified;
+    }
+
+    public Friend(String userEmail, String friendEmail, String type, String friendName, String profilePicURL, String friendLastModified, String latitude, String longitude) {
+        this.userEmail = userEmail;
+        this.friendEmail = friendEmail;
+        this.type = type;
+        this.friendName = friendName;
+        this.profilePicURL = profilePicURL;
+        this.friendLastModified = friendLastModified;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getUserEmail() {
@@ -68,5 +81,21 @@ public class Friend {
 
     public void setFriendLastModified(String friendLastModified) {
         this.friendLastModified = friendLastModified;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 }
